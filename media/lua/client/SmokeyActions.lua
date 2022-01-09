@@ -40,10 +40,28 @@ function ISSmoking:perform()
 	if self.eatAudio ~= 0 and self.character:getEmitter():isPlaying(self.eatAudio) then
         self.character:stopOrTriggerSound(self.eatAudio);
     end
-	self.item:getContainer():setDrawDirty(true);
+	
+	local cigarette = self.character:getInventory():getItemFromType("Cigarettes");
+	cigarette:UseItem();
+	
+	--Reset last smoke timer et Cigarette Stress
+	self.character:setTimeSinceLastSmoke(0);
+	self.stats:setStressFromCigarettes(0);
+	
+	--Reset stress if smoker, reduce stress by 5  and inflict FoodSicknessLevel if non Smoker
+	if self.character:HasTrait("Smoker") then
+		self.stats:setStress(0);
+		self.character:getBodyDamage():setUnhappynessLevel(self.character:getBodyDamage():getUnhappynessLevel() - 10);
+	else
+		self.stats:setStress(self.stats:getStress() - 0.05 )
+		self.character:getBodyDamage():setFoodSicknessLevel(self.character:getBodyDamage():getFoodSicknessLevel() + 13);
+	end
+	
+	
+	
 	self.item:setJobDelta(0.0);
-	print ("PERFORMED")
 	ISBaseTimedAction.perform(self)
+	
 end
 
 function ISSmoking:new (character, stove, item, time)
@@ -51,6 +69,7 @@ function ISSmoking:new (character, stove, item, time)
 	setmetatable(o, self)
 	self.__index = self
 	o.character = character;
+	o.stats = character:getStats();
 	o.stove = stove;
 	o.item = item;
 	o.maxTime = time;
@@ -59,6 +78,8 @@ function ISSmoking:new (character, stove, item, time)
 	o.eatAudio = 0;
 	o.stopOnWalk = false;
 	o.stopOnRun = true;
-	if o.character:isTimedActionInstant() then o.maxTime = 1 end;
+	if character:isTimedActionInstant() then
+		o.maxTime = 1;
+	end
 	return o
 end
