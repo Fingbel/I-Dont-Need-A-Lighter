@@ -16,8 +16,10 @@ local function LightCigOnOven(_player, _context, _worldObjects, _test)
 				_context:addOption(getText('ContextMenu_LightCigaretteWithOven'), player, OnSmoking, stove, cigarette)
 			
 			elseif instanceof(stove,'IsoFireplace') and stove:isLit() then
-				_context:addOption(getText('ContextMenu_LightCigaretteWithFireplace'), player, OnSmoking, stove, cigarette)		
-			
+				_context:addOption(getText('ContextMenu_LightCigaretteWithFireplace'), player, OnSmoking, stove, cigarette)
+
+			elseif instanceof(stove,'IsoBarbecue') and stove:isLit() then
+				_context:addOption(getText('ContextMenu_LightCigaretteWithBarbecue'), player, OnSmoking, stove, cigarette)
 			end				
 		end		
 	end
