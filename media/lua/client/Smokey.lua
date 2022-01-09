@@ -12,7 +12,7 @@ local function LightCigOnOven(_player, _context, _worldObjects, _test)
 	
 	if inventory:containsType('Cigarettes') then
 		for i,stove in ipairs(_worldObjects) do
-			if instanceof(stove, 'IsoStove') and stove:Activated() then
+			if instanceof(stove, 'IsoStove') and stove:Activated() and not 	stove:isMicrowave() then
 				_context:addOption(getText('ContextMenu_LightCigaretteWithOven'), player, OnSmoking, stove, cigarette)
 			
 			elseif instanceof(stove,'IsoFireplace') and stove:isLit() then
