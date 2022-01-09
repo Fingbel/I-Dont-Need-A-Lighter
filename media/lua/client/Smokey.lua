@@ -6,6 +6,7 @@ local Smokey = {}
 local function LightCigOnOven(_player, _context, _worldObjects, _test)
 
 	local player = getSpecificPlayer(_player)
+	local stats = player:getStats()
 	local inventory = player:getInventory()
 	local cigarette = inventory:getItemFromType("Base.Cigarettes")
 	
@@ -25,7 +26,7 @@ end
 function OnSmoking (player, stove, cigarette)
 
 	if luautils.walkAdj(player, stove:getSquare(), false) then
-		ISTimedActionQueue.add(ISSmoking:new(player, stove, cigarette, 460))	
+		ISTimedActionQueue.add(ISSmoking:new(player, stove, cigarette, 460))
 	end
 	
 end
