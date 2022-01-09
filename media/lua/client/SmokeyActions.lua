@@ -7,11 +7,14 @@ function ISSmoking:isValid()
 end
 
 function ISSmoking:waitToStart()
+	--Face the correct direction
 	self.character:faceThisObject(self.stove)
 	return self.character:shouldBeTurning()
 end
 
 function ISSmoking:update()
+
+	--Make progress bar move
 	self.item:setJobDelta(self:getJobDelta());
      if self.eatAudio ~= 0 and not self.character:getEmitter():isPlaying(self.eatAudio) then
          self.eatAudio = self.character:getEmitter():playSound(self.eatSound);
@@ -19,6 +22,7 @@ function ISSmoking:update()
 end
 
 function ISSmoking:start()
+	--Start Audio
 	if self.eatSound ~= '' then
          self.eatAudio = self.character:getEmitter():playSound(self.eatSound);
 	end
@@ -28,18 +32,30 @@ function ISSmoking:start()
 	end
 
 function ISSmoking:stop()
-   	ISBaseTimedAction.stop(self);
-	if self.eatAudio ~= 0 and self.character:getEmitter():isPlaying(self.eatAudio) then
+    --Stop Audio
+   		if self.eatAudio ~= 0 and self.character:getEmitter():isPlaying(self.eatAudio) then
 		self.character:stopOrTriggerSound(self.eatAudio);
 	end
+	
+	--Reset Progress Bar
 	self.item:setJobDelta(0.0);
+	
+	--StopTimeBasedAction
+	ISBaseTimedAction.stop(self);
+	
+	--DEBUG
 	print ("STOPPED")
+	
 	end
 
 function ISSmoking:perform()
+	--Stop Audio
 	if self.eatAudio ~= 0 and self.character:getEmitter():isPlaying(self.eatAudio) then
         self.character:stopOrTriggerSound(self.eatAudio);
     end
+	
+	--Reset Progress Bar
+	self.item:setJobDelta(0.0);
 	
 	local cigarette = self.character:getInventory():getItemFromType("Cigarettes");
 	cigarette:UseItem();
@@ -48,20 +64,22 @@ function ISSmoking:perform()
 	self.character:setTimeSinceLastSmoke(0);
 	self.stats:setStressFromCigarettes(0);
 	
-	--Reset stress if smoker, reduce stress by 5  and inflict FoodSicknessLevel if non Smoker
+	--Reset stree if smoker
 	if self.character:HasTrait("Smoker") then
 		self.stats:setStress(0);
 		self.character:getBodyDamage():setUnhappynessLevel(self.character:getBodyDamage():getUnhappynessLevel() - 10);
+		
+	--Regen 0.05 Stress & Inflict FoodSicknessLevel if non Smoker
 	else
 		self.stats:setStress(self.stats:getStress() - 0.05 )
 		self.character:getBodyDamage():setFoodSicknessLevel(self.character:getBodyDamage():getFoodSicknessLevel() + 13);
 	end
 	
-	
-	
-	self.item:setJobDelta(0.0);
+	--FinishTimeBasedAction
 	ISBaseTimedAction.perform(self)
 	
+	--DEBUG
+	print ("PERFORMED")
 end
 
 function ISSmoking:new (character, stove, item, time)
