@@ -36,7 +36,7 @@ local function LightCigOnOven(_player, _context, _worldObjects, _test)
 				
 			--did we clicked on a Fire ? You mad man
 			elseif instanceof(stove, "IsoFire") then
-				_context:addOption(getText('ContextMenu_LightCigaretteWithCampFire'), player, OnStoveSmoking, stove, cigarette)
+				_context:addOption(getText('ContextMenu_LightCigaretteWithFire'), player, OnStoveSmoking, stove, cigarette)
 				print("FIRE!")
 			end
 		end		
