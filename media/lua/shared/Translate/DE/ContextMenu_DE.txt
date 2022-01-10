@@ -3,4 +3,5 @@ ContextMenu_DE = {
 	ContextMenu_LightCigaretteWithFireplace = "Am Herd eine Zigarette anzünden"
 	ContextMenu_LightCigaretteWithBarbecue = "Mit dem Grill eine Zigarette anzünden"
 	ContextMenu_LightCigaretteWithCampFire = "Am Lagerfeuer eine Zigarette anzünden"
+	ContextMenu_LightCigaretteWithFire = "Mit Feuer eine Zigarette anzünden"
 	}
