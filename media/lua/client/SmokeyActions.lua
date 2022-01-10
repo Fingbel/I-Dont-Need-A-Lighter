@@ -44,7 +44,7 @@ function ISSmoking:stop()
 	ISBaseTimedAction.stop(self);
 	
 	--DEBUG
-	print ("STOPPED")
+	--print ("STOPPED")
 	
 	end
 
@@ -79,7 +79,7 @@ function ISSmoking:perform()
 	ISBaseTimedAction.perform(self)
 	
 	--DEBUG
-	print ("PERFORMED")
+	--print ("PERFORMED")
 end
 
 function ISSmoking:new (character, stove, item, time)
