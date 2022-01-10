@@ -17,7 +17,7 @@ local function LightCigOnOven(_player, _context, _worldObjects, _test)
 		
 		--We have cigarette, let's see if we have a source of flame where we clicked
 		for i,stove in ipairs(_worldObjects) do
-			print(stove)
+		print(stove:getName())
 			--did we clicked a lit  stove which is not a microwave?
 			if instanceof(stove, 'IsoStove') and stove:Activated() and not 	stove:isMicrowave() then
 				_context:addOption(getText('ContextMenu_LightCigaretteWithOven'), player, OnStoveSmoking, stove, cigarette)
@@ -35,9 +35,9 @@ local function LightCigOnOven(_player, _context, _worldObjects, _test)
 				_context:addOption(getText('ContextMenu_LightCigaretteWithCampFire'), player, OnStoveSmoking, stove, cigarette)
 				
 			--did we clicked on a Fire ? You mad man
-			elseif instanceof(stove, "IsoFire") then
+			elseif instanceof(stove, "IsoFire") and not object:isPermanent() then
 				_context:addOption(getText('ContextMenu_LightCigaretteWithFire'), player, OnStoveSmoking, stove, cigarette)	
-				print("FIRE!")
+				print("FIRE ALERT!")
 			end
 		end		
 	end
