@@ -26,9 +26,10 @@ local function LightCigOnOven(_player, _context, _worldObjects, _test)
 			elseif instanceof(stove,'IsoBarbecue') and stove:isLit() then
 				_context:addOption(getText('ContextMenu_LightCigaretteWithBarbecue'), player, OnSmoking, stove, cigarette)
 			
-			--did we clicked a Campfire ?
-			elseif instanceof(stove, "IsoObject") and stove:getName() == "Campfire" then
+			--did we clicked a Campfire ? We check the sprite directly to check if fire is lit
+			elseif instanceof(stove, "IsoObject") and stove:getSpriteName() == "camping_01_5" then
 				_context:addOption(getText('ContextMenu_LightCigaretteWithCampFire'), player, OnSmoking, stove, cigarette)
+				print(stove:getSpriteName())
 			end
 		end		
 	end
