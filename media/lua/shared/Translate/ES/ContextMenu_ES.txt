@@ -1,0 +1,6 @@
+ContextMenu_FR = {
+	ContextMenu_LightCigaretteWithOven = "Encender un cigarrillo con la estufa de gas"
+	ContextMenu_LightCigaretteWithFireplace = "Enciende un cigarrillo con la estufa"
+	ContextMenu_LightCigaretteWithBarbecue = "Encender un cigarro con la barbacoa"
+	ContextMenu_LightCigaretteWithCampFire = "Enciende un cigarrillo con la fogata"
+	}
