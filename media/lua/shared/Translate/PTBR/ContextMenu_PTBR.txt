@@ -3,4 +3,5 @@ ContextMenu_PTBR = {
 	ContextMenu_LightCigaretteWithFireplace = "Acender um cigarro com o fogão"
 	ContextMenu_LightCigaretteWithBarbecue = "Acender um cigarro com o churrasco"
 	ContextMenu_LightCigaretteWithCampFire = "Acender um cigarro na fogueira"
+	ContextMenu_LightCigaretteWithFire = "Acenda um cigarro com fogo"
 	}
