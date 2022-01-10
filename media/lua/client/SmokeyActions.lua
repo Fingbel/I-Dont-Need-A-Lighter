@@ -1,18 +1,18 @@
 require "TimedActions/ISBaseTimedAction"
 
-IsStoveSmoking = ISBaseTimedAction:derive('IsStoveSmoking')
+ISSmoking = ISBaseTimedAction:derive('ISSmoking')
 
-function IsStoveSmoking:isValid()
+function ISSmoking:isValid()
 	return self.character:getInventory():contains(self.item);
 end
 
-function IsStoveSmoking:waitToStart()
+function ISSmoking:waitToStart()
 	--Face the correct direction
 	self.character:faceThisObject(self.stove)
 	return self.character:shouldBeTurning()
 end
 
-function IsStoveSmoking:update()
+function ISSmoking:update()
 
 	--Make progress bar move
 	self.item:setJobDelta(self:getJobDelta());
@@ -21,7 +21,7 @@ function IsStoveSmoking:update()
      end
 end
 
-function IsStoveSmoking:start()
+function ISSmoking:start()
 	--Start Audio
 	if self.eatSound ~= '' then
          self.eatAudio = self.character:getEmitter():playSound(self.eatSound);
@@ -31,7 +31,7 @@ function IsStoveSmoking:start()
 	
 	end
 
-function IsStoveSmoking:stop()
+function ISSmoking:stop()
     --Stop Audio
    		if self.eatAudio ~= 0 and self.character:getEmitter():isPlaying(self.eatAudio) then
 		self.character:stopOrTriggerSound(self.eatAudio);
@@ -48,7 +48,7 @@ function IsStoveSmoking:stop()
 	
 	end
 
-function IsStoveSmoking:perform()
+function ISSmoking:perform()
 	--Stop Audio
 	if self.eatAudio ~= 0 and self.character:getEmitter():isPlaying(self.eatAudio) then
         self.character:stopOrTriggerSound(self.eatAudio);
@@ -64,12 +64,12 @@ function IsStoveSmoking:perform()
 	self.character:setTimeSinceLastSmoke(0);
 	self.stats:setStressFromCigarettes(0);
 	
-	--Reset stress if smoker and reduce unhapiness by 10
+	--Reset stree if smoker
 	if self.character:HasTrait("Smoker") then
 		self.stats:setStress(0);
 		self.character:getBodyDamage():setUnhappynessLevel(self.character:getBodyDamage():getUnhappynessLevel() - 10);
 		
-	--Regen 0.05 Stress & Inflict 13 FoodSicknessLevel if non Smoker
+	--Regen 0.05 Stress & Inflict FoodSicknessLevel if non Smoker
 	else
 		self.stats:setStress(self.stats:getStress() - 0.05 )
 		self.character:getBodyDamage():setFoodSicknessLevel(self.character:getBodyDamage():getFoodSicknessLevel() + 13);
@@ -82,7 +82,7 @@ function IsStoveSmoking:perform()
 	--print ("PERFORMED")
 end
 
-function IsStoveSmoking:new (character, stove, item, time)
+function ISSmoking:new (character, stove, item, time)
 	local o = {}
 	setmetatable(o, self)
 	self.__index = self
