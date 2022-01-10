@@ -6,6 +6,7 @@ local Smokey = {}
 local function LightCigOnOven(_player, _context, _worldObjects, _test)
 
 	local player = getSpecificPlayer(_player)
+	local stats = player:getStats()
 	local inventory = player:getInventory()
 	local cigarette = inventory:getItemFromType("Base.Cigarettes")
 		
@@ -17,34 +18,30 @@ local function LightCigOnOven(_player, _context, _worldObjects, _test)
 
 			--did we clicked a lit  stove which is not a microwave?
 			if instanceof(stove, 'IsoStove') and stove:Activated() and not 	stove:isMicrowave() then
-				_context:addOption(getText('ContextMenu_LightCigaretteWithOven'), player, OnStoveSmoking, stove, cigarette)
+				_context:addOption(getText('ContextMenu_LightCigaretteWithOven'), player, OnSmoking, stove, cigarette)
 			
 			--did we clicked a lit fireplace ?
 			elseif instanceof(stove,'IsoFireplace') and stove:isLit() then
-				_context:addOption(getText('ContextMenu_LightCigaretteWithFireplace'), player, OnStoveSmoking, stove, cigarette)
+				_context:addOption(getText('ContextMenu_LightCigaretteWithFireplace'), player, OnSmoking, stove, cigarette)
 			
 			--did we clicked a lit barbecue ?
 			elseif instanceof(stove,'IsoBarbecue') and stove:isLit() then
-				_context:addOption(getText('ContextMenu_LightCigaretteWithBarbecue'), player, OnStoveSmoking, stove, cigarette)
+				_context:addOption(getText('ContextMenu_LightCigaretteWithBarbecue'), player, OnSmoking, stove, cigarette)
 			
 			--did we clicked a Campfire ? We check the sprite directly to check if the campfire is lit or not
 			elseif instanceof(stove, "IsoObject") and stove:getSpriteName() == "camping_01_5" then
-				_context:addOption(getText('ContextMenu_LightCigaretteWithCampFire'), player, OnStoveSmoking, stove, cigarette)
+				_context:addOption(getText('ContextMenu_LightCigaretteWithCampFire'), player, OnSmoking, stove, cigarette)
 			end	
-			
-			--did we clicked on a Fire ? You mad man
-			-- elseif instanceof(stove, "IsoFire") and not object:isPermanent() then
-				-- _context:addOption(getText('ContextMenu_LightCigaretteWithFire'), player, OnStoveSmoking, stove, cigarette)	
-				-- print("FIRE ALERT!")
-			--end
 		end		
 	end
 end
 
-function OnStoveSmoking (_player, _stove, _cigarette)
+function OnSmoking (_player, _stove, _cigarette)
+
 	if luautils.walkAdj(_player, _stove:getSquare(), false) then
-		ISTimedActionQueue.add(IsStoveSmoking:new(player, stove,_cigarette, 460))
+		ISTimedActionQueue.add(ISSmoking:new(_player, _stove,_cigarette, 460))
 	end
+	
 end
 
 Events.OnFillWorldObjectContextMenu.Add(LightCigOnOven)
