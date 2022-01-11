@@ -8,10 +8,6 @@ function IsCarSmoking:isValid()
 	return true --self.character:getInventory():contains(self.item)
 end
 
-function IsCarSmoking:waitToStart()
-	
-end
-
 function IsCarSmoking:update()
 
 	--Make progress bar move
@@ -27,8 +23,7 @@ function IsCarSmoking:start()
          self.eatAudio = self.character:getEmitter():playSound(self.eatSound);
 	end
 	self.item:setJobDelta(0.0);
-	self.item:setJobType(getText("ContextMenu_Eat"));
-		
+	
 	end
 
 function IsCarSmoking:stop()
@@ -91,10 +86,7 @@ function IsCarSmoking:new (character, item, time)
 	o.item = item;
 	o.maxTime = time;
 	o.eatSound ="Smoke";
-	o.eatType = Cigarettes;
 	o.eatAudio = 0;
-	o.stopOnWalk = false;
-	o.stopOnRun = true;
 	if character:isTimedActionInstant() then
 		o.maxTime = 1;
 	end

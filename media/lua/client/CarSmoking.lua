@@ -39,7 +39,7 @@ function OnCarSmoking(_playerObj)
 	
 	
 	if CheckInventoryForCigarette (inventory) == 2 then
-		StoveSmoking.cigarette = TransferCigarette (_playerObj)
+		cigarette = TransferCigarette (_playerObj)
 	end
 
 	print("We should start smokingnow ")
