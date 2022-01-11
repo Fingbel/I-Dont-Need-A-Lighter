@@ -1,0 +1,7 @@
+ContextMenu_RU = {
+	ContextMenu_LightCigaretteWithOven = "Зажигание сигареты с помощью газовой плиты"
+	ContextMenu_LightCigaretteWithFireplace = "Зажгите сигарету с плитой"
+	ContextMenu_LightCigaretteWithBarbecue = "Зажгите сигарету с барбекю"
+	ContextMenu_LightCigaretteWithCampFire = "Зажгите сигарету у костра"
+	ContextMenu_LightCigaretteWithFire = "Зажечь сигарету огнем"
+	}
