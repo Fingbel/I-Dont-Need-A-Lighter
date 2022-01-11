@@ -27,6 +27,7 @@ function IsStoveSmoking:start()
          self.eatAudio = self.character:getEmitter():playSound(self.eatSound);
 	end
 	self.item:setJobDelta(0.0);
+	self.item:setJobType(getText("ContextMenu_Eat"));
 	self:setActionAnim("Eat");
 	
 	end
@@ -91,7 +92,7 @@ function IsStoveSmoking:new (character, stove, item, time)
 	o.stove = stove;
 	o.item = item;
 	o.maxTime = time;
-	o.eatSound = "Smoke";
+	o.eatSound ="Smoke";
 	o.eatType = Cigarettes;
 	o.eatAudio = 0;
 	o.stopOnWalk = false;
