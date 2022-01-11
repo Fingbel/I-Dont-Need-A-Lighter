@@ -2,7 +2,7 @@ require "TimedActions/ISBaseTimedAction"
 
 ISSmoking = ISBaseTimedAction:derive('ISSmoking')
 
-function ISSmoking:isValid()
+function IsStoveSmoking:isValid()
 	return self.character:getInventory():contains(self.item);
 end
 
