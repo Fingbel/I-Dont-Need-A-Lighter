@@ -52,8 +52,6 @@ function OnStoveSmoking(_player, _stove)
 		end
 	end
 
-	print (cigarette)
-	
 	if luautils.walkAdj(_player, _stove:getSquare(), true) then 
 		ISTimedActionQueue.add(IsStoveSmoking:new(_player, _stove, cigarette, 460))
 	end
@@ -79,14 +77,12 @@ function CheckInventoryForCigarette(inventory)
 			local bagContent = inventoryItems:get(i):getItemContainer():getItems()			
 			
 			for i=0, bagContent:size()-1 do			
-				if bagContent:get(i):getType() == ('Cigarettes') then
-					print ("Found cigarette in my bag")					
+				if bagContent:get(i):getType() == ('Cigarettes') then		
 					return 2
 				end
 			end
 		end
 	end
-	print ("No cigarette found")
 	return 0
 end
 
