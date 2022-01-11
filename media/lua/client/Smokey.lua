@@ -12,7 +12,7 @@ local function LightCigOnOven(_player, _context, _worldObjects, _test)
 
 		
 	
-		--Check for cigarette stock
+		--Check for cigarette stock NEED TO EXPAND TO BAGS
 	if inventory:containsType('Cigarettes') then
 		
 		--We have cigarette, let's see if we have a source of flame where we clicked
