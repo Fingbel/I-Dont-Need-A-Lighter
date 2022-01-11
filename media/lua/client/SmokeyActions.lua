@@ -2,12 +2,12 @@ require "TimedActions/ISBaseTimedAction"
 
 IsStoveSmoking = ISBaseTimedAction:derive('IsStoveSmoking')
 
-function IsStoveSmoking:isValid()
+ function IsStoveSmoking:isValid()
 	return self.character:getInventory():contains(self.item);
-end
+ end
 
 function IsStoveSmoking:waitToStart()
-	--Face the correct direction
+		--Face the correct direction
 	self.character:faceThisObject(self.stove)
 	return self.character:shouldBeTurning()
 end
