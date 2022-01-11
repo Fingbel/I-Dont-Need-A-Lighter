@@ -43,17 +43,22 @@ end
 Events.OnFillWorldObjectContextMenu.Add(LightCigOnOven)
 
 function OnStoveSmoking(_player, _stove)
-local inventory = _player:getInventory()
-local cigarette = _player:getInventory():getItemFromType("Base.Cigarettes")
+	local cigarette = _player:getInventory():getItemFromType("Base.Cigarettes")
+	local inventory = _player:getInventory()
 	
-	if CheckInventoryForCigarette (inventory) == 2 then
-		TransferCigarette (_player)
+	if luautils.walkAdj(_player, _stove:getSquare(), true) then 
+		if CheckInventoryForCigarette (inventory) == 2 then
+			cigarette = TransferCigarette (_player)
+		end
 	end
-		
-	if luautils.walkAdj(_player, _stove:getSquare(), true) then
-		  ISTimedActionQueue.add(IsStoveSmoking:new(_player, _stove,cigarette, 460))
+
+	print (cigarette)
+	
+	if luautils.walkAdj(_player, _stove:getSquare(), true) then 
+		ISTimedActionQueue.add(IsStoveSmoking:new(_player, _stove, cigarette, 460))
 	end
 end
+
 
 	
 function CheckInventoryForCigarette(inventory)
@@ -99,10 +104,15 @@ local inventoryItems = player:getInventory():getItems();
 			--We look inside each container for cigarettes				
 			local bagContent = bag:getItemContainer():getItems()
 					
-			for i=0, bagContent:size()-1 do			
-				if bagContent:get(i):getType() == ('Cigarettes') then		
-					ISTimedActionQueue.add(ISInventoryTransferAction:new (player, bagContent:get(i), bag:getItemContainer() , player:getInventory(), 100))					
-					break
+			for i=0, bagContent:size()-1 do	
+				
+				--Did we found a cigarette ?
+				if bagContent:get(i):getType() == ('Cigarettes') then
+					
+					--We did, let's transfer it to the main inventory
+					ISTimedActionQueue.add(ISInventoryTransferAction:new (player, bagContent:get(i), bag:getItemContainer() , player:getInventory(), 5))					
+					
+					return bagContent:get(i)
 				end
 			end
 		end
