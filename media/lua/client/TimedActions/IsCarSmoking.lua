@@ -2,19 +2,17 @@
 
 require "TimedActions/ISBaseTimedAction"
 
-IsStoveSmoking = ISBaseTimedAction:derive('IsStoveSmoking')
+IsCarSmoking = ISBaseTimedAction:derive('IsCarSmoking')
 
-function IsStoveSmoking:isValid()
-	return self.character:getInventory():contains(self.item);
+function IsCarSmoking:isValid()
+	return true --self.character:getInventory():contains(self.item)
 end
 
-function IsStoveSmoking:waitToStart()
-	--Face the correct direction
-	self.character:faceThisObject(self.stove)
-	return self.character:shouldBeTurning()
+function IsCarSmoking:waitToStart()
+	
 end
 
-function IsStoveSmoking:update()
+function IsCarSmoking:update()
 
 	--Make progress bar move
 	self.item:setJobDelta(self:getJobDelta());
@@ -23,18 +21,17 @@ function IsStoveSmoking:update()
      end
 end
 
-function IsStoveSmoking:start()
+function IsCarSmoking:start()
 	--Start Audio
 	if self.eatSound ~= '' then
          self.eatAudio = self.character:getEmitter():playSound(self.eatSound);
 	end
 	self.item:setJobDelta(0.0);
 	self.item:setJobType(getText("ContextMenu_Eat"));
-	self:setActionAnim("Eat");
-	
+		
 	end
 
-function IsStoveSmoking:stop()
+function IsCarSmoking:stop()
     --Stop Audio
    		if self.eatAudio ~= 0 and self.character:getEmitter():isPlaying(self.eatAudio) then
 		self.character:stopOrTriggerSound(self.eatAudio);
@@ -51,7 +48,7 @@ function IsStoveSmoking:stop()
 	
 	end
 
-function IsStoveSmoking:perform()
+function IsCarSmoking:perform()
 	--Stop Audio
 	if self.eatAudio ~= 0 and self.character:getEmitter():isPlaying(self.eatAudio) then
         self.character:stopOrTriggerSound(self.eatAudio);
@@ -85,13 +82,12 @@ function IsStoveSmoking:perform()
 	--print ("PERFORMED")
 end
 
-function IsStoveSmoking:new (character, stove, item, time)
+function IsCarSmoking:new (character, item, time)
 	local o = {}
 	setmetatable(o, self)
 	self.__index = self
 	o.character = character;
 	o.stats = character:getStats();
-	o.stove = stove;
 	o.item = item;
 	o.maxTime = time;
 	o.eatSound ="Smoke";

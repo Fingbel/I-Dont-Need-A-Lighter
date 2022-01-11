@@ -1,7 +1,7 @@
 --NoLighterNeeded Mod by Fingbel
 
 NoLighterNeeded = NoLighterNeeded
-local Smokey = {}
+local StoveSmoking = {}
 
 local function LightCigOnStove(_player, _context, _worldObjects, _test)
 
@@ -35,7 +35,6 @@ local function LightCigOnStove(_player, _context, _worldObjects, _test)
 			--did we clicked on a Fire ? You mad man
 			elseif instanceof(stove, "IsoFire") then
 				_context:addOption(getText('ContextMenu_LightCigaretteWithFire'), player, OnStoveSmoking, stove)	
-				print("FIRE!")
 			end
 
 		end		
@@ -43,8 +42,8 @@ local function LightCigOnStove(_player, _context, _worldObjects, _test)
 end
 
 Events.OnFillWorldObjectContextMenu.Add(LightCigOnStove)
-
-function OnStoveSmoking(_player, _stove)
+	
+function OnStoveSmoking(_player, _stove) 
 	local cigarette = _player:getInventory():getItemFromType("Base.Cigarettes")
 	local inventory = _player:getInventory()
 	
@@ -59,9 +58,8 @@ function OnStoveSmoking(_player, _stove)
 	end
 end
 
-
 	
-function CheckInventoryForCigarette(inventory)
+function CheckInventoryForCigarette(inventory) --BEURK : This function & the next need refactoring
 	local inventoryItems = inventory:getItems()
 
 	--do we have cigarette in our pocket ?
@@ -89,7 +87,7 @@ function CheckInventoryForCigarette(inventory)
 	return 0
 end
 
-function TransferCigarette(player)
+function TransferCigarette(player) --BEURK : Need refactoring
 	local inventoryItems = player:getInventory():getItems();	
 
 	--We Check inventory for all items
