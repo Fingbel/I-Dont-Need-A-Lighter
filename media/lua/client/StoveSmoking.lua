@@ -3,7 +3,7 @@
 NoLighterNeeded = NoLighterNeeded
 local Smokey = {}
 
-local function LightCigOnOven(_player, _context, _worldObjects, _test)
+local function LightCigOnStove(_player, _context, _worldObjects, _test)
 
 
 	local player = getSpecificPlayer(_player);
@@ -42,7 +42,7 @@ local function LightCigOnOven(_player, _context, _worldObjects, _test)
 	end
 end
 
-Events.OnFillWorldObjectContextMenu.Add(LightCigOnOven)
+Events.OnFillWorldObjectContextMenu.Add(LightCigOnStove)
 
 function OnStoveSmoking(_player, _stove)
 	local cigarette = _player:getInventory():getItemFromType("Base.Cigarettes")
@@ -80,6 +80,7 @@ function CheckInventoryForCigarette(inventory)
 			
 			for i=0, bagContent:size()-1 do			
 				if bagContent:get(i):getType() == ('Cigarettes') then		
+					--We found some
 					return 2
 				end
 			end
