@@ -9,7 +9,7 @@ local function LightCigOnOven(_player, _context, _worldObjects, _test)
 	local stats = player:getStats()
 	local inventory = player:getInventory()
 	local cigarette = inventory:getItemFromType("Base.Cigarettes")
-	local sac = player:getClothingItem_Back()
+
 		
 	
 		--Check for cigarette stock
@@ -45,8 +45,8 @@ end
 
 Events.OnFillWorldObjectContextMenu.Add(LightCigOnOven)
 
-local function OnStoveSmoking (_player, _stove,_cigarette)
+function OnStoveSmoking (_player, _stove,_cigarette)
 	if luautils.walkAdj(_player, _stove:getSquare(), false) then
-		ISTimedActionQueue.add(ISSmoking:new(player, stove,_cigarette, 460))
+		ISTimedActionQueue.add(IsStoveSmoking:new(_player, _stove,_cigarette, 460))
 	end
 end
