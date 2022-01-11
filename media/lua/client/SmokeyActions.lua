@@ -1,18 +1,18 @@
 require "TimedActions/ISBaseTimedAction"
 
-ISSmoking = ISBaseTimedAction:derive('ISSmoking')
+IsStoveSmoking = ISBaseTimedAction:derive('IsStoveSmoking')
 
 function IsStoveSmoking:isValid()
 	return self.character:getInventory():contains(self.item);
 end
 
-function ISSmoking:waitToStart()
+function IsStoveSmoking:waitToStart()
 	--Face the correct direction
 	self.character:faceThisObject(self.stove)
 	return self.character:shouldBeTurning()
 end
 
-function ISSmoking:update()
+function IsStoveSmoking:update()
 
 	--Make progress bar move
 	self.item:setJobDelta(self:getJobDelta());
@@ -21,7 +21,7 @@ function ISSmoking:update()
      end
 end
 
-function ISSmoking:start()
+function IsStoveSmoking:start()
 	--Start Audio
 	if self.eatSound ~= '' then
          self.eatAudio = self.character:getEmitter():playSound(self.eatSound);
@@ -31,7 +31,7 @@ function ISSmoking:start()
 	
 	end
 
-function ISSmoking:stop()
+function IsStoveSmoking:stop()
     --Stop Audio
    		if self.eatAudio ~= 0 and self.character:getEmitter():isPlaying(self.eatAudio) then
 		self.character:stopOrTriggerSound(self.eatAudio);
@@ -48,7 +48,7 @@ function ISSmoking:stop()
 	
 	end
 
-function ISSmoking:perform()
+function IsStoveSmoking:perform()
 	--Stop Audio
 	if self.eatAudio ~= 0 and self.character:getEmitter():isPlaying(self.eatAudio) then
         self.character:stopOrTriggerSound(self.eatAudio);
@@ -82,7 +82,7 @@ function ISSmoking:perform()
 	--print ("PERFORMED")
 end
 
-function ISSmoking:new (character, stove, item, time)
+function IsStoveSmoking:new (character, stove, item, time)
 	local o = {}
 	setmetatable(o, self)
 	self.__index = self

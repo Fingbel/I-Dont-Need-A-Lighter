@@ -42,7 +42,7 @@ local function LightCigOnOven(_player, _context, _worldObjects, _test)
 	end
 end
 
-function OnSmoking (_player, _stove, _cigarette)
+Events.OnFillWorldObjectContextMenu.Add(LightCigOnOven)
 
 function OnStoveSmoking(_player, _stove)
 	local cigarette = _player:getInventory():getItemFromType("Base.Cigarettes")
@@ -89,8 +89,7 @@ function CheckInventoryForCigarette(inventory)
 end
 
 function TransferCigarette(player)
-
-local inventoryItems = player:getInventory():getItems();	
+	local inventoryItems = player:getInventory():getItems();	
 
 	--We Check inventory for all items
 	for i=0, inventoryItems:size()-1 do	
@@ -116,11 +115,4 @@ local inventoryItems = player:getInventory():getItems();
 		end
 	end
 end
-=======
-	if luautils.walkAdj(_player, _stove:getSquare(), false) then
-		ISTimedActionQueue.add(ISSmoking:new(_player, _stove,_cigarette, 460))
-	end
-	
-end
 
-Events.OnFillWorldObjectContextMenu.Add(LightCigOnOven)
