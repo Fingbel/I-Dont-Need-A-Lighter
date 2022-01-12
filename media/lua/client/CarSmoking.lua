@@ -24,8 +24,12 @@ function ISVehicleMenu.showRadialMenu(playerObj)
 		
 		--The custom code
 		if  seat == 0 or seat == 1 then
-			if vehicle:isEngineRunning() then
-				menu:addSlice(getText("ContextMenu_StartCarSmoking"), getTexture("media/ui/vehicles/carSmoking.png"), OnCarSmoking, playerObj)
+			print (vehicle:getBatteryCharge())
+			if vehicle:getBatteryCharge() > 0 then
+				print("WE PASS BATTERY TEST")
+				if vehicle:isHotwired() or vehicle:isKeysInIgnition() then
+					menu:addSlice(getText("ContextMenu_StartCarSmoking"), getTexture("media/ui/vehicles/carSmoking.png"), OnCarSmoking, playerObj)
+				end
 			end
 		end
 		menu:addToUIManager()
@@ -36,13 +40,15 @@ end
 function OnCarSmoking(_playerObj)
 	local inventory = _playerObj:getInventory()
 	local cigarette = inventory:getItemFromType("Base.Cigarettes")
-	
+	local vehicle = _playerObj:getVehicle()
 	
 	if CheckInventoryForCigarette (inventory) == 2 then
 		cigarette = TransferCigarette (_playerObj)
 	end
-
+	
 	print("We should start smokingnow ")
+	--TODO add batterydrain on use 
+	--vehicle.battery =  vehicle:getBatteryCharge() - 100
 	ISTimedActionQueue.add(IsCarSmoking:new(_playerObj, cigarette, 460))
 	
 end
