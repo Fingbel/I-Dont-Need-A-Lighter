@@ -4,5 +4,5 @@ ContextMenu_EN = {
 	ContextMenu_LightCigaretteWithBarbecue = "Light a cigarette on the barbecue"
 	ContextMenu_LightCigaretteWithCampFire = "Light a cigarette on the campfire"
 	ContextMenu_LightCigaretteWithFire = "Light a cigarette with fire"
-	ContextMenu_StartCarSmoking = "Light a cigarette with the car lighter "
+	ContextMenu_StartCarSmoking = "Use the cigarette lighter "
 	}

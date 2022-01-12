@@ -4,5 +4,5 @@ ContextMenu_RU = {
 	ContextMenu_LightCigaretteWithBarbecue = "Зажгите сигарету с барбекю"
 	ContextMenu_LightCigaretteWithCampFire = "Зажгите сигарету у костра"
 	ContextMenu_LightCigaretteWithFire = "Зажечь сигарету огнем"
-	ContextMenu_StartCarSmoking = "Utiliser Allume Cigare "
+	ContextMenu_StartCarSmoking = "Используйте прикуриватель"
 	}
