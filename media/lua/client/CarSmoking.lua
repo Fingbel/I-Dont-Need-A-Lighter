@@ -9,6 +9,8 @@ function ISVehicleMenu.showRadialMenu(playerObj)
 	--Let's run the vanilla function before our code
 	old_ISVehicleMenu_showRadialMenu(playerObj)
 	local vehicle = playerObj:getVehicle()
+
+	
 	if vehicle ~= nil then
 		local menu = getPlayerRadialMenu(playerObj:getPlayerNum())
 		
@@ -23,12 +25,14 @@ function ISVehicleMenu.showRadialMenu(playerObj)
 		local seat = vehicle:getSeat(playerObj)
 		
 		--The custom code
-		if  seat == 0 or seat == 1 then
-			print (vehicle:getBatteryCharge())
-			if vehicle:getBatteryCharge() > 0 then
-				print("WE PASS BATTERY TEST")
-				if vehicle:isHotwired() or vehicle:isKeysInIgnition() then
-					menu:addSlice(getText("ContextMenu_StartCarSmoking"), getTexture("media/ui/vehicles/carSmoking.png"), OnCarSmoking, playerObj)
+		local inventory = playerObj:getInventory()
+		if CheckInventoryForCigarette (inventory) ~= 0 then 
+			if  seat == 0 or seat == 1 then
+				print (vehicle:getBatteryCharge())
+				if vehicle:getBatteryCharge() > 0 then			
+					if vehicle:isHotwired() or vehicle:isKeysInIgnition() then
+						menu:addSlice(getText("ContextMenu_StartCarSmoking"), getTexture("media/ui/vehicles/carSmoking.png"), OnCarSmoking, playerObj)
+					end
 				end
 			end
 		end
