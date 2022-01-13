@@ -18,6 +18,8 @@ function IsStoveSmoking:update()
 
 	--Make progress bar move
 	self.item:setJobDelta(self:getJobDelta());
+	
+	--Audio repeat
      if self.eatAudio ~= 0 and not self.character:getEmitter():isPlaying(self.eatAudio) then
          self.eatAudio = self.character:getEmitter():playSound(self.eatSound);
      end
@@ -28,7 +30,10 @@ function IsStoveSmoking:start()
 	if self.eatSound ~= '' then
          self.eatAudio = self.character:getEmitter():playSound(self.eatSound);
 	end
+	--Initialize progress bar
 	self.item:setJobDelta(0.0);
+	
+	--TODO : fix the animation below
 	self.item:setJobType(getText("ContextMenu_Eat"));
 	self:setActionAnim("Eat");
 	
@@ -67,12 +72,12 @@ function IsStoveSmoking:perform()
 	self.character:setTimeSinceLastSmoke(0);
 	self.stats:setStressFromCigarettes(0);
 	
-	--Reset stree if smoker
+	--Reset stress and regen 10 unhappyness if smoker 
 	if self.character:HasTrait("Smoker") then
 		self.stats:setStress(0);
 		self.character:getBodyDamage():setUnhappynessLevel(self.character:getBodyDamage():getUnhappynessLevel() - 10);
 		
-	--Regen 0.05 Stress & Inflict FoodSicknessLevel if non Smoker
+	--Regen 0.05 Stress & Inflict FoodSicknessLevel if non smoker
 	else
 		self.stats:setStress(self.stats:getStress() - 0.05 )
 		self.character:getBodyDamage():setFoodSicknessLevel(self.character:getBodyDamage():getFoodSicknessLevel() + 13);

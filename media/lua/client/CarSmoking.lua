@@ -46,6 +46,7 @@ function OnCarSmoking(_playerObj)
 	local cigarette = inventory:getItemFromType("Base.Cigarettes")
 	local vehicle = _playerObj:getVehicle()
 	
+	
 	if CheckInventoryForCigarette (inventory) == 2 then
 		cigarette = TransferCigarette (_playerObj)
 	end
