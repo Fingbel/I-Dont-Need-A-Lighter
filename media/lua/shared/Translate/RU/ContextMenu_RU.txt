@@ -1,8 +1,8 @@
 ContextMenu_RU = {
-	ContextMenu_LightCigaretteWithOven = "Р—Р°Р¶РёРіР°РЅРёРµ СЃРёРіР°СЂРµС‚С‹ СЃ РїРѕРјРѕС‰СЊСЋ РіР°Р·РѕРІРѕР№ РїР»РёС‚С‹"
-	ContextMenu_LightCigaretteWithFireplace = "Р—Р°Р¶РіРёС‚Рµ СЃРёРіР°СЂРµС‚Сѓ СЃ РїР»РёС‚РѕР№"
-	ContextMenu_LightCigaretteWithBarbecue = "Р—Р°Р¶РіРёС‚Рµ СЃРёРіР°СЂРµС‚Сѓ СЃ Р±Р°СЂР±РµРєСЋ"
-	ContextMenu_LightCigaretteWithCampFire = "Р—Р°Р¶РіРёС‚Рµ СЃРёРіР°СЂРµС‚Сѓ Сѓ РєРѕСЃС‚СЂР°"
-	ContextMenu_LightCigaretteWithFire = "Р—Р°Р¶РµС‡СЊ СЃРёРіР°СЂРµС‚Сѓ РѕРіРЅРµРј"
-	ContextMenu_StartCarSmoking = "РСЃРїРѕР»СЊР·СѓР№С‚Рµ РїСЂРёРєСѓСЂРёРІР°С‚РµР»СЊ"
-	}
+	ContextMenu_LightCigaretteWithOven = "Прикурить сигарету с помощью плиты"
+	ContextMenu_LightCigaretteWithFireplace = "Прикурить сигарету с помощью камина"
+	ContextMenu_LightCigaretteWithBarbecue = "Прикурить сигарету с помощью мангала"
+	ContextMenu_LightCigaretteWithCampFire = "Прикурить сигарету с помощью костра"
+	ContextMenu_LightCigaretteWithFire = "Прикурить сигарету с помощью огня"
+	ContextMenu_StartCarSmoking = "Использовать прикуриватель "
+}
