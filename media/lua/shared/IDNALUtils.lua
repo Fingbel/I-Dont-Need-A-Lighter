@@ -13,8 +13,8 @@ moddedCigaretteType = {}
 
 function CheckSmokable(player)
 	
-	if 	getActivatedMods():contains("Smoker") then 
-		return CheckInventoryForSmokerCigarette(player) 
+	if 	getActivatedMods():contains("Smoker") or getActivatedMods():contains("jiggasGreenFireMod") then 
+		return CheckInventoryModdedCigarette(player) 
 	end
 	return CheckInventoryForVanillaCigarette(player)
 end
@@ -56,8 +56,8 @@ function CheckInventoryForVanillaCigarette(player)
 end
 
 
-function CheckInventoryForSmokerCigarette(player)
-
+function CheckInventoryModdedCigarette(player)
+	
 	local inventoryItems = player:getInventory():getItems()
 	local smokable = {}
 	
@@ -71,7 +71,37 @@ function CheckInventoryForSmokerCigarette(player)
 			inventoryItems:get(i):getType() ==  ('SMHomemadeCigarette') or 
 			inventoryItems:get(i):getType() ==  ('SMHomemadeCigarette2') or
 			inventoryItems:get(i):getType() ==  ('SMButt') or
-			inventoryItems:get(i):getType() ==  ('SMButt2') then
+			inventoryItems:get(i):getType() ==  ('SMButt2') or
+			inventoryItems:get(i):getType() ==  ('Blunt') or
+			inventoryItems:get(i):getType() ==  ('BluntCigar') or
+			inventoryItems:get(i):getType() ==  ('CannabisCigar') or
+			inventoryItems:get(i):getType() ==  ('GFCigar') or
+			inventoryItems:get(i):getType() ==  ('GFCigarette') or
+			inventoryItems:get(i):getType() ==  ('DelCannaCigar') or
+			inventoryItems:get(i):getType() ==  ('HalfBlunt') or
+			inventoryItems:get(i):getType() ==  ('HalfBluntCigar') or
+			inventoryItems:get(i):getType() ==  ('HalfCannaCigar') or
+			inventoryItems:get(i):getType() ==  ('HalfCigar') or
+			inventoryItems:get(i):getType() ==  ('HalfDelCannaCigar') or
+			inventoryItems:get(i):getType() ==  ('HalfHashBlunt') or
+			inventoryItems:get(i):getType() ==  ('HalfHashJoint') or
+			inventoryItems:get(i):getType() ==  ('HashJoint') or
+			inventoryItems:get(i):getType() ==  ('HalfKiefBlunt') or
+			inventoryItems:get(i):getType() ==  ('HalfKiefJoint') or
+			inventoryItems:get(i):getType() ==  ('HalfMixedBlunt') or
+			inventoryItems:get(i):getType() ==  ('HalfPreCannaCigar') or 
+			inventoryItems:get(i):getType() ==  ('HalfResCannaCigar') or 
+			inventoryItems:get(i):getType() ==  ('HalfSpaceBlunt') or
+			inventoryItems:get(i):getType() ==  ('HashBlunt') or
+			inventoryItems:get(i):getType() ==  ('Joint') or
+			inventoryItems:get(i):getType() ==  ('KiefBlunt') or
+			inventoryItems:get(i):getType() ==  ('KiefJoint') or
+			inventoryItems:get(i):getType() ==  ('MixedBlunt') or
+			inventoryItems:get(i):getType() ==  ('PreCannaCigar') or
+			inventoryItems:get(i):getType() ==  ('ResCannaCigar') or
+			inventoryItems:get(i):getType() ==  ('SpaceBlunt') or
+			inventoryItems:get(i):getType() ==  ('Spliff') 
+			then
 				smokable[getTableSize(smokable)] = inventoryItems:get(i)
 		end
 		
@@ -88,7 +118,37 @@ function CheckInventoryForSmokerCigarette(player)
 					ContainerContent:get(i):getType() ==  ('SMHomemadeCigarette') or 
 					ContainerContent:get(i):getType() ==  ('SMHomemadeCigarette2') or
 					ContainerContent:get(i):getType() ==  ('SMButt') or
-					ContainerContent:get(i):getType() ==  ('SMButt2') then		
+					ContainerContent:get(i):getType() ==  ('SMButt2') or		
+					ContainerContent:get(i):getType() ==  ('Blunt') or
+					ContainerContent:get(i):getType() ==  ('BluntCigar') or
+					ContainerContent:get(i):getType() ==  ('CannabisCigar') or
+					ContainerContent:get(i):getType() ==  ('GFCigar') or
+					ContainerContent:get(i):getType() ==  ('GFCigarette') or
+					ContainerContent:get(i):getType() ==  ('DelCannaCigar') or
+					ContainerContent:get(i):getType() ==  ('HalfBlunt') or
+					ContainerContent:get(i):getType() ==  ('HalfBluntCigar') or
+					ContainerContent:get(i):getType() ==  ('HalfCannaCigar') or
+					ContainerContent:get(i):getType() ==  ('HalfCigar') or
+					ContainerContent:get(i):getType() ==  ('HalfDelCannaCigar') or
+					ContainerContent:get(i):getType() ==  ('HalfHashBlunt') or
+					ContainerContent:get(i):getType() ==  ('HalfHashJoint') or
+					ContainerContent:get(i):getType() ==  ('HashJoint') or
+					ContainerContent:get(i):getType() ==  ('HalfKiefBlunt') or
+					ContainerContent:get(i):getType() ==  ('HalfKiefJoint') or
+					ContainerContent:get(i):getType() ==  ('HalfMixedBlunt') or
+					ContainerContent:get(i):getType() ==  ('HalfPreCannaCigar') or 
+					ContainerContent:get(i):getType() ==  ('HalfResCannaCigar') or
+					ContainerContent:get(i):getType() ==  ('HalfSpaceBlunt') or
+					ContainerContent:get(i):getType() ==  ('HashBlunt') or
+					ContainerContent:get(i):getType() ==  ('Joint') or
+					ContainerContent:get(i):getType() ==  ('KiefBlunt') or
+					ContainerContent:get(i):getType() ==  ('KiefJoint') or
+					ContainerContent:get(i):getType() ==  ('MixedBlunt') or
+					ContainerContent:get(i):getType() ==  ('PreCannaCigar') or 
+					ContainerContent:get(i):getType() ==  ('ResCannaCigar') or
+					ContainerContent:get(i):getType() ==  ('SpaceBlunt') or
+					ContainerContent:get(i):getType() ==  ('Spliff')
+					then		
 						smokable[getTableSize(smokable)] = ContainerContent:get(i)	
 				end
 			end
@@ -119,23 +179,6 @@ function removeDuplicates(arr)
 	end
 	return newArray
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 function getTableSize(t)
     local count = 0
