@@ -5,13 +5,14 @@ require "TimedActions/ISBaseTimedAction"
 IsCarSmoking = ISBaseTimedAction:derive('IsCarSmoking')
 
 function IsCarSmoking:isValid()
-	return self.character:getInventory():contains(self.item)
+	return true
 end
 
 function IsCarSmoking:update()
 
 	--Make progress bar move
-	self.item:setJobDelta(self:getJobDelta());
+	self.cigarette:setJobDelta(self:getJobDelta());
+	
      if self.eatAudio ~= 0 and not self.character:getEmitter():isPlaying(self.eatAudio) then
          self.eatAudio = self.character:getEmitter():playSound(self.eatSound);
      end
@@ -22,7 +23,7 @@ function IsCarSmoking:start()
 	if self.eatSound ~= '' then
          self.eatAudio = self.character:getEmitter():playSound(self.eatSound);
 	end
-	self.item:setJobDelta(0.0);
+	self.cigarette:setJobDelta(0.0);
 	
 	end
 
@@ -33,13 +34,10 @@ function IsCarSmoking:stop()
 	end
 	
 	--Reset Progress Bar
-	self.item:setJobDelta(0.0);
+	self.cigarette:setJobDelta(0.0);
 	
 	--StopTimeBasedAction
 	ISBaseTimedAction.stop(self);
-	
-	--DEBUG
-	--print ("STOPPED")
 	
 	end
 
@@ -50,40 +48,21 @@ function IsCarSmoking:perform()
     end
 	
 	--Reset Progress Bar
-	self.item:setJobDelta(0.0);
-	
-	local cigarette = self.character:getInventory():getItemFromType("Cigarettes");
-	cigarette:UseItem();
-	
-	--Reset last smoke timer et Cigarette Stress
-	self.character:setTimeSinceLastSmoke(0);
-	self.stats:setStressFromCigarettes(0);
-	
-	--Reset stree if smoker
-	if self.character:HasTrait("Smoker") then
-		self.stats:setStress(0);
-		self.character:getBodyDamage():setUnhappynessLevel(self.character:getBodyDamage():getUnhappynessLevel() - 10);
-		
-	--Regen 0.05 Stress & Inflict FoodSicknessLevel if non Smoker
-	else
-		self.stats:setStress(self.stats:getStress() - 0.05 )
-		self.character:getBodyDamage():setFoodSicknessLevel(self.character:getBodyDamage():getFoodSicknessLevel() + 13);
-	end
+	self.cigarette:setJobDelta(0.0);
+	self.character:Eat(self.cigarette, 1)
 	
 	--FinishTimeBasedAction
 	ISBaseTimedAction.perform(self)
 	
-	--DEBUG
-	--print ("PERFORMED")
 end
 
-function IsCarSmoking:new (character, item, time)
+function IsCarSmoking:new (character, cigarette, time)
 	local o = {}
 	setmetatable(o, self)
 	self.__index = self
 	o.character = character;
 	o.stats = character:getStats();
-	o.item = item;
+	o.cigarette = cigarette;
 	o.maxTime = time;
 	o.eatSound ="Smoke";
 	o.eatAudio = 0;

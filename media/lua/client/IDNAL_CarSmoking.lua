@@ -9,6 +9,7 @@ function ISVehicleMenu.showRadialMenu(playerObj)
 	--Let's run the vanilla function before our code
 	old_ISVehicleMenu_showRadialMenu(playerObj)	
 	local vehicle = playerObj:getVehicle()
+	local smokables = CheckSmokable(playerObj)
 	
 	if vehicle ~= nil then
 		local menu = getPlayerRadialMenu(playerObj:getPlayerNum())
@@ -24,12 +25,12 @@ function ISVehicleMenu.showRadialMenu(playerObj)
 		local seat = vehicle:getSeat(playerObj)
 		
 		--The custom code
-			if CheckInventoryForCigarette (playerObj) ~= 0 then 
+			if smokables ~= nil then
+
 			if  seat == 0 or seat == 1 then
-				print (vehicle:getBatteryCharge())
 				if vehicle:getBatteryCharge() > 0 then			
 					if vehicle:isHotwired() or vehicle:isKeysInIgnition() then
-						menu:addSlice(getText("ContextMenu_StartCarSmoking"), getTexture("media/ui/vehicles/carSmoking.png"), OnCarSmoking, playerObj)
+						menu:addSlice(smokables[0]:getDisplayName(), getTexture("media/ui/vehicles/carSmoking.png"), OnCarSmoking, playerObj)
 					end
 				end
 			end
@@ -40,17 +41,15 @@ end
 
 --This is the function starting the car smoking sequence
 function OnCarSmoking(_player)
-	local cigarette = _player:getInventory():getItemFromType("Base.Cigarettes")
+	local smokables = CheckSmokable(_player)
+	local _cigarette = smokables[0]
 	local vehicle = _player:getVehicle()
-	
-	--Do we need to transfer the cigarette from a bag ?
-	if CheckInventoryForCigarette (_player) == 2 then
-		cigarette = TransferCigaretteFromBag (_player)
-	end
-	
-	print("We should start smokingnow ")
-	--TODO add batterydrain on use 
-	--vehicle.battery =  vehicle:getBatteryCharge() - 100
-	ISTimedActionQueue.add(IsCarSmoking:new(_player, cigarette, 460))
+			--Do we need to transfer cigarette from a bag first ? 
+		if _cigarette:getContainer() ~= _player:getInventory() then
+			ISTimedActionQueue.add(ISInventoryTransferAction:new (_player,  _cigarette, _cigarette:getContainer(), _player:getInventory(), 5))
+		end
+
+
+	ISTimedActionQueue.add(IsCarSmoking:new(_player, _cigarette, 460))
 	
 end

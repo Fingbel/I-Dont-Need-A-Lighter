@@ -5,7 +5,7 @@ require "TimedActions/ISBaseTimedAction"
 IsStoveSmoking = ISBaseTimedAction:derive('IsStoveSmoking')
 
 function IsStoveSmoking:isValid()
-	return self.character:getInventory():contains(self.item);
+	return true --self.character:getInventory():contains(self.cigarette);
 end
 
 function IsStoveSmoking:waitToStart()
@@ -17,7 +17,7 @@ end
 function IsStoveSmoking:update()
 
 	--Make progress bar move
-	self.item:setJobDelta(self:getJobDelta());
+	self.cigarette:setJobDelta(self:getJobDelta());
 	
 	--Audio repeat
      if self.eatAudio ~= 0 and not self.character:getEmitter():isPlaying(self.eatAudio) then
@@ -31,10 +31,10 @@ function IsStoveSmoking:start()
          self.eatAudio = self.character:getEmitter():playSound(self.eatSound);
 	end
 	--Initialize progress bar
-	self.item:setJobDelta(0.0);
+	self.cigarette:setJobDelta(0.0);
 	
 	--TODO : fix the animation below
-	self.item:setJobType(getText("ContextMenu_Eat"));
+	self.cigarette:setJobType(getText("ContextMenu_Eat"));
 	self:setActionAnim("Eat");
 	
 	end
@@ -46,7 +46,7 @@ function IsStoveSmoking:stop()
 	end
 	
 	--Reset Progress Bar
-	self.item:setJobDelta(0.0);
+	self.cigarette:setJobDelta(0.0);
 	
 	--StopTimeBasedAction
 	ISBaseTimedAction.stop(self);
@@ -63,45 +63,28 @@ function IsStoveSmoking:perform()
     end
 	
 	--Reset Progress Bar
-	self.item:setJobDelta(0.0);
+	self.cigarette:setJobDelta(0.0);
 	
-	local cigarette = self.character:getInventory():getItemFromType("Cigarettes");
-	cigarette:UseItem();
-	
-	--Reset last smoke timer et Cigarette Stress
-	self.character:setTimeSinceLastSmoke(0);
-	self.stats:setStressFromCigarettes(0);
-	
-	--Reset stress and regen 10 unhappyness if smoker 
-	if self.character:HasTrait("Smoker") then
-		self.stats:setStress(0);
-		self.character:getBodyDamage():setUnhappynessLevel(self.character:getBodyDamage():getUnhappynessLevel() - 10);
+	--Eat the cigarette
+	self.character:Eat(self.cigarette, 1)
 		
-	--Regen 0.05 Stress & Inflict FoodSicknessLevel if non smoker
-	else
-		self.stats:setStress(self.stats:getStress() - 0.05 )
-		self.character:getBodyDamage():setFoodSicknessLevel(self.character:getBodyDamage():getFoodSicknessLevel() + 13);
-	end
-	
 	--FinishTimeBasedAction
 	ISBaseTimedAction.perform(self)
 	
-	--DEBUG
-	--print ("PERFORMED")
 end
 
-function IsStoveSmoking:new (character, stove, item, time)
+function IsStoveSmoking:new (character, stove, cigarette, time)
 	local o = {}
 	setmetatable(o, self)
 	self.__index = self
 	o.character = character;
 	o.stats = character:getStats();
 	o.stove = stove;
-	o.item = item;
+	o.cigarette = cigarette;
 	o.maxTime = time;
 	o.eatSound ="Smoke";
-	o.eatType = Cigarettes;
-	o.eatAudio = 0;
+	--o.eatType = Cigarettes;
+	--o.eatAudio = 0;
 	o.stopOnWalk = false;
 	o.stopOnRun = true;
 	if character:isTimedActionInstant() then
