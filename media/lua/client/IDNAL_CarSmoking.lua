@@ -24,7 +24,7 @@ function ISVehicleMenu.showRadialMenu(playerObj)
 		local seat = vehicle:getSeat(playerObj)
 		
 		--The custom code
-			if CheckInventoryForCigarette (playerObj) ~= 0 then 
+			if CheckSmokable (playerObj) ~= 0 then 
 			if  seat == 0 or seat == 1 then
 				print (vehicle:getBatteryCharge())
 				if vehicle:getBatteryCharge() > 0 then			
