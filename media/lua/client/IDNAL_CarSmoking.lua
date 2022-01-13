@@ -26,6 +26,7 @@ function ISVehicleMenu.showRadialMenu(playerObj)
 		
 		--The custom code
 			if smokables ~= nil then
+
 			if  seat == 0 or seat == 1 then
 				if vehicle:getBatteryCharge() > 0 then			
 					if vehicle:isHotwired() or vehicle:isKeysInIgnition() then

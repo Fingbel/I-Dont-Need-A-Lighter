@@ -23,6 +23,7 @@ function CheckInventoryForVanillaCigarette(player)
 	local inventoryItems = player:getInventory():getItems()
 	local smokable = {}
 	local smokableList = {}
+
 		--We Check inventory for all items
 	for i=0, inventoryItems:size()-1 do	
 		
@@ -54,7 +55,9 @@ function CheckInventoryForVanillaCigarette(player)
 	return smokableList
 end
 
+
 function CheckInventoryForSmokerCigarette(player)
+
 	local inventoryItems = player:getInventory():getItems()
 	local smokable = {}
 	
@@ -91,11 +94,12 @@ function CheckInventoryForSmokerCigarette(player)
 			end
 		end
 	end
+
 if getTableSize(smokable) == 0 then return nil end
 return removeDuplicates(smokable)
 end
 
---Code to remove duplicate in smokable 
+
 function inArray(arr, element)
 	for i=0,getTableSize(arr) -1 do
 		if arr[i]:getType() == element:getType()
@@ -108,6 +112,7 @@ end
 function removeDuplicates(arr)
 	local newArray = {}
 	for i=0, getTableSize(arr) -1 do
+
 		if not inArray(newArray, arr[i]) then
 			newArray[getTableSize(newArray)] = arr[i]
 		end
