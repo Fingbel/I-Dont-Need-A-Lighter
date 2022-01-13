@@ -66,14 +66,11 @@ function IsStoveSmoking:perform()
 	self.cigarette:setJobDelta(0.0);
 	
 	--Eat the cigarette
-	--self.cigarette:UseItem();
 	self.character:Eat(self.cigarette, 1)
 		
 	--FinishTimeBasedAction
 	ISBaseTimedAction.perform(self)
 	
-	--DEBUG
-	--print ("PERFORMED")
 end
 
 function IsStoveSmoking:new (character, stove, cigarette, time)
@@ -86,8 +83,8 @@ function IsStoveSmoking:new (character, stove, cigarette, time)
 	o.cigarette = cigarette;
 	o.maxTime = time;
 	o.eatSound ="Smoke";
-	o.eatType = Cigarettes;
-	o.eatAudio = 0;
+	--o.eatType = Cigarettes;
+	--o.eatAudio = 0;
 	o.stopOnWalk = false;
 	o.stopOnRun = true;
 	if character:isTimedActionInstant() then
