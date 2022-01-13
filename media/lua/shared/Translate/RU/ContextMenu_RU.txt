@@ -5,4 +5,5 @@ ContextMenu_RU = {
 	ContextMenu_LightCigaretteWithCampFire = "Прикурить сигарету с помощью костра"
 	ContextMenu_LightCigaretteWithFire = "Прикурить сигарету с помощью огня"
 	ContextMenu_StartCarSmoking = "Использовать прикуриватель "
+	ContextMenu_Smoke = "Курить"
 }
