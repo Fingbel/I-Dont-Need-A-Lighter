@@ -5,4 +5,5 @@ ContextMenu_LightCigaretteWithBarbecue = "Zapálit cigaretu na grilu "
 ContextMenu_LightCigaretteWithCampFire = "Zapálit cigaretu na ohništi"
 ContextMenu_LightCigaretteWithFire = "Pøipálit cigaretu od ohnì"
 ContextMenu_StartCarSmoking = "Použít zapalovaè "
+ContextMenu_Smoke = "Kouøit"
 }

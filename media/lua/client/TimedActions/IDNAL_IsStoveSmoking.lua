@@ -51,9 +51,6 @@ function IsStoveSmoking:stop()
 	--StopTimeBasedAction
 	ISBaseTimedAction.stop(self);
 	
-	--DEBUG
-	--print ("STOPPED")
-	
 	end
 
 function IsStoveSmoking:perform()
