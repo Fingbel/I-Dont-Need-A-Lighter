@@ -48,7 +48,7 @@ function OnCarSmoking(_player)
 		cigarette = TransferCigaretteFromBag (_player)
 	end
 	
-	print("We should start smokingnow ")
+	--print("We should start smoking now ")
 	--TODO add batterydrain on use 
 	--vehicle.battery =  vehicle:getBatteryCharge() - 100
 	ISTimedActionQueue.add(IsCarSmoking:new(_player, cigarette, 460))
