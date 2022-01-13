@@ -16,11 +16,13 @@ local function LightCigOnStove(_player, _context, _worldObjects, _test)
 		for i,stove in ipairs(_worldObjects) do
 			
 			--did we clicked a lit  stove which is not a microwave?
-			if instanceof(stove, 'IsoStove') and stove:Activated() and not 	stove:isMicrowave() then				
+			if instanceof(stove, 'IsoStove') and stove:Activated() and not 	stove:isMicrowave() then
+							
 				local smokeOption = _context:addOption(getText('ContextMenu_Smoke'), worldobjects, nil);
 				local subMenu = ISContextMenu:getNew(_context)
 				
-				for i=0,getTableSize(smokables) -1 do
+				print (smokables[0])
+				for i=0,getTableSize(smokables) -1 do				
 					subMenu:addOption(smokables[i]:getDisplayName(), player, OnStoveSmoking, stove, smokables[i])
 					_context:addSubMenu(smokeOption, subMenu);
 				end
@@ -76,6 +78,7 @@ end
 Events.OnFillWorldObjectContextMenu.Add(LightCigOnStove)
 	
 function OnStoveSmoking(_player, _stove, _cigarette) 
+
 	if luautils.walkAdj(_player, _stove:getSquare(), true) then 
 	
 		--Do we need to transfer cigarette from a bag first ? 

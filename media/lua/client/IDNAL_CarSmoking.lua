@@ -10,7 +10,6 @@ function ISVehicleMenu.showRadialMenu(playerObj)
 	old_ISVehicleMenu_showRadialMenu(playerObj)	
 	local vehicle = playerObj:getVehicle()
 	local smokables = CheckSmokable(playerObj)
-	print(getTableSize(smokables))
 	
 	if vehicle ~= nil then
 		local menu = getPlayerRadialMenu(playerObj:getPlayerNum())
@@ -30,7 +29,7 @@ function ISVehicleMenu.showRadialMenu(playerObj)
 			if  seat == 0 or seat == 1 then
 				if vehicle:getBatteryCharge() > 0 then			
 					if vehicle:isHotwired() or vehicle:isKeysInIgnition() then
-						menu:addSlice(getText("ContextMenu_StartCarSmoking"), getTexture("media/ui/vehicles/carSmoking.png"),OnCarSmoking,playerObj, smokables[0])
+						menu:addSlice(smokables[0]:getDisplayName(), getTexture("media/ui/vehicles/carSmoking.png"), OnCarSmoking, playerObj)
 					end
 				end
 			end
@@ -40,7 +39,14 @@ function ISVehicleMenu.showRadialMenu(playerObj)
 end
 
 --This is the function starting the car smoking sequence
-function OnCarSmoking(_player, _cigarette)
+function OnCarSmoking(_player)
+	print (_player)
+	local smokables = CheckSmokable(_player)
+	for i=0,getTableSize(smokables) do
+		print(smokables[i])
+	end
+	
+	local _cigarette = smokables[0]
 	local vehicle = _player:getVehicle()
 			--Do we need to transfer cigarette from a bag first ? 
 		if _cigarette:getContainer() ~= _player:getInventory() then

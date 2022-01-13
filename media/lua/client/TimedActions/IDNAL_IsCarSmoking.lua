@@ -12,6 +12,7 @@ function IsCarSmoking:update()
 
 	--Make progress bar move
 	self.cigarette:setJobDelta(self:getJobDelta());
+	
      if self.eatAudio ~= 0 and not self.character:getEmitter():isPlaying(self.eatAudio) then
          self.eatAudio = self.character:getEmitter():playSound(self.eatSound);
      end
@@ -50,7 +51,7 @@ function IsCarSmoking:perform()
     end
 	
 	--Reset Progress Bar
-	self.item:setJobDelta(0.0);
+	self.cigarette:setJobDelta(0.0);
 	self.character:Eat(self.cigarette, 1)
 	
 	--FinishTimeBasedAction
@@ -64,7 +65,7 @@ function IsCarSmoking:new (character, cigarette, time)
 	self.__index = self
 	o.character = character;
 	o.stats = character:getStats();
-	o.cigarette = item;
+	o.cigarette = cigarette;
 	o.maxTime = time;
 	o.eatSound ="Smoke";
 	o.eatAudio = 0;
