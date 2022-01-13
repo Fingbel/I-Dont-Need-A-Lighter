@@ -5,7 +5,7 @@ require "TimedActions/ISBaseTimedAction"
 IsCarSmoking = ISBaseTimedAction:derive('IsCarSmoking')
 
 function IsCarSmoking:isValid()
-	return true --self.character:getInventory():contains(self.item)
+	return self.character:getInventory():contains(self.item)
 end
 
 function IsCarSmoking:update()
