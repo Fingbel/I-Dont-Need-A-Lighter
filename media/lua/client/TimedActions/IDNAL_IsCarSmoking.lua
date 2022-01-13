@@ -39,9 +39,6 @@ function IsCarSmoking:stop()
 	--StopTimeBasedAction
 	ISBaseTimedAction.stop(self);
 	
-	--DEBUG
-	--print ("STOPPED")
-	
 	end
 
 function IsCarSmoking:perform()

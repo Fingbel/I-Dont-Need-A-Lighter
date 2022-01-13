@@ -40,12 +40,7 @@ end
 
 --This is the function starting the car smoking sequence
 function OnCarSmoking(_player)
-	print (_player)
 	local smokables = CheckSmokable(_player)
-	for i=0,getTableSize(smokables) do
-		print(smokables[i])
-	end
-	
 	local _cigarette = smokables[0]
 	local vehicle = _player:getVehicle()
 			--Do we need to transfer cigarette from a bag first ? 

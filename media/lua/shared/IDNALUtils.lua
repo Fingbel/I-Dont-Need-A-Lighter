@@ -14,7 +14,7 @@ moddedCigaretteType = {}
 function CheckSmokable(player)
 	
 	if 	getActivatedMods():contains("Smoker") then 
-		return CheckInventoryForModdedCigarette(player) 
+		return CheckInventoryForSmokerCigarette(player) 
 	end
 	return CheckInventoryForVanillaCigarette(player)
 end
@@ -54,7 +54,7 @@ function CheckInventoryForVanillaCigarette(player)
 	return smokableList
 end
 
-function CheckInventoryForModdedCigarette(player)
+function CheckInventoryForSmokerCigarette(player)
 	local inventoryItems = player:getInventory():getItems()
 	local smokable = {}
 	
