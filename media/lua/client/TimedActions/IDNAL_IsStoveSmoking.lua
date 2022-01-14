@@ -26,6 +26,10 @@ function IsStoveSmoking:update()
 end
 
 function IsStoveSmoking:start()
+	
+	--This bypass the lighter durability drainage
+	self.cigarette:setRequireInHandOrInventory(nil)
+	
 	--Start Audio
 	if self.eatSound ~= '' then
          self.eatAudio = self.character:getEmitter():playSound(self.eatSound);
@@ -80,7 +84,6 @@ function IsStoveSmoking:new (character, stove, cigarette, time)
 	o.cigarette = cigarette;
 	o.maxTime = time;
 	o.eatSound ="Smoke";
-	--o.eatType = Cigarettes;
 	--o.eatAudio = 0;
 	o.stopOnWalk = false;
 	o.stopOnRun = true;

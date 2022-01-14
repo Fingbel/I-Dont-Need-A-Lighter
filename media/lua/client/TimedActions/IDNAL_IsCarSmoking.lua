@@ -19,6 +19,9 @@ function IsCarSmoking:update()
 end
 
 function IsCarSmoking:start()
+	--This bypass the lighter durability drainage
+	self.cigarette:setRequireInHandOrInventory(nil)
+	
 	--Start Audio
 	if self.eatSound ~= '' then
          self.eatAudio = self.character:getEmitter():playSound(self.eatSound);
