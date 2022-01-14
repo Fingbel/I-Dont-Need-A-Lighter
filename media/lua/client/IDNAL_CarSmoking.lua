@@ -18,7 +18,7 @@ function ISVehicleMenu.showRadialMenu(playerObj)
 		if menu:isReallyVisible() then
 			if menu.joyfocus then
 				setJoypadFocus(playerObj:getplayerObjNum(), nil)
-			end
+			end 
 			menu:undisplay()
 			return
 		end

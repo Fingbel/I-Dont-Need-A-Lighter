@@ -15,9 +15,9 @@ local function LightCigOnStove(_player, _context, _worldObjects, _test)
 		--We have cigarettes, let's see if we have a source of flame where we clicked
 		for i,stove in ipairs(_worldObjects) do
 			
+			-- TODO : add an option to make Stove electric, we need to find and test the electricity shutoff flag
 			--did we clicked a lit  stove which is not a microwave?
-
-			if instanceof(stove, 'IsoStove') and stove:Activated() and not 	stove:isMicrowave() then
+			if instanceof(stove, 'IsoStove') and stove:Activated() and not 	stove:isMicrowave() then 
 							
 				local smokeOption = _context:addOption(getText('ContextMenu_Smoke'), worldobjects, nil);
 				local subMenu = ISContextMenu:getNew(_context)
