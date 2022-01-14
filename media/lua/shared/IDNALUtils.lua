@@ -3,13 +3,9 @@
 IDNAL = IDNAL
 
 --This function is responsible to confirm the presence of cigarette in the player inventory 
---This function return an array of one of each of the possible smokable items
+--This function return an array(duplicate removed) of one of each of the possible smokable items
 
 --This is the only place where a Cigarette check need to happen so we can expand to cigarettes from mods
-
-moddedCigaretteType = {}
-
-
 
 function CheckSmokable(player)
 	
@@ -62,8 +58,9 @@ function CheckInventoryModdedCigarette(player)
 	local smokable = {}
 	
 	for i=0, inventoryItems:size()-1 do	
-		--We look for Smoked Cigarettes in our pocket	
+		--We look for modded Cigarettes in our pocket	
 		
+		--This is ugly and need to change / Refactored
 		if inventoryItems:get(i):getType() ==  ('SMCigarette') or 
 			inventoryItems:get(i):getType() ==  ('SMPCigaretteGold') or 
 			inventoryItems:get(i):getType() ==  ('SMCigaretteLight') or 
@@ -107,10 +104,12 @@ function CheckInventoryModdedCigarette(player)
 		
 		--And we look for container to search inside
 		if inventoryItems:get(i):getCategory() == ("Container") then
-			--We look inside each container for cigarettes				
+		
+			--We look inside each container for modded cigarettes				
 			local ContainerContent = inventoryItems:get(i):getItemContainer():getItems()					
 			for i=0, ContainerContent:size()-1 do		
 				
+				--This is ugly and need to change / Refactored
 				if ContainerContent:get(i):getType() ==  ('SMCigarette') or 
 					ContainerContent:get(i):getType() ==  ('SMPCigaretteGold') or 
 					ContainerContent:get(i):getType() ==  ('SMCigaretteLight') or
@@ -160,6 +159,8 @@ return removeDuplicates(smokable)
 end
 
 
+
+--Utility functions
 function inArray(arr, element)
 	for i=0,getTableSize(arr) -1 do
 		if arr[i]:getType() == element:getType()
