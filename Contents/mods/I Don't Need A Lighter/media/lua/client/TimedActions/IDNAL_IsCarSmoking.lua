@@ -5,13 +5,13 @@ require "TimedActions/ISBaseTimedAction"
 IsCarSmoking = ISBaseTimedAction:derive('IsCarSmoking')
 
 function IsCarSmoking:isValid()
-	return true
+	return self.character:getInventory():contains(self.item);
 end
 
 function IsCarSmoking:update()
 
 	--Make progress bar move
-	self.cigarette:setJobDelta(self:getJobDelta());
+	self.item:setJobDelta(self:getJobDelta());
 	
      if self.eatAudio ~= 0 and not self.character:getEmitter():isPlaying(self.eatAudio) then
          self.eatAudio = self.character:getEmitter():playSound(self.eatSound);
@@ -20,13 +20,13 @@ end
 
 function IsCarSmoking:start()
 	--This bypass the lighter durability drainage
-	self.cigarette:setRequireInHandOrInventory(nil)
+	self.item:setRequireInHandOrInventory(nil)
 	
 	--Start Audio
 	if self.eatSound ~= '' then
          self.eatAudio = self.character:getEmitter():playSound(self.eatSound);
 	end
-	self.cigarette:setJobDelta(0.0);
+	self.item:setJobDelta(0.0);
 	
 	end
 
@@ -37,7 +37,7 @@ function IsCarSmoking:stop()
 	end
 	
 	--Reset Progress Bar
-	self.cigarette:setJobDelta(0.0);
+	self.item:setJobDelta(0.0);
 	
 	--StopTimeBasedAction
 	ISBaseTimedAction.stop(self);
@@ -51,21 +51,21 @@ function IsCarSmoking:perform()
     end
 	
 	--Reset Progress Bar
-	self.cigarette:setJobDelta(0.0);
-	self.character:Eat(self.cigarette, 1)
+	self.item:setJobDelta(0.0);
+	self.character:Eat(self.item, 1)
 	
 	--FinishTimeBasedAction
 	ISBaseTimedAction.perform(self)
 	
 end
 
-function IsCarSmoking:new (character, cigarette, time)
+function IsCarSmoking:new (character, item, time)
 	local o = {}
 	setmetatable(o, self)
 	self.__index = self
 	o.character = character;
 	o.stats = character:getStats();
-	o.cigarette = cigarette;
+	o.item = item;
 	o.maxTime = time;
 	o.eatSound ="Smoke";
 	o.eatAudio = 0;

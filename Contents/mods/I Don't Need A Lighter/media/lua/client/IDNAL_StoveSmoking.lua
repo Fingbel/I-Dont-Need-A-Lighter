@@ -7,7 +7,7 @@ local function LightCigOnStove(_player, _context, _worldObjects, _test)
 	local player = getSpecificPlayer(_player);
 	local stats = player:getStats();
 	local inventory = player:getInventory();
-	local smokables = CheckSmokable(player)
+	local smokables = CheckInventoryForCigarette(player)
 	
 	--Global check for cigarette
 	if smokables ~= nil then
