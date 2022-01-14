@@ -37,6 +37,8 @@ function IsStoveSmoking:start()
 	self.cigarette:setJobType(getText("ContextMenu_Eat"));
 	self:setActionAnim("Eat");
 	
+	--TODO : Add an option to allow the automatic turn off of self.stove after the animation started
+	
 	end
 
 function IsStoveSmoking:stop()
