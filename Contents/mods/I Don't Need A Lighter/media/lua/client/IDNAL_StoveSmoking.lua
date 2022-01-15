@@ -8,16 +8,16 @@ local function LightCigOnStove(player, context, worldObjects, _test)
 	local stats = player:getStats();
 	local inventory = player:getInventory();
 	local smokables = CheckInventoryForCigarette(player)
-	
+
 	--Global check for cigarette
-	if smokables ~= nil then
+	--if smokables ~= nil then
 		
 		--We have cigarettes, let's see if we have a source of flame where we clicked
 		for i,stove in ipairs(worldObjects) do
 			
 			--did we clicked a lit  stove which is not a microwave?
 			if instanceof(stove, 'IsoStove') and stove:Activated() and not 	stove:isMicrowave() then 
-				
+
 				ContextDrawing(player, context, stove, smokables)
 				
 			--did we clicked a lit fireplace ?
@@ -41,7 +41,7 @@ local function LightCigOnStove(player, context, worldObjects, _test)
 				ContextDrawing(player, context, stove, smokables)
 			end
 		end		
-	end
+	--end
 end
 
 Events.OnFillWorldObjectContextMenu.Add(LightCigOnStove)
@@ -49,10 +49,21 @@ Events.OnFillWorldObjectContextMenu.Add(LightCigOnStove)
 --This function is responsible for the drawing of the context depending on the smokable array size
 function ContextDrawing(player, context, stove, smokables)
 
-	--If we have only one smokable type in the array 
-	if getTableSize(smokables) == 1 then 
-		context:addOption(getText('ContextMenu_Smoke') .." ".. smokables[0]:getDisplayName(), player, OnStoveSmoking, stove, smokables[0])
+	local tooltip = ISWorldObjectContextMenu.addToolTip()
+	tooltip:setName("testName")
+    tooltip.description = ("testDescription");
+
+	--If we do not have any smokable, let draw a fake smoke context menu and make it unavailable
+	if smokables == nil then 
+		local foo = context:addOption(getText('ContextMenu_Smoke'), player, stove)
+		foo.notAvailable = true
 		return
+
+	--If we have only one smokable type in the array 
+	elseif getTableSize(smokables) == 1 then 
+		context:addOption(getText('ContextMenu_Smoke') .."  ".. smokables[0]:getDisplayName(), player, OnStoveSmoking, stove, smokables[0])
+		context.toolTip = tooltip
+	return
 	end
 
 	--We have more than on type, we need to draw a sub-menu
@@ -61,6 +72,7 @@ function ContextDrawing(player, context, stove, smokables)
 	for i=0,getTableSize(smokables) -1 do				
 		subMenu:addOption(smokables[i]:getDisplayName(), player, OnStoveSmoking, stove, smokables[i])
 		context:addSubMenu(smokeOption, subMenu);
+		subMenu.toolTip = tooltip
 	end
 end
 	
