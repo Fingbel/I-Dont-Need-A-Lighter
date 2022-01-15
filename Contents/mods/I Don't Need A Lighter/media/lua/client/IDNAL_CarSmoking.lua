@@ -34,7 +34,7 @@ function ISVehicleMenu.showRadialMenu(player)
 					if vehicle:isHotwired() or vehicle:isKeysInIgnition() then
 						
 						--If we are using the modded version let's launch the submenu
-						if 	IDNAL == "MODDEDIDNAL" then menu:addSlice(getText('ContextMenu_Smoke'), getTexture("media/ui/vehicles/carSmoking.png"), ISVehicleMenu.IDNALOnSubMenu, player)
+						if 	IDNAL == "MODDEDIDNAL" then menu:addSlice(getText('ContextMenu_Smoke'), getTexture("media/ui/vehicles/carSmoking.png"), IDNALOnSubMenu, player)
 						
 						
 						else menu:addSlice(getText('ContextMenu_Smoke'),getTexture("media/ui/vehicles/carSmoking.png"), OnCarSmoking, player, smokables[0] ) end
@@ -43,15 +43,17 @@ function ISVehicleMenu.showRadialMenu(player)
 				end
 			end
 		end
-		--menu:addToUIManager()
+		menu:addToUIManager()
 	end
 end
 
 		--This is the function for the Sub-Menu for the modded version of the car lighter to show-up smokable while in a car
- function ISVehicleMenu.IDNALOnSubMenu(player)
+ function IDNALOnSubMenu(player)
 	local smokables = CheckInventoryForCigarette(player)
 	local menu = getPlayerRadialMenu(player:getPlayerNum())
 	menu:clear()
+	
+
 	
 	--Draw the radial menu again
 	menu:setX(getPlayerScreenLeft(player:getPlayerNum()) + getPlayerScreenWidth(player:getPlayerNum()) / 2 - menu:getWidth() / 2)
@@ -61,10 +63,16 @@ end
 
 	
 	for i=0, getTableSize(smokables) -1 do
-		print(smokables[i]:getTexture() )
 		menu:addSlice(smokables[i]:getDisplayName(), smokables[i]:getTexture(), OnCarSmoking, player, smokables[i] )
 	end
+	
 	menu:addToUIManager()
+
+	if JoypadState.players[player:getPlayerNum()+1] then
+		menu:setHideWhenButtonReleased(Joypad.DPadUp)
+		setJoypadFocus(player:getPlayerNum(), menu)
+		player:setJoypadIgnoreAimUntilCentered(true)
+	end
 end
 
 	--This is the function starting the car smoking sequence
