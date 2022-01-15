@@ -8,21 +8,11 @@ function IsStoveSmoking:isValid()
 	return self.character:getInventory():contains(self.item);
 end
 
-function IsStoveSmoking:waitToStart()
-	--Face the correct direction
-	self.character:faceThisObject(self.worldobject)
-	return self.character:shouldBeTurning()
-end
-
 function IsStoveSmoking:update()
 
 	--Make progress bar move
 	self.item:setJobDelta(self:getJobDelta());
 	
-	--Audio repeat
-     if self.eatAudio ~= 0 and not self.character:getEmitter():isPlaying(self.eatAudio) then
-         self.eatAudio = self.character:getEmitter():playSound(self.eatSound);
-     end
 end
 
 function IsStoveSmoking:start()
@@ -30,9 +20,7 @@ function IsStoveSmoking:start()
 	--This bypass the lighter durability drainage
 	self.item:setRequireInHandOrInventory(nil)
 	--Start Audio
-	if self.eatSound ~= '' then
-         self.eatAudio = self.character:getEmitter():playSound(self.eatSound);
-	end
+	self.character:getEmitter():playSound("NoLighterSmoke");
 
 	self:setAnimVariable("FoodType", self.item:getEatType());
 	self.item:setJobDelta(0.0);
@@ -44,10 +32,7 @@ function IsStoveSmoking:start()
 	end
 
 function IsStoveSmoking:stop()
-    --Stop Audio
-   		if self.eatAudio ~= 0 and self.character:getEmitter():isPlaying(self.eatAudio) then
-		self.character:stopOrTriggerSound(self.eatAudio);
-	end
+     self.character:getEmitter():stopAll()
 	
 	--Reset Progress Bar
 	self.item:setJobDelta(0.0);
@@ -58,10 +43,6 @@ function IsStoveSmoking:stop()
 	end
 
 function IsStoveSmoking:perform()
-	--Stop Audio
-	if self.eatAudio ~= 0 and self.character:getEmitter():isPlaying(self.eatAudio) then
-        self.character:stopOrTriggerSound(self.eatAudio);
-    end
 	
 	--Reset Progress Bar
 	self.item:setJobDelta(0.0);
@@ -83,7 +64,8 @@ function IsStoveSmoking:new (character, worldobject, item, time)
 	o.worldobject = worldobject;
 	o.item = item;
 	o.maxTime = time;
-	o.eatSound ="Smoke";
+	o.eatAudio = 0
+	 o.eatSound = item:getCustomEatSound() or "Eating";
 	o.eatType = 'cigarette'
 	o.stopOnWalk = false;
 	o.stopOnRun = true;

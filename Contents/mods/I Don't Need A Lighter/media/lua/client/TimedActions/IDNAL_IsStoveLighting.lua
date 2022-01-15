@@ -10,9 +10,9 @@ function IsStoveLighting:isValid()
 end
 
 
-function IsStoveSmoking:waitToStart()
+function IsStoveLighting:waitToStart()
 	--Face the correct direction
-	self.character:faceThisObject(self.worldobject)
+	self.character:faceThisObject(self.stove)
 	return self.character:shouldBeTurning()
 end
 
@@ -29,7 +29,9 @@ end
 function IsStoveLighting:stop()
 	--StopTimeBasedAction
 	ISBaseTimedAction.stop(self);	
-
+		if self.initialState == false then
+		self.stove:Toggle()
+	end
 end
 
 function IsStoveLighting:perform()
