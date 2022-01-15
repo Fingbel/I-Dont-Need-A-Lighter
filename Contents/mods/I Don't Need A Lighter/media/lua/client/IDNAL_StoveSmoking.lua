@@ -4,50 +4,20 @@ local StoveSmoking = {}
 
 local function LightCigOnStove(player, context, worldObjects, _test)
 
+
 	local player = getSpecificPlayer(player);
-	local stats = player:getStats();
+	print (player)
 	local inventory = player:getInventory();
 	local smokables = CheckInventoryForCigarette(player)
-
-	--Global check for cigarette
-	--if smokables ~= nil then
-		
-		--We have cigarettes, let's see if we have a source of flame where we clicked
-		for i,stove in ipairs(worldObjects) do
-			
-			--did we clicked a lit  stove which is not a microwave?
-			if instanceof(stove, 'IsoStove') and not stove:isMicrowave() then 
-
-				ContextDrawing(player, context, stove, smokables)
-				
-			--did we clicked a lit fireplace ?
-			elseif instanceof(stove,'IsoFireplace') and stove:isLit() then
-				
-				ContextDrawing(player, context, stove, smokables)
-				
-			--did we clicked a lit barbecue ?
-			elseif instanceof(stove,'IsoBarbecue') and stove:isLit() then
-				
-				ContextDrawing(player, context, stove, smokables)
-				
-			--did we clicked a Campfire ? We check the sprite directly to check if the campfire is lit or not
-			elseif instanceof(stove, "IsoObject") and stove:getSpriteName() == "camping_01_5" then
-				
-				ContextDrawing(player, context, stove, smokables)
-				
-			--did we clicked on a Fire ? You mad man THIS ONE IS BROKEN, IsoFire is not picked up
-			elseif instanceof(stove, "IsoFire") then
-
-				ContextDrawing(player, context, stove, smokables)
-			end
-		end		
-	--end
+	ContextDrawing(player, context, whatIsUnderTheMouse(worldObjects), smokables)
 end
 
 Events.OnFillWorldObjectContextMenu.Add(LightCigOnStove)
 
 --This function is responsible for the drawing of the context depending on the smokable array size
 function ContextDrawing(player, context, stove, smokables)
+
+	if stove == nill then return end
 
 	--If we do not have any smokable, let draw a fake smoke context menu and make it unavailable
 	if smokables == nil then 
@@ -70,23 +40,46 @@ function ContextDrawing(player, context, stove, smokables)
 	end
 end
 	
-function OnStoveSmoking(_player, _stove, _cigarette) 
-
+function OnStoveSmoking(_player, stove, _cigarette) 
 	--Do we need to transfer cigarette from a bag first ? 
-	if luautils.walkAdj(_player, _stove:getSquare(), true) then 
+	if luautils.walkAdj(_player, stove:getSquare(), true) then 
 		if _cigarette:getContainer() ~= _player:getInventory() then
 			ISTimedActionQueue.add(ISInventoryTransferAction:new (_player,  _cigarette, _cigarette:getContainer(), _player:getInventory(), 5))
 		end
 	end
-
+	 
 	--Let's light what we've selected
-	if luautils.walkAdj(_player, _stove:getSquare(), true) then 
-		ISTimedActionQueue.add(IsStoveLighting:new (_player, _stove, _cigarette, 300))
+	local time
+	if luautils.walkAdj(_player, stove:getSquare(), true) then 
+		if instanceof(stove, 'IsoStove') and not stove:isMicrowave() then ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette, 300))
+		elseif instanceof(stove, 'IsoStove') and stove:isMicrowave() then ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette, 2000)) 
+		elseif instanceof(stove,'IsoFireplace') and stove:isLit() then ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette, 200)) 
+		elseif instanceof(stove,'IsoBarbecue') and stove:isLit() then ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette, 275)) 
+		elseif instanceof(stove, "IsoObject") and stove:getSpriteName() == "camping_01_5" then ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette, 200)) 
+		elseif instanceof(stove, "IsoFire") then ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette, 10)) end
 	end
 
 	--Now it's lit, let's smoke it
-	if luautils.walkAdj(_player, _stove:getSquare(), true) then 
+	if luautils.walkAdj(_player, stove:getSquare(), true) then 
 		
-		ISTimedActionQueue.add(IsStoveSmoking:new(_player, _stove, _cigarette, 460))
+		ISTimedActionQueue.add(IsStoveSmoking:new(_player, stove, _cigarette, 460))
+	end
+end
+
+function whatIsUnderTheMouse (worldObjects)
+	for i,stove in ipairs(worldObjects) do
+	--did we clicked a lit stove?
+		if instanceof(stove, 'IsoStove') and not stove:isMicrowave() then return stove		
+	--did we clicked a microwave?
+		elseif instanceof(stove, 'IsoStove') and stove:isMicrowave() then return stove		
+	--did we clicked a lit fireplace ?
+		elseif instanceof(stove,'IsoFireplace') and stove:isLit() then return stove										
+	--did we clicked a lit barbecue ?
+		elseif instanceof(stove,'IsoBarbecue') and stove:isLit() then return stove									
+	--did we clicked a Campfire ? We check the sprite directly to check if the campfire is lit or not
+		elseif instanceof(stove, "IsoObject") and stove:getSpriteName() == "camping_01_5" then return stove						
+	--did we clicked on a Fire ? You mad man THIS ONE IS BROKEN, IsoFire is not picked up
+		elseif instanceof(stove, "IsoFire") then return stove end
+	return nil 
 	end
 end

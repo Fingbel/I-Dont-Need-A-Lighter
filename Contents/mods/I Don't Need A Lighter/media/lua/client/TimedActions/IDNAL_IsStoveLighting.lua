@@ -18,25 +18,32 @@ end
 
 function IsStoveLighting:start()
 	self:setActionAnim("Craft");
-	print(self.initialState)
 	--This bypass the lighter durability drainage
+	
 	self.item:setRequireInHandOrInventory(nil)
-	if self.initialState == false then
-		self.stove:Toggle() 
+	if instanceof(self.stove,'IsoStove') then
+		if self.initialState == false then
+			self.stove:Toggle() 
+		end
 	end
 end
 
 function IsStoveLighting:stop()
 	--StopTimeBasedAction
-	ISBaseTimedAction.stop(self);	
+	if instanceof(self.stove,'IsoStove') then
 		if self.initialState == false then
-		self.stove:Toggle()
+			self.stove:Toggle()
+		end
 	end
+	ISBaseTimedAction.stop(self);	
 end
 
+
 function IsStoveLighting:perform()
-	if self.initialState == false then
-		self.stove:Toggle()
+	if instanceof(self.stove,'IsoStove') then
+		if self.initialState == false then
+			self.stove:Toggle() 
+		end
 	end
 	--FinishTimeBasedAction
 	ISBaseTimedAction.perform(self)
@@ -50,7 +57,9 @@ function IsStoveLighting:new (character, stove, item, time)
 	o.stove = stove
 	o.item = item;
 	o.maxTime = time;
-	o.initialState = stove:Activated()
+	if instanceof(stove,'IsoStove') then
+		o.initialState = stove:Activated()
+	end
 	if character:isTimedActionInstant() then
 		o.maxTime = 1;
 	end
