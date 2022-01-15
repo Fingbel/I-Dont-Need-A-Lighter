@@ -29,16 +29,14 @@ function IsStoveSmoking:start()
 	
 	--This bypass the lighter durability drainage
 	self.item:setRequireInHandOrInventory(nil)
-	
 	--Start Audio
 	if self.eatSound ~= '' then
          self.eatAudio = self.character:getEmitter():playSound(self.eatSound);
 	end
-	--Initialize progress bar
+
+	self:setAnimVariable("FoodType", self.item:getEatType());
 	self.item:setJobDelta(0.0);
-	
-	--TODO : fix the animation below
-	self.item:setJobType(getText("ContextMenu_Eat"));
+
 	self:setActionAnim("Eat");
 	
 	--TODO : Add an option to allow the automatic turn off of self.stove after the animation started
@@ -86,6 +84,7 @@ function IsStoveSmoking:new (character, worldobject, item, time)
 	o.item = item;
 	o.maxTime = time;
 	o.eatSound ="Smoke";
+	o.eatType = 'cigarette'
 	o.stopOnWalk = false;
 	o.stopOnRun = true;
 	if character:isTimedActionInstant() then

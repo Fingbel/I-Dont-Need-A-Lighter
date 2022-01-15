@@ -16,7 +16,7 @@ local function LightCigOnStove(player, context, worldObjects, _test)
 		for i,stove in ipairs(worldObjects) do
 			
 			--did we clicked a lit  stove which is not a microwave?
-			if instanceof(stove, 'IsoStove') and stove:Activated() and not 	stove:isMicrowave() then 
+			if instanceof(stove, 'IsoStove') and not stove:isMicrowave() then 
 
 				ContextDrawing(player, context, stove, smokables)
 				
@@ -78,12 +78,17 @@ end
 	
 function OnStoveSmoking(_player, _stove, _cigarette) 
 
+	--Do we need to transfer cigarette from a bag first ? 
 	if luautils.walkAdj(_player, _stove:getSquare(), true) then 
-	
-		--Do we need to transfer cigarette from a bag first ? 
 		if _cigarette:getContainer() ~= _player:getInventory() then
 			ISTimedActionQueue.add(ISInventoryTransferAction:new (_player,  _cigarette, _cigarette:getContainer(), _player:getInventory(), 5))
 		end
+	end
+
+	
+	if luautils.walkAdj(_player, _stove:getSquare(), true) then 
+		
+		ISTimedActionQueue.add(IsStoveLighting:new (_player, _stove, _cigarette, 150))
 	end
 
 	if luautils.walkAdj(_player, _stove:getSquare(), true) then 

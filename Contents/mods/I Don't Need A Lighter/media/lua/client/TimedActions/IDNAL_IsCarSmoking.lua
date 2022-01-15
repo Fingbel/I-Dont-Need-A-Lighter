@@ -64,7 +64,6 @@ function IsCarSmoking:new (character, item, time)
 	setmetatable(o, self)
 	self.__index = self
 	o.character = character;
-	o.stats = character:getStats();
 	o.item = item;
 	o.maxTime = time;
 	o.eatSound ="Smoke";

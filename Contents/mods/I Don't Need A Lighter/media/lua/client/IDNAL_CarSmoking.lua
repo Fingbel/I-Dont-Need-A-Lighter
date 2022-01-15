@@ -77,11 +77,14 @@ end
 
 	--This is the function starting the car smoking sequence
 function OnCarSmoking(_player, _cigarette)
-	--local smokables = CheckSmokable(_player)
-	local vehicle = _player:getVehicle()
-			--Do we need to transfer cigarette from a bag first ? 
+	
+	ISTimedActionQueue.add(IsCarLighting:new (_player, _cigarette, 250))
+	
+	--Do we need to transfer cigarette from a bag first ? 
 	if _cigarette:getContainer() ~= _player:getInventory() then
-			ISTimedActionQueue.add(ISInventoryTransferAction:new (_player,  _cigarette, _cigarette:getContainer(), _player:getInventory(), 5))
+		ISTimedActionQueue.add(ISInventoryTransferAction:new (_player,  _cigarette, _cigarette:getContainer(), _player:getInventory(), 5))
 	end
+
+	--Let's smoke now
 	ISTimedActionQueue.add(IsCarSmoking:new(_player, _cigarette, 460))
 end
