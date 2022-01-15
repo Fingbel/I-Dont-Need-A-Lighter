@@ -2,9 +2,9 @@
 
 local StoveSmoking = {}
 
-local function LightCigOnStove(_player, _context, _worldObjects, _test)
+ function StoveSmoking.LightCigOnStove(player, context, worldObjects, test)
 
-	local player = getSpecificPlayer(_player);
+	local player = getSpecificPlayer(player);
 	local stats = player:getStats();
 	local inventory = player:getInventory();
 	local smokables = CheckInventoryForCigarette(player)
@@ -13,71 +13,58 @@ local function LightCigOnStove(_player, _context, _worldObjects, _test)
 	if smokables ~= nil then
 		
 		--We have cigarettes, let's see if we have a source of flame where we clicked
-		for i,stove in ipairs(_worldObjects) do
+		for i,stove in ipairs(worldObjects) do
 			
-			-- TODO : add an option to make Stove electric, we need to find and test the electricity shutoff flag
 			--did we clicked a lit  stove which is not a microwave?
 			if instanceof(stove, 'IsoStove') and stove:Activated() and not 	stove:isMicrowave() then 
-							
-				local smokeOption = _context:addOption(getText('ContextMenu_Smoke'), worldobjects, nil);
-				local subMenu = ISContextMenu:getNew(_context)
 				
-				for i=0,getTableSize(smokables) -1 do				
-					subMenu:addOption(smokables[i]:getDisplayName(), player, OnStoveSmoking, stove, smokables[i])
-					_context:addSubMenu(smokeOption, subMenu);
-				end
+				ContextDrawing(player, context, stove, smokables)
 				
 			--did we clicked a lit fireplace ?
 			elseif instanceof(stove,'IsoFireplace') and stove:isLit() then
-				local smokeOption = _context:addOption(getText('ContextMenu_Smoke'), player, OnStoveSmoking, stove)
-				local subMenu = ISContextMenu:getNew(_context)
 				
-				
-				for i=0,getTableSize(smokables) -1 do
-					subMenu:addOption(smokables[i]:getDisplayName(), player, OnStoveSmoking, stove, smokables[i])
-					_context:addSubMenu(smokeOption, subMenu);
-				end
+				ContextDrawing(player, context, stove, smokables)
 				
 			--did we clicked a lit barbecue ?
 			elseif instanceof(stove,'IsoBarbecue') and stove:isLit() then
-				local smokeOption = _context:addOption(getText('ContextMenu_Smoke'), player, OnStoveSmoking, stove, smokables[i])
-				local subMenu = ISContextMenu:getNew(_context)
 				
-				
-				for i=0,getTableSize(smokables) -1 do
-					subMenu:addOption(smokables[i]:getDisplayName(), player, OnStoveSmoking, stove, smokables[i])
-					_context:addSubMenu(smokeOption, subMenu);
-				end
+				ContextDrawing(player, context, stove, smokables)
 				
 			--did we clicked a Campfire ? We check the sprite directly to check if the campfire is lit or not
 			elseif instanceof(stove, "IsoObject") and stove:getSpriteName() == "camping_01_5" then
-				local smokeOption =_context:addOption(getText('ContextMenu_Smoke'), player, OnStoveSmoking, stove, smokables[i])
-				local subMenu = ISContextMenu:getNew(_context)
 				
-				
-				for i=0,getTableSize(smokables) -1 do
-					subMenu:addOption(smokables[i]:getDisplayName(), player, OnStoveSmoking, stove, smokables[i])
-					_context:addSubMenu(smokeOption, subMenu);
-				end	
+				ContextDrawing(player, context, stove, smokables)
 				
 			--did we clicked on a Fire ? You mad man THIS ONE IS BROKEN, IsoFire is not picked up
 			elseif instanceof(stove, "IsoFire") then
-				local smokeOption =_context:addOption(getText('ContextMenu_Smoke'), player, OnStoveSmoking, stove, smokables[i])	
-				local subMenu = ISContextMenu:getNew(_context)
-				
-				
-				for i=0,getTableSize(smokables) -1 do
-					subMenu:addOption(smokables[i]:getDisplayName(), player, OnStoveSmoking, stove, smokables[i])
-					_context:addSubMenu(smokeOption, subMenu);
-				end
+
+				ContextDrawing(player, context, stove, smokables)
 			end
 		end		
 	end
 end
 
 Events.OnFillWorldObjectContextMenu.Add(LightCigOnStove)
+
+--This function is responsible for the drawing of the context depending on the smokable array size
+function StoveSmoking.ContextDrawing(player, context, stove, smokables)
+
+	--If we have only one smokable type in the array 
+	if getTableSize(smokables) == 1 then 
+		context:addOption(getText('ContextMenu_Smoke') .." ".. smokables[0]:getDisplayName(), player, OnStoveSmoking, stove, smokables[0])
+		return
+	end
+
+	--We have more than on type, we need to draw a sub-menu
+	local smokeOption = context:addOption(getText('ContextMenu_Smoke'), stove, nil);		
+	local subMenu = ISContextMenu:getNew(context)
+	for i=0,getTableSize(smokables) -1 do				
+		subMenu:addOption(smokables[i]:getDisplayName(), player, OnStoveSmoking, stove, smokables[i])
+		context:addSubMenu(smokeOption, subMenu);
+	end
+end
 	
-function OnStoveSmoking(_player, _stove, _cigarette) 
+function StoveSmoking.OnStoveSmoking(_player, _stove, _cigarette) 
 
 	if luautils.walkAdj(_player, _stove:getSquare(), true) then 
 	
