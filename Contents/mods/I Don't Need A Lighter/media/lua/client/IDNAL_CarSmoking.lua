@@ -9,7 +9,7 @@ function ISVehicleMenu.showRadialMenu(player)
 	old_ISVehicleMenu_showRadialMenu(player)	
 	local vehicle = player:getVehicle()
 	local smokables = CheckInventoryForCigarette(player)
-	
+
 	if vehicle ~= nil then
 		local menu = getPlayerRadialMenu(player:getPlayerNum())
 		
@@ -22,24 +22,40 @@ function ISVehicleMenu.showRadialMenu(player)
 			return
 		end
 		local seat = vehicle:getSeat(player)
-		
+		print(seat)
+		if seat == 0 or seat == 1 then
 			--Do we have smokable on us ?
-			if smokables ~= nil then
-
-			--Are we in the front set ? 
-			if  seat == 0 or seat == 1 then
-				
-				--Do we have battery left ? 
-				if vehicle:getBatteryCharge() > 0 then			
-					if vehicle:isHotwired() or vehicle:isKeysInIgnition() then
-						
-						--If we are using the modded version let's launch the submenu
-						if 	IDNAL == "MODDEDIDNAL" then menu:addSlice(getText('ContextMenu_Smoke'), getTexture("media/ui/vehicles/carSmoking.png"), IDNALOnSubMenu, player)
-						
-						
-						else menu:addSlice(getText('ContextMenu_Smoke'),getTexture("media/ui/vehicles/carSmoking.png"), OnCarSmoking, player, smokables[0] ) end
-
-					end
+			if smokables ~= nil and vehicle:getBatteryCharge() > 0 and vehicle:isHotwired() or vehicle:isKeysInIgnition() then
+				if 	IDNAL == "MODDEDIDNAL" then menu:addSlice(getText('ContextMenu_Smoke'), getTexture("media/ui/vehicles/carSmokingBatteryCigarette.png"), IDNALOnSubMenu, player)				
+					else menu:addSlice(getText('ContextMenu_Smoke'),getTexture("media/ui/vehicles/carSmokingBatteryCigarette.png"), OnCarSmoking, player, smokables[0] ) 
+				end
+			elseif smokables == nil and vehicle:getBatteryCharge() > 0 and vehicle:isHotwired() or vehicle:isKeysInIgnition() then
+				if 	IDNAL == "MODDEDIDNAL" then menu:addSlice(getText('ContextMenu_Smoke'), getTexture("media/ui/vehicles/carSmokingBatteryContactNoCigarette.png"))				
+					else menu:addSlice(getText('ContextMenu_Smoke'),getTexture("media/ui/vehicles/carSmokingBatteryContactNoCigarette.png")) 
+				end
+			elseif smokables == nil and vehicle:getBatteryCharge() == 0 and vehicle:isHotwired() or vehicle:isKeysInIgnition() then
+				if 	IDNAL == "MODDEDIDNAL" then menu:addSlice(getText('ContextMenu_Smoke'), getTexture("media/ui/vehicles/carSmokingNoBatteryContactNoCigarette.png"))				
+					else menu:addSlice(getText('ContextMenu_Smoke'),getTexture("media/ui/vehicles/carSmokingNoBatteryContactNoCigarette.png")) 
+				end
+			elseif smokables == nil and vehicle:getBatteryCharge() == 0 and not vehicle:isHotwired() or not vehicle:isKeysInIgnition() then
+				if 	IDNAL == "MODDEDIDNAL" then menu:addSlice(getText('ContextMenu_Smoke'), getTexture("media/ui/vehicles/carSmokingNoBatteryNoContactNoCigarette.png"))				
+					else menu:addSlice(getText('ContextMenu_Smoke'),getTexture("media/ui/vehicles/carSmokingNoBatteryNoContactNoCigarette.png") )
+				end
+			elseif smokables == nil and vehicle:getBatteryCharge() > 0 and not vehicle:isHotwired() or not vehicle:isKeysInIgnition() then
+				if 	IDNAL == "MODDEDIDNAL" then menu:addSlice(getText('ContextMenu_Smoke'), getTexture("media/ui/vehicles/carSmokingBatteryNoContactNoCigarette.png"))				
+					else menu:addSlice(getText('ContextMenu_Smoke'),getTexture("media/ui/vehicles/carSmokingBatteryNoContactNoCigarette.png") ) 
+				end
+			elseif smokables ~= nil and vehicle:getBatteryCharge() > 0 and not vehicle:isHotwired() or not vehicle:isKeysInIgnition() then
+				if 	IDNAL ~= "MODDEDIDNAL" then menu:addSlice(getText('ContextMenu_Smoke'), getTexture("media/ui/vehicles/carSmokingBatteryNoContactNoCigarette.png"))				
+					else menu:addSlice(getText('ContextMenu_Smoke'),getTexture("media/ui/vehicles/carSmokingBatteryNoContactCigarette.png")) 
+				end
+			elseif smokables ~= nil and vehicle:getBatteryCharge() == 0 and  vehicle:isHotwired() or  vehicle:isKeysInIgnition() then
+				if 	IDNAL ~= "MODDEDIDNAL" then menu:addSlice(getText('ContextMenu_Smoke'), getTexture("media/ui/vehicles/carSmokingBatteryNoContactNoCigarette.png"))				
+					else menu:addSlice(getText('ContextMenu_Smoke'),getTexture("media/ui/vehicles/carSmokingNoBatteryContactCigarette.png")) 
+				end
+			elseif smokables ~= nil and vehicle:getBatteryCharge() == 0 and not vehicle:isHotwired() or not vehicle:isKeysInIgnition() then
+				if 	IDNAL ~= "MODDEDIDNAL" then menu:addSlice(getText('ContextMenu_Smoke'), getTexture("media/ui/vehicles/carSmokingBatteryNoContactNoCigarette.png"))				
+					else menu:addSlice(getText('ContextMenu_Smoke'),getTexture("media/ui/vehicles/carSmokingNoBatteryNoContactCigarette.png")) 
 				end
 			end
 		end
@@ -48,7 +64,7 @@ function ISVehicleMenu.showRadialMenu(player)
 end
 
 		--This is the function for the Sub-Menu for the modded version of the car lighter to show-up smokable while in a car
- function IDNALOnSubMenu(player)
+function IDNALOnSubMenu(player)
 	local smokables = CheckInventoryForCigarette(player)
 	local menu = getPlayerRadialMenu(player:getPlayerNum())
 	menu:clear()
@@ -73,12 +89,14 @@ end
 		setJoypadFocus(player:getPlayerNum(), menu)
 		player:setJoypadIgnoreAimUntilCentered(true)
 	end
+
 end
 
 	--This is the function starting the car smoking sequence
 function OnCarSmoking(_player, _cigarette)
 	
-	ISTimedActionQueue.add(IsCarLighting:new (_player, _cigarette, 250))
+	--We need some time for the lighter to heat
+	ISTimedActionQueue.add(IsCarLighting:new (_player, _cigarette, 650))
 	
 	--Do we need to transfer cigarette from a bag first ? 
 	if _cigarette:getContainer() ~= _player:getInventory() then

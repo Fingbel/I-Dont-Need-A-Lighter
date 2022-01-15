@@ -1,11 +1,11 @@
 --I Don't Need A Lighter Mod by Fingbel
 
-IDNAL="IDNAL"
 
 -- if getCore():isDedicated()
 
 if getActivatedMods():contains("Smoker") or getActivatedMods():contains("jiggasGreenFireMod") then 
 	IDNAL="MODDEDIDNAL"
+else IDNAL="IDNAL"
 end
 
 --This function is responsible to confirm the presence of cigarette in the player inventory 

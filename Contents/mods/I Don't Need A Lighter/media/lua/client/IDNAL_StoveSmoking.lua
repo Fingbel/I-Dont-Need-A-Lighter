@@ -49,10 +49,6 @@ Events.OnFillWorldObjectContextMenu.Add(LightCigOnStove)
 --This function is responsible for the drawing of the context depending on the smokable array size
 function ContextDrawing(player, context, stove, smokables)
 
-	local tooltip = ISWorldObjectContextMenu.addToolTip()
-	tooltip:setName("testName")
-    tooltip.description = ("testDescription");
-
 	--If we do not have any smokable, let draw a fake smoke context menu and make it unavailable
 	if smokables == nil then 
 		local foo = context:addOption(getText('ContextMenu_Smoke'), player, stove)
@@ -62,7 +58,6 @@ function ContextDrawing(player, context, stove, smokables)
 	--If we have only one smokable type in the array 
 	elseif getTableSize(smokables) == 1 then 
 		context:addOption(getText('ContextMenu_Smoke') .."  ".. smokables[0]:getDisplayName(), player, OnStoveSmoking, stove, smokables[0])
-		context.toolTip = tooltip
 	return
 	end
 
@@ -72,7 +67,6 @@ function ContextDrawing(player, context, stove, smokables)
 	for i=0,getTableSize(smokables) -1 do				
 		subMenu:addOption(smokables[i]:getDisplayName(), player, OnStoveSmoking, stove, smokables[i])
 		context:addSubMenu(smokeOption, subMenu);
-		subMenu.toolTip = tooltip
 	end
 end
 	
@@ -85,12 +79,12 @@ function OnStoveSmoking(_player, _stove, _cigarette)
 		end
 	end
 
-	
+	--Let's light what we've selected
 	if luautils.walkAdj(_player, _stove:getSquare(), true) then 
-		
-		ISTimedActionQueue.add(IsStoveLighting:new (_player, _stove, _cigarette, 150))
+		ISTimedActionQueue.add(IsStoveLighting:new (_player, _stove, _cigarette, 300))
 	end
 
+	--Now it's lit, let's smoke it
 	if luautils.walkAdj(_player, _stove:getSquare(), true) then 
 		
 		ISTimedActionQueue.add(IsStoveSmoking:new(_player, _stove, _cigarette, 460))
