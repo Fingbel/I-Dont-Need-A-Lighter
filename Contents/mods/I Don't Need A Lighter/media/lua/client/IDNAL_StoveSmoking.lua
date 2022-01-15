@@ -7,7 +7,7 @@ local function LightCigOnStove(player, context, worldObjects, _test)
 
 	local player = getSpecificPlayer(player);
 	print (player)
-	local inventory = player:getInventory();
+	--local inventory = player:getInventory();
 	local smokables = CheckInventoryForCigarette(player)
 	ContextDrawing(player, context, whatIsUnderTheMouse(worldObjects), smokables)
 end

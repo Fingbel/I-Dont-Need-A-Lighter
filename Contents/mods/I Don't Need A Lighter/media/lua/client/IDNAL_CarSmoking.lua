@@ -66,7 +66,7 @@ end
 
 		--This is the function for the Sub-Menu for the modded version of the car lighter to show-up smokable while in a car
 function IDNALOnSubMenu(player)
-	local smokables = CheckInventoryForCigarette(player)
+	local smokables = CheckInventoryForCigarette(player) --TODO : this could be a parameter, we are wasting power
 	local menu = getPlayerRadialMenu(player:getPlayerNum())
 	menu:clear()
 	
@@ -79,7 +79,7 @@ function IDNALOnSubMenu(player)
 	local texture = Joypad.Texture.AButton
 
 	
-	for i=0, getTableSize(smokables) -1 do
+	for i=0, getTableSize(smokables) -1 do --TODO : this need to have a hardcap to not fuck up the radialmenu
 		menu:addSlice(smokables[i]:getDisplayName(), smokables[i]:getTexture(), OnCarSmoking, player, smokables[i] )
 	end
 	

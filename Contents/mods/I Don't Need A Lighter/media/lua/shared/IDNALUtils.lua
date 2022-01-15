@@ -3,7 +3,7 @@
 
 -- if getCore():isDedicated()
 
-if getActivatedMods():contains("Smoker") or getActivatedMods():contains("jiggasGreenFireMod") then 
+if getActivatedMods():contains("Smoker") or getActivatedMods():contains("jiggasGreenfireMod") then 
 	IDNAL="MODDEDIDNAL"
 else IDNAL="IDNAL"
 end
@@ -12,7 +12,7 @@ end
 --This function return an array(duplicate removed) of one of each of the possible smokable items
 
 function CheckInventoryForCigarette(player)
-	
+	print(IDNAL)
 	local inventoryItems = player:getInventory():getItems()
 	local smokable = {}
 	
