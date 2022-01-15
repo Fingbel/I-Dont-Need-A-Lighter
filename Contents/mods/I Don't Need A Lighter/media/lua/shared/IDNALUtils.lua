@@ -16,26 +16,25 @@ function CheckInventoryForCigarette(player)
 	local inventoryItems = player:getInventory():getItems()
 	local smokable = {}
 	
+	--Do we have smokable in our pocket
 	for i=0, inventoryItems:size()-1 do	
-		if inventoryItems:get(i):getEatType() ~= nil then print(inventoryItems:get(i):getEatType()) end
-		--We look for modded Cigarettes in our pocket	
-		
-		--This is ugly and need to change / Refactored
 		if inventoryItems:get(i):getEatType() ==  ('Cigarettes') then
+			
+			--If yes we add them to the smokable array 
 			smokable[getTableSize(smokable)] = inventoryItems:get(i)
-		end
-		
-		--And we look for container to search inside
+		end	
+	end
+
+	--Now we look for container to search inside
+	for i=0, inventoryItems:size()-1 do	
 		if inventoryItems:get(i):getCategory() == ("Container") then
 		
-			--We look inside each container for modded cigarettes				
-			local ContainerContent = inventoryItems:get(i):getItemContainer():getItems()					
-			for i=0, ContainerContent:size()-1 do		
-				
-				--This is ugly and need to change / Refactored
-				
+			--We look inside each container for smokable
+			local ContainerContent = inventoryItems:get(i):getItemContainer():getItems()	
+			
+			for i=0, ContainerContent:size()-1 do				
 				if ContainerContent:get(i):getEatType() ==  ('Cigarettes') then
-					smokable[getTableSize(smokable)] = inventoryItems:get(i)
+					smokable[getTableSize(smokable)] = ContainerContent:get(i)
 				end
 			end
 		end

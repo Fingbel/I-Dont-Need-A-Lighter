@@ -2,7 +2,7 @@
 
 local StoveSmoking = {}
 
- function StoveSmoking.LightCigOnStove(player, context, worldObjects, test)
+local function LightCigOnStove(player, context, worldObjects, _test)
 
 	local player = getSpecificPlayer(player);
 	local stats = player:getStats();
@@ -47,7 +47,7 @@ end
 Events.OnFillWorldObjectContextMenu.Add(LightCigOnStove)
 
 --This function is responsible for the drawing of the context depending on the smokable array size
-function StoveSmoking.ContextDrawing(player, context, stove, smokables)
+function ContextDrawing(player, context, stove, smokables)
 
 	--If we have only one smokable type in the array 
 	if getTableSize(smokables) == 1 then 
@@ -64,7 +64,7 @@ function StoveSmoking.ContextDrawing(player, context, stove, smokables)
 	end
 end
 	
-function StoveSmoking.OnStoveSmoking(_player, _stove, _cigarette) 
+function OnStoveSmoking(_player, _stove, _cigarette) 
 
 	if luautils.walkAdj(_player, _stove:getSquare(), true) then 
 	
