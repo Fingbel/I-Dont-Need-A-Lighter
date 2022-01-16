@@ -15,34 +15,49 @@ Events.OnFillWorldObjectContextMenu.Add(LightCigOnStove)
 --This function is responsible for the drawing of the context depending on the smokable array size
 function ContextDrawing(player, context, stove, smokables)
 
+	local tooltip = ISWorldObjectContextMenu.addToolTip()
 	if stove == nill then return end
 
 	--If we do not have any smokable, let draw a fake smoke context menu and make it unavailable
 	if smokables == nil then 
 		local foo = context:addOption(getText('ContextMenu_Smoke'), player, stove)
 		foo.notAvailable = true
-		return
+		return	
 
 	--If we have only one smokable type in the array 
 	elseif getTableSize(smokables) == 1 then 
-		context:addOption(getText('ContextMenu_Smoke') .."  ".. smokables[0]:getDisplayName(), player, OnStoveSmoking, stove, smokables[0])
+		--tooltip.description = (toolTipBuilder(smokables[0]))
+		option = context:addOption(getText('ContextMenu_Smoke') .."  ".. smokables[0]:getDisplayName(), player, OnStoveSmoking, stove, smokables[0])
+		--option.toolTip = tooltip
 	return
 	end
 
 	--We have more than on type, we need to draw a sub-menu
 	local smokeOption = context:addOption(getText('ContextMenu_Smoke'), stove, nil);		
 	local subMenu = ISContextMenu:getNew(context)
-	for i=0,getTableSize(smokables) -1 do				
-		subMenu:addOption(smokables[i]:getDisplayName(), player, OnStoveSmoking, stove, smokables[i])
-		context:addSubMenu(smokeOption, subMenu);
+	for i=0,getTableSize(smokables) -1 do	
+
+		--tooltip.description = (toolTipBuilder(smokables[i]))
+		Option = subMenu:addOption(smokables[i]:getDisplayName(), player, OnStoveSmoking, stove, smokables[i])
+		
+
+		context:addSubMenu(smokeOption, subMenu);		
+		--Option.toolTip = tooltip
 	end
+	
+end
+
+function toolTipBuilder(smokable)
+	local newTooltip = smokable:getDisplayName()
+
+	return newTooltip
 end
 
 function whatIsUnderTheMouse (worldObjects)
 	for i,stove in ipairs(worldObjects) do
 
 	--did we clicked a stove/microwave?	
-		if instanceof(stove, 'IsoStove') and (SandboxVars.ElecShutModifier > -1 and getGameTime():getNightsSurvived() < SandboxVars.ElecShutModifier) or stove:getSquare():haveElectricity() then return stove
+		if instanceof(stove, 'IsoStove') and ((SandboxVars.ElecShutModifier > -1 and getGameTime():getNightsSurvived() < SandboxVars.ElecShutModifier) or stove:getSquare():haveElectricity() ) then return stove
 	--did we clicked a lit fireplace ?
 		elseif instanceof(stove,'IsoFireplace') and stove:isLit() then return stove										
 	--did we clicked a lit barbecue ?
@@ -67,11 +82,11 @@ function OnStoveSmoking(_player, stove, _cigarette)
 	--Let's light what we've selected
 	local time
 	if luautils.walkAdj(_player, stove:getSquare(), true) then 
-		if instanceof(stove, 'IsoStove') and not stove:isMicrowave() then ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette, 300))
+		if instanceof(stove, 'IsoStove') and not stove:isMicrowave() then ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette, 100))
 		elseif instanceof(stove, 'IsoStove') and stove:isMicrowave() then ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette, 3000)) 
-		elseif instanceof(stove,'IsoFireplace') and stove:isLit() then ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette, 200)) 
-		elseif instanceof(stove,'IsoBarbecue') and stove:isLit() then ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette, 275)) 
-		elseif instanceof(stove, "IsoObject") and stove:getSpriteName() == "camping_01_5" then ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette, 200)) 
+		elseif instanceof(stove,'IsoFireplace') and stove:isLit() then ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette, 100)) 
+		elseif instanceof(stove,'IsoBarbecue') and stove:isLit() then ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette, 100)) 
+		elseif instanceof(stove, "IsoObject") and stove:getSpriteName() == "camping_01_5" then ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette, 120)) 
 		elseif instanceof(stove, "IsoFire") then ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette, 10)) end
 	end
 
