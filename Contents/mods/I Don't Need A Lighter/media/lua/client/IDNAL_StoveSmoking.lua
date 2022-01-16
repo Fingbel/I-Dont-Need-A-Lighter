@@ -6,8 +6,6 @@ local function LightCigOnStove(player, context, worldObjects, _test)
 
 
 	local player = getSpecificPlayer(player);
-	print (player)
-	--local inventory = player:getInventory();
 	local smokables = CheckInventoryForCigarette(player)
 	ContextDrawing(player, context, whatIsUnderTheMouse(worldObjects), smokables)
 end
@@ -39,8 +37,28 @@ function ContextDrawing(player, context, stove, smokables)
 		context:addSubMenu(smokeOption, subMenu);
 	end
 end
-	
+
+function whatIsUnderTheMouse (worldObjects)
+	for i,stove in ipairs(worldObjects) do
+		
+	--did we clicked a lit stove?	
+		if instanceof(stove, 'IsoStove') and not stove:isMicrowave() and stove:getSquare():haveElectricity() then return stove		
+	--did we clicked a microwave?
+		elseif instanceof(stove, 'IsoStove') and stove:isMicrowave() and stove:getSquare():haveElectricity() then return stove		
+	--did we clicked a lit fireplace ?
+		elseif instanceof(stove,'IsoFireplace') and stove:isLit() then return stove										
+	--did we clicked a lit barbecue ?
+		elseif instanceof(stove,'IsoBarbecue') and stove:isLit() then return stove									
+	--did we clicked a Campfire ? We check the sprite directly to check if the campfire is lit or not
+		elseif instanceof(stove, "IsoObject") and stove:getSpriteName() == "camping_01_5" then return stove						
+	--did we clicked on a Fire ? You mad man THIS ONE IS BROKEN, IsoFire is not picked up
+		elseif instanceof(stove, "IsoFire") then return stove end
+	return nil 
+	end
+end
+
 function OnStoveSmoking(_player, stove, _cigarette) 
+
 	--Do we need to transfer cigarette from a bag first ? 
 	if luautils.walkAdj(_player, stove:getSquare(), true) then 
 		if _cigarette:getContainer() ~= _player:getInventory() then
@@ -63,23 +81,5 @@ function OnStoveSmoking(_player, stove, _cigarette)
 	if luautils.walkAdj(_player, stove:getSquare(), true) then 
 		
 		ISTimedActionQueue.add(IsStoveSmoking:new(_player, stove, _cigarette, 460))
-	end
-end
-
-function whatIsUnderTheMouse (worldObjects)
-	for i,stove in ipairs(worldObjects) do
-	--did we clicked a lit stove?
-		if instanceof(stove, 'IsoStove') and not stove:isMicrowave() then return stove		
-	--did we clicked a microwave?
-		elseif instanceof(stove, 'IsoStove') and stove:isMicrowave() then return stove		
-	--did we clicked a lit fireplace ?
-		elseif instanceof(stove,'IsoFireplace') and stove:isLit() then return stove										
-	--did we clicked a lit barbecue ?
-		elseif instanceof(stove,'IsoBarbecue') and stove:isLit() then return stove									
-	--did we clicked a Campfire ? We check the sprite directly to check if the campfire is lit or not
-		elseif instanceof(stove, "IsoObject") and stove:getSpriteName() == "camping_01_5" then return stove						
-	--did we clicked on a Fire ? You mad man THIS ONE IS BROKEN, IsoFire is not picked up
-		elseif instanceof(stove, "IsoFire") then return stove end
-	return nil 
 	end
 end

@@ -10,6 +10,6 @@
     "\\Contents\\mods\\I Don't Need A Lighter\\media\\lua\\client\\TimedActions",
     "\\Contents\\mods\\I Don't Need A Lighter\\media\\lua\\shared"
   ],
-  "SelectedNode": "\\Contents\\mods\\I Don't Need A Lighter\\media\\lua\\client\\IDNAL_StoveSmoking.lua",
+  "SelectedNode": "\\Contents\\mods\\I Don't Need A Lighter\\media\\lua\\client\\TimedActions\\IDNAL_IsStoveSmoking.lua",
   "PreviewInSolutionExplorer": false
 }

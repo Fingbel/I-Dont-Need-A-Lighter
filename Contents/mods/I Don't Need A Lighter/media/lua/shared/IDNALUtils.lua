@@ -12,7 +12,6 @@ end
 --This function return an array(duplicate removed) of one of each of the possible smokable items
 
 function CheckInventoryForCigarette(player)
-	print(IDNAL)
 	local inventoryItems = player:getInventory():getItems()
 	local smokable = {}
 	
