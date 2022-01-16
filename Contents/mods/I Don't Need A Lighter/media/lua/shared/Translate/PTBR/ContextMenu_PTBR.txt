@@ -5,5 +5,11 @@ ContextMenu_PTBR = {
 	ContextMenu_LightCigaretteWithCampFire = "Acender um cigarro na fogueira"
 	ContextMenu_LightCigaretteWithFire = "Acenda um cigarro com fogo"
 	ContextMenu_StartCarSmoking = "Use o isqueiro"
+	
 	ContextMenu_Smoke = "Fumar"
+	
+	ContextMenu_CarLighter = "Isqueiro do carro"
+	ContextMenu_CarOutOfCigarette = " <br> Nada para fumar"
+	ContextMenu_CarNoBattery = "<br> A bateria está descarregada ou ausente "
+	ContextMenu_CarNoKeyOrWire = "<br> Falta chave ou fio"
 	}

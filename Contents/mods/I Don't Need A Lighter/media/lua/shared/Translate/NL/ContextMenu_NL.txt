@@ -5,5 +5,12 @@ ContextMenu_NL = {
 	ContextMenu_LightCigaretteWithCampFire = "Steek een sigaret op bij het kampvuur"
 	ContextMenu_LightCigaretteWithFire = "Steek een sigaret aan met vuur"
 	ContextMenu_StartCarSmoking = "Gebruik de sigarettenaansteker"
+	
 	ContextMenu_Smoke = "Roken"
+	
+	ContextMenu_CarLighter = "Auto aansteker"
+	ContextMenu_CarOutOfCigarette = " <br> Niets om te roken"
+	ContextMenu_CarNoBattery = "<br> Batterij is leeg of ontbreekt"
+	ContextMenu_CarNoKeyOrWire = "<br> Sleutel of draad ontbreekt"
+	
 	}
