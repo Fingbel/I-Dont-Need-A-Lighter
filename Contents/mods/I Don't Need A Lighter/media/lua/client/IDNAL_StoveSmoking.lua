@@ -38,11 +38,11 @@ function ContextDrawing(player, context, stove, smokables)
 	for i=0,getTableSize(smokables) -1 do	
 
 		--tooltip.description = (toolTipBuilder(smokables[i]))
-		Option = subMenu:addOption(smokables[i]:getDisplayName(), player, OnStoveSmoking, stove, smokables[i])
+		option = subMenu:addOption(smokables[i]:getDisplayName(), player, OnStoveSmoking, stove, smokables[i])
 		
 
 		context:addSubMenu(smokeOption, subMenu);		
-		--Option.toolTip = tooltip
+		--option.toolTip = tooltip
 	end
 	
 end
