@@ -96,7 +96,7 @@ function OnCarSmoking(_player, _cigarette)
 	end
 
 	--We need some time for the lighter to heat
-	ISTimedActionQueue.add(IsCarLighting:new (_player, _cigarette, 550))
+	ISTimedActionQueue.add(IsCarLighting:new (_player, _cigarette, 500))
 	
 	--Let's smoke now
 	ISTimedActionQueue.add(IsCarSmoking:new(_player, _cigarette, 460))
