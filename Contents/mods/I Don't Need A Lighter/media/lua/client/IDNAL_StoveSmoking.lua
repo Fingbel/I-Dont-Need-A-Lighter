@@ -40,11 +40,9 @@ end
 
 function whatIsUnderTheMouse (worldObjects)
 	for i,stove in ipairs(worldObjects) do
-		
-	--did we clicked a lit stove?	
-		if instanceof(stove, 'IsoStove') and not stove:isMicrowave() and stove:getSquare():haveElectricity() then return stove		
-	--did we clicked a microwave?
-		elseif instanceof(stove, 'IsoStove') and stove:isMicrowave() and stove:getSquare():haveElectricity() then return stove		
+
+	--did we clicked a stove/microwave?	
+		if instanceof(stove, 'IsoStove') and (SandboxVars.ElecShutModifier > -1 and getGameTime():getNightsSurvived() < SandboxVars.ElecShutModifier) or stove:getSquare():haveElectricity() then return stove
 	--did we clicked a lit fireplace ?
 		elseif instanceof(stove,'IsoFireplace') and stove:isLit() then return stove										
 	--did we clicked a lit barbecue ?
@@ -70,7 +68,7 @@ function OnStoveSmoking(_player, stove, _cigarette)
 	local time
 	if luautils.walkAdj(_player, stove:getSquare(), true) then 
 		if instanceof(stove, 'IsoStove') and not stove:isMicrowave() then ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette, 300))
-		elseif instanceof(stove, 'IsoStove') and stove:isMicrowave() then ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette, 2000)) 
+		elseif instanceof(stove, 'IsoStove') and stove:isMicrowave() then ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette, 3000)) 
 		elseif instanceof(stove,'IsoFireplace') and stove:isLit() then ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette, 200)) 
 		elseif instanceof(stove,'IsoBarbecue') and stove:isLit() then ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette, 275)) 
 		elseif instanceof(stove, "IsoObject") and stove:getSpriteName() == "camping_01_5" then ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette, 200)) 
