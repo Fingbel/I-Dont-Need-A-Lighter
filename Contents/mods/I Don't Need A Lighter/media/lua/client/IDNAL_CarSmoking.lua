@@ -28,7 +28,7 @@ function ISVehicleMenu.showRadialMenu(player)
 			--Do we have everything ?
 			if smokables ~= nil and vehicle:getBatteryCharge() > 0 and (vehicle:isHotwired() or vehicle:isKeysInIgnition()) then
 				if 	IDNAL == "MODDEDIDNAL" then menu:addSlice(getText('ContextMenu_CarLighter'), getTexture("media/ui/vehicles/carSmokingBatteryCigarette.png"), IDNALOnSubMenu, player)				
-					else menu:addSlice(getText('ContextMenu_CarLighter') .. getText('ContextMenu_CarOutOfCigarette'),getTexture("media/ui/vehicles/carSmokingBatteryCigarette.png"), OnCarSmoking, player, smokables[0] ) 
+					else menu:addSlice(getText('ContextMenu_CarLighter'),getTexture("media/ui/vehicles/carSmokingBatteryCigarette.png"), OnCarSmoking, player, smokables[0] ) 
 				end
 			
 			--What are we missing ?
