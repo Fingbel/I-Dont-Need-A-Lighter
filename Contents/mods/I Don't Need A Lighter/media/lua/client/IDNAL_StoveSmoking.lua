@@ -64,8 +64,8 @@ function whatIsUnderTheMouse (worldObjects)
 		elseif instanceof(stove,'IsoBarbecue') and stove:isLit() then return stove									
 	--did we clicked a Campfire ? We check the sprite directly to check if the campfire is lit or not
 		elseif instanceof(stove, "IsoObject") and stove:getSpriteName() == "camping_01_5" then return stove						
-	--did we clicked on a Fire ? You mad man THIS ONE IS BROKEN, IsoFire is not picked up
-		elseif instanceof(stove, "IsoFire") then return stove end
+	--did we clicked on a Fire ? You mad man 
+		elseif stove:getSquare():haveFire() then return stove end
 	return nil 
 	end
 end
@@ -87,7 +87,7 @@ function OnStoveSmoking(_player, stove, _cigarette)
 		elseif instanceof(stove,'IsoFireplace') and stove:isLit() then ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette, 100)) 
 		elseif instanceof(stove,'IsoBarbecue') and stove:isLit() then ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette, 100)) 
 		elseif instanceof(stove, "IsoObject") and stove:getSpriteName() == "camping_01_5" then ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette, 120)) 
-		elseif instanceof(stove, "IsoFire") then ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette, 10)) end
+		elseif stove:getSquare():haveFire() then ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette, 10)) end
 	end
 
 	--Now it's lit, let's smoke it
