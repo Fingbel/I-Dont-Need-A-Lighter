@@ -29,6 +29,8 @@ end
 function IsCarLighting:perform()
 	
 	self.character:getEmitter():playSound("CarLighter_PlugOut");
+	battery = self.character:getVehicle():getBattery():getInventoryItem()
+	battery:setUsedDelta(battery:getUsedDelta() -0.02)
 
 	--FinishTimeBasedAction
 	ISBaseTimedAction.perform(self)
