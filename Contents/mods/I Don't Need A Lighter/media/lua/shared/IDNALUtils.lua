@@ -7,7 +7,6 @@ if getActivatedMods():contains("Smoker") or getActivatedMods():contains("jiggasG
 	IDNAL="MODDEDIDNAL"
 else IDNAL="IDNAL"
 end
---Compatibility for Cigarette Carton MOD 
 
 --This function is responsible to confirm the presence of cigarette in the player inventory 
 --This function return an array(duplicate removed) of one of each of the possible smokable items
@@ -17,8 +16,7 @@ function CheckInventoryForCigarette(player)
 	local smokable = {}
 	
 	--Do we have smokable in our pocket
-	for i=0, inventoryItems:size()-1 do	
-		
+	for i=0, inventoryItems:size()-1 do			
 		if inventoryItems:get(i):getEatType() ==  ('Cigarettes') or inventoryItems:get(i):getEatType() == ('CigarettesOne') then
 			
 			--If yes we add them to the smokable array 
@@ -31,8 +29,7 @@ function CheckInventoryForCigarette(player)
 		if inventoryItems:get(i):getCategory() == ("Container") then
 		
 			--We look inside each container for smokable
-			local ContainerContent = inventoryItems:get(i):getItemContainer():getItems()	
-			
+			local ContainerContent = inventoryItems:get(i):getItemContainer():getItems()				
 			for i=0, ContainerContent:size()-1 do				
 				if ContainerContent:get(i):getEatType() ==  ('Cigarettes') or ContainerContent:get(i):getEatType() == ('CigarettesOne')  then
 					smokable[getTableSize(smokable)] = ContainerContent:get(i)
