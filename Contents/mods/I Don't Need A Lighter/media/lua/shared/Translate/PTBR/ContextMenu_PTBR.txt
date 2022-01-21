@@ -1,15 +1,15 @@
 ContextMenu_PTBR = {
-	ContextMenu_LightCigaretteWithOven = "Acendendo um cigarro no fogão a gás"
-	ContextMenu_LightCigaretteWithFireplace = "Acender um cigarro com o fogão"
-	ContextMenu_LightCigaretteWithBarbecue = "Acender um cigarro com o churrasco"
-	ContextMenu_LightCigaretteWithCampFire = "Acender um cigarro na fogueira"
-	ContextMenu_LightCigaretteWithFire = "Acenda um cigarro com fogo"
-	ContextMenu_StartCarSmoking = "Use o isqueiro"
+	ContextMenu_LightCigaretteWithOven = "Acender o cigarro no fogão"
+	ContextMenu_LightCigaretteWithFireplace = "Acender o cigarro no fogão a lenha"
+	ContextMenu_LightCigaretteWithBarbecue = "Acender o cigarro com a churrasqueira"
+	ContextMenu_LightCigaretteWithCampFire = "Acender o cigarro na fogueira"
+	ContextMenu_LightCigaretteWithFire = "Acenda o cigarro com o fogo"
+	ContextMenu_StartCarSmoking = "Use o acendedor do carro"
 	
 	ContextMenu_Smoke = "Fumar"
 	
-	ContextMenu_CarLighter = "Isqueiro do carro"
+	ContextMenu_CarLighter = "Acendedor do carro"
 	ContextMenu_CarOutOfCigarette = " <br> Nada para fumar"
-	ContextMenu_CarNoBattery = "<br> A bateria está descarregada ou ausente "
-	ContextMenu_CarNoKeyOrWire = "<br> Falta chave ou fio"
-	}
+	ContextMenu_CarNoBattery = "<br> A bateria deve estar descarregada ou ausente "
+	ContextMenu_CarNoKeyOrWire = "<br> Falta a chave ou fio"
+}
