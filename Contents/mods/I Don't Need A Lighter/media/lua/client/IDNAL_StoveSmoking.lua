@@ -7,7 +7,7 @@ local function LightCigOnStove(_player, context, worldObjects, _test)
 
 	local player = getSpecificPlayer(_player);
 	local smokables = CheckInventoryForCigarette(player)
-	ContextDrawing(player, context, whatIsUnderTheMouse(worldObjects), smokables)
+	ContextDrawing(player, context, whatIsUnderTheMouse(worldObjects, player), smokables)
 end
 
 Events.OnPreFillWorldObjectContextMenu.Add(LightCigOnStove)
@@ -38,10 +38,25 @@ function ContextDrawing(player, context, stove, smokables)
 	end
 end
 
-function whatIsUnderTheMouse ( worldObjects)
+function whatIsUnderTheMouse ( worldObjects, playerObj)
 	for i,stove in ipairs(worldObjects) do	
-	print(stove)
-	print(stove:getObjectName())
+
+		--Did we click on a player ?
+		for x=stove:getSquare():getX()-1,stove:getSquare():getX()+1 do
+			for y=stove:getSquare():getY()-1,stove:getSquare():getY()+1 do
+				local sq = getCell():getGridSquare(x,y,stove:getSquare():getZ());
+				if sq then
+					for i=0,sq:getMovingObjects():size()-1 do
+						local o = sq:getMovingObjects():get(i)
+						if instanceof(o, "IsoPlayer") and (o ~= playerObj) then
+							if string.match(o:getAnimationDebug(), "foodtype : Cigarettes") then
+							return o
+							end
+						end
+					end
+				end
+			end
+		end
 	--did we clicked a stove/microwave?	
 		if stove:getObjectName() == ("Stove") and ((SandboxVars.ElecShutModifier > -1 and getGameTime():getNightsSurvived() < SandboxVars.ElecShutModifier) or stove:getSquare():haveElectricity()) then return stove
 	--did we clicked a lit fireplace ?
@@ -57,6 +72,12 @@ end
 
 function OnStoveSmoking(_player, stove, _cigarette) 
 	ISWorldObjectContextMenu.Test = true
+
+	--We need to make sure the clicked player is still smoking
+	if instanceof(stove, 'IsoPlayer') then
+		if not string.match(stove:getAnimationDebug(), "foodtype : Cigarettes") then return end
+	end
+
 	--Do we need to transfer cigarette from a bag first ? 
 	if luautils.walkAdj(_player, stove:getSquare(), true) then 
 		if _cigarette:getContainer() ~= _player:getInventory() then
@@ -72,12 +93,18 @@ function OnStoveSmoking(_player, stove, _cigarette)
 		elseif instanceof(stove,'IsoFireplace') and stove:isLit() then ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette, 100)) 
 		elseif instanceof(stove,'IsoBarbecue') and stove:isLit() then ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette, 100)) 
 		elseif instanceof(stove, "IsoObject") and stove:getSpriteName() == "camping_01_5" then ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette, 120)) 
-		elseif stove:getSquare():haveFire() then ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette, 10)) end
+		elseif stove:getSquare():haveFire() then ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette, 10))
+		else for i=0,stove:getSquare():getMovingObjects():size()-1 do
+				local o = stove:getSquare():getMovingObjects():get(i)
+				if instanceof(o, "IsoPlayer") and (o ~= playerObj) then
+					if string.match(o:getAnimationDebug(), "foodtype : Cigarettes") then ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette, 10)) end
+				end		
+			end
+		end
 	end
 
 	--Now it's lit, let's smoke it
-	if luautils.walkAdj(_player, stove:getSquare(), true) then 
-		
+	if luautils.walkAdj(_player, stove:getSquare(), true) then 	
 		ISTimedActionQueue.add(IsStoveSmoking:new(_player, stove, _cigarette, 460))
 	end
 end
