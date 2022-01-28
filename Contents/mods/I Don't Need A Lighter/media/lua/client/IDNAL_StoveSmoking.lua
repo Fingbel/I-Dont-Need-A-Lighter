@@ -15,7 +15,7 @@ Events.OnPreFillWorldObjectContextMenu.Add(LightCigOnStove)
 --This function is responsible for the drawing of the context depending on the smokable array size
 function ContextDrawing(player, context, stove, smokables)
 	
-	if stove == nill then return end
+	if stove == nil then return end
 	
 	--If we do not have any smokable, let draw a fake smoke context menu and make it unavailable
 	if smokables == nil then 
@@ -40,6 +40,8 @@ end
 
 function whatIsUnderTheMouse ( worldObjects)
 	for i,stove in ipairs(worldObjects) do	
+	print(stove)
+	print(stove:getObjectName())
 	--did we clicked a stove/microwave?	
 		if stove:getObjectName() == ("Stove") and ((SandboxVars.ElecShutModifier > -1 and getGameTime():getNightsSurvived() < SandboxVars.ElecShutModifier) or stove:getSquare():haveElectricity()) then return stove
 	--did we clicked a lit fireplace ?

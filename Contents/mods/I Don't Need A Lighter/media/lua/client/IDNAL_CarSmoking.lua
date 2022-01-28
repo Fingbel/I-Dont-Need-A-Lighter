@@ -1,12 +1,11 @@
---NoLighterNeeded Mod by Fingbel
+	--NoLighterNeeded Mod by Fingbel
 
 local old_ISVehicleMenu_showRadialMenu = ISVehicleMenu.showRadialMenu
 
 
 function ISVehicleMenu.showRadialMenu(player)
-	
-	--Let's run the vanilla function before our code
 	old_ISVehicleMenu_showRadialMenu(player)	
+
 	local vehicle = player:getVehicle()
 	local smokables = CheckInventoryForCigarette(player)
 

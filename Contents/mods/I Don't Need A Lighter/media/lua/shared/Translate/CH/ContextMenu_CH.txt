@@ -1,0 +1,15 @@
+ContextMenu_CH = {
+	ContextMenu_LightCigaretteWithOven = "使用瓦斯爐點菸",
+	ContextMenu_LightCigaretteWithFireplace = "使用壁爐點菸",
+	ContextMenu_LightCigaretteWithBarbecue = "使用燒烤架點菸",
+	ContextMenu_LightCigaretteWithCampFire = "使用營火點菸",
+	ContextMenu_LightCigaretteWithFire = "使用火點菸",
+	ContextMenu_StartCarSmoking = "使用點菸器",
+	
+	ContextMenu_Smoke = "抽菸",
+	
+	ContextMenu_CarLighter = "汽車點菸器",
+	ContextMenu_CarOutOfCigarette = "<br> 沒有香菸",
+	ContextMenu_CarNoBattery = "<br> 電池沒電或遺失",
+	ContextMenu_CarNoKeyOrWire = "<br> 缺少鑰匙或電線" 
+}
