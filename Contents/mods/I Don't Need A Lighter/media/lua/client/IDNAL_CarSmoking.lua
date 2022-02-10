@@ -1,11 +1,13 @@
-	--NoLighterNeeded Mod by Fingbel
+--NoLighterNeeded Mod by Fingbel
 
 local old_ISVehicleMenu_showRadialMenu = ISVehicleMenu.showRadialMenu
 
-
+--This is the added code to the base function
 function ISVehicleMenu.showRadialMenu(player)
+	--Here we first call the base function
 	old_ISVehicleMenu_showRadialMenu(player)	
 
+	--Now we run some custom code
 	local vehicle = player:getVehicle()
 	local smokables = CheckInventoryForCigarette(player)
 
@@ -57,7 +59,7 @@ function ISVehicleMenu.showRadialMenu(player)
 	end
 end
 
-		--This is the function for the Sub-Menu for the modded version of the car lighter to show-up smokable while in a car
+--This is the function for the Sub-Menu for the modded version of the car lighter to show-up smokable while in a car
 function IDNALOnSubMenu(player)
 	local smokables = CheckInventoryForCigarette(player) --TODO : this could be a parameter, we are wasting power
 	local menu = getPlayerRadialMenu(player:getPlayerNum())
@@ -83,10 +85,9 @@ function IDNALOnSubMenu(player)
 		setJoypadFocus(player:getPlayerNum(), menu)
 		player:setJoypadIgnoreAimUntilCentered(true)
 	end
-
 end
 
-	--This is the function starting the car smoking sequence
+--This is the function starting the car smoking sequence
 function OnCarSmoking(_player, _cigarette)
 	
 	--Do we need to transfer cigarette from a bag first ? 
