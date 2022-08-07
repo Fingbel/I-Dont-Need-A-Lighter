@@ -1,15 +1,15 @@
-ContextMenu_CH = {
-	ContextMenu_LightCigaretteWithOven = "¨Ï¥Î¥Ë´µÄlÂIµÒ",
-	ContextMenu_LightCigaretteWithFireplace = "¨Ï¥Î¾ÀÄlÂIµÒ",
-	ContextMenu_LightCigaretteWithBarbecue = "¨Ï¥Î¿N¯N¬[ÂIµÒ",
-	ContextMenu_LightCigaretteWithCampFire = "¨Ï¥ÎÀç¤õÂIµÒ",
-	ContextMenu_LightCigaretteWithFire = "¨Ï¥Î¤õÂIµÒ",
-	ContextMenu_StartCarSmoking = "¨Ï¥ÎÂIµÒ¾¹",
+ï»¿ContextMenu_CH = {
+	ContextMenu_LightCigaretteWithOven = "ä½¿ç”¨ç“¦æ–¯çˆé»ç‡ƒé¦™è¸",
+	ContextMenu_LightCigaretteWithFireplace = "ä½¿ç”¨å£çˆé»ç‡ƒé¦™è¸",
+	ContextMenu_LightCigaretteWithBarbecue = "ä½¿ç”¨çƒ¤è‚‰æ¶é»ç‡ƒé¦™è¸",
+	ContextMenu_LightCigaretteWithCampFire = "ä½¿ç”¨ç¯ç«é»ç‡ƒé¦™è¸",
+	ContextMenu_LightCigaretteWithFire = "ä½¿ç”¨ç«ç„°é»ç‡ƒé¦™ç…™",
+	ContextMenu_StartCarSmoking = "ä½¿ç”¨é»è¸å™¨é»ç‡ƒé¦™è¸",
 	
-	ContextMenu_Smoke = "©âµÒ",
+	ContextMenu_Smoke = "æŠ½è¸",
 	
-	ContextMenu_CarLighter = "¨T¨®ÂIµÒ¾¹",
-	ContextMenu_CarOutOfCigarette = "<br> ¨S¦³­»µÒ",
-	ContextMenu_CarNoBattery = "<br> ¹q¦À¨S¹q©Î¿ò¥¢",
-	ContextMenu_CarNoKeyOrWire = "<br> ¯Ê¤ÖÆ_°Í©Î¹q½u" 
+	ContextMenu_CarLighter = "é»è¸å™¨",
+	ContextMenu_CarOutOfCigarette = "<br> æ²’è¸äº†",
+	ContextMenu_CarNoBattery = "<br> é›»æ± éºå¤±æˆ–æ²’é›»",
+	ContextMenu_CarNoKeyOrWire = "<br> è»Šè¼›æ²’æœ‰é€šé›»" 
 }

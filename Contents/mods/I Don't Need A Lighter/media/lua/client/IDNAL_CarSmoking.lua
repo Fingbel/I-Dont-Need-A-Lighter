@@ -65,8 +65,6 @@ function IDNALOnSubMenu(player)
 	local menu = getPlayerRadialMenu(player:getPlayerNum())
 	menu:clear()
 	
-
-	
 	--Draw the radial menu again
 	menu:setX(getPlayerScreenLeft(player:getPlayerNum()) + getPlayerScreenWidth(player:getPlayerNum()) / 2 - menu:getWidth() / 2)
 	menu:setY(getPlayerScreenTop(player:getPlayerNum()) + getPlayerScreenHeight(player:getPlayerNum()) / 2 - menu:getHeight() / 2)
