@@ -18,9 +18,9 @@ function CheckInventoryForCigarette(player)
 	--Do we have smokable in our pocket
 	for i=0, inventoryItems:size()-1 do			
 		if inventoryItems:get(i):getEatType() ==  ('Cigarettes') or inventoryItems:get(i):getEatType() == ('CigarettesOne') then
-			
-			--If yes we add them to the smokable array 
-			smokable[getTableSize(smokable)] = inventoryItems:get(i)
+			if inventoryItems:get(i):getDisplayName() ~= ('Candy Cigarette') then
+				smokable[getTableSize(smokable)] = inventoryItems:get(i)
+			end
 		end	
 	end
 
@@ -32,7 +32,9 @@ function CheckInventoryForCigarette(player)
 			local ContainerContent = inventoryItems:get(i):getItemContainer():getItems()				
 			for i=0, ContainerContent:size()-1 do				
 				if ContainerContent:get(i):getEatType() ==  ('Cigarettes') or ContainerContent:get(i):getEatType() == ('CigarettesOne')  then
-					smokable[getTableSize(smokable)] = ContainerContent:get(i)
+					if inventoryItems:get(i):getDisplayName() ~= ('Candy Cigarette') then
+						smokable[getTableSize(smokable)] = ContainerContent:get(i)
+					end
 				end
 			end
 		end
