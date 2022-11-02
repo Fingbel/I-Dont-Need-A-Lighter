@@ -43,7 +43,6 @@ end
 
 function whatIsUnderTheMouse ( worldObjects, playerObj)
 	for i,stove in ipairs(worldObjects) do	
-
 		--Did we click on a player ?
 		for x=stove:getSquare():getX()-1,stove:getSquare():getX()+1 do
 			for y=stove:getSquare():getY()-1,stove:getSquare():getY()+1 do
@@ -89,7 +88,6 @@ function OnStoveSmoking(_player, stove, _cigarette)
 	end
 	 
 	--Let's light what we've found
-	local time
 	if luautils.walkAdj(_player, stove:getSquare(), true) then 
 		if instanceof(stove, 'IsoStove') and not stove:isMicrowave() then ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette, 100))
 		elseif instanceof(stove, 'IsoStove') and stove:isMicrowave() then ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette, 3000)) 
