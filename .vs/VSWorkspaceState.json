@@ -3,14 +3,10 @@
     "",
     "\\Contents",
     "\\Contents\\mods",
-    "\\Contents\\mods\\I Might Need A Lighter",
-    "\\Contents\\mods\\I Might Need A Lighter\\media",
-    "\\Contents\\mods\\I Might Need A Lighter\\media\\lua",
-    "\\Contents\\mods\\I Might Need A Lighter\\media\\lua\\client",
-    "\\Contents\\mods\\I Might Need A Lighter\\media\\lua\\server",
-    "\\Contents\\mods\\I Might Need A Lighter\\media\\sound",
-    "\\Contents\\mods\\I Might Need A Lighter\\media\\textures"
+    "\\Contents\\mods\\I Don't Need A Lighter",
+    "\\Contents\\mods\\I Don't Need A Lighter\\media",
+    "\\Contents\\mods\\I Don't Need A Lighter\\media\\lua",
+    "\\Contents\\mods\\I Don't Need A Lighter\\media\\lua\\shared"
   ],
-  "SelectedNode": "\\Contents\\mods\\I Might Need A Lighter\\media\\lua\\client\\Json.lua",
   "PreviewInSolutionExplorer": false
 }

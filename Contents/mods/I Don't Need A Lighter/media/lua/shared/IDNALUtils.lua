@@ -18,7 +18,6 @@ function CheckInventoryForCigarette(player)
 	--Do we have smokable in our pocket
 	for i=0, inventoryItems:size()-1 do			
 		if inventoryItems:get(i):getEatType() ==  ('Cigarettes') or inventoryItems:get(i):getEatType() == ('CigarettesOne') then
-		--
 			--if inventoryItems:get(i):getDisplayName() ~= ('Candy Cigarette') then
 				smokable[getTableSize(smokable)] = inventoryItems:get(i)
 			--end

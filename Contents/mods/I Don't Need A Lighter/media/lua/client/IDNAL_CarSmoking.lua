@@ -1,4 +1,5 @@
 --NoLighterNeeded Mod by Fingbel
+
 local old_ISVehicleMenu_showRadialMenu = ISVehicleMenu.showRadialMenu
 
 --This is the added code to the base function
@@ -8,11 +9,6 @@ function ISVehicleMenu.showRadialMenu(player)
 
 	--Now we run some custom code
 	local vehicle = player:getVehicle()
-	local id = vehicle:getSqlId()
-	local CLPresence = CarLighterCheck(id)
-	--SQLId is our unique identifier for each vehicle. We should now randomize/calculate the chance to spawn a carlighter or not
-		print(CLPresence)
-
 	local smokables = CheckInventoryForCigarette(player)
 
 	if vehicle ~= nil then
@@ -103,9 +99,3 @@ function OnCarSmoking(_player, _cigarette)
 	--Let's smoke now
 	ISTimedActionQueue.add(IsCarSmoking:new(_player, _cigarette, 460))
 end
-
-local function OnReceiveGlobalModData(carLighters, modData)
-	carLighters = modData
-end
-
-Events.OnReceiveGlobalModData.Add(OnReceiveGlobalModData)
