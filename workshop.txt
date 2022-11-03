@@ -1,41 +1,6 @@
 version=1
-id=2714198296
-title=I Don't Need A Lighter
-description=[h2] What is this mod ? [/h2]
-description=[noparse] So you're telling me that people can't light a cigarette while sitting in front of a campfire or while driving around in a 90's car ? Well this is over with this mod. You now have access to a car-lighter within every car and you can also light a cigarette on any kitchen stove or similar source of flame ![/noparse]
-description=
-description=[h2]Current Feature [/h2]
-description=[list]
-description=[*]  Light a cigarette with a Car-Lighter ! The key must be on the ignition or the vehicle must be hotwire. Battery must be functional and not empty
-description=[*] Light a cigarette on a stove / barbecue / etc. The source must be on. Microwave is not a valid source. (or is it ?)
-description=[*] Bump a Light. You can light a cigarette directly from a nearby smoking friend.
-description=[/list]
-description=
-description=[h2]Current Known Issue[/h2]
-description=[list]
-description=
-description=
-description=[h2]Mod Compatibility[/h2]
-description=[list]
-description=[*]Smoker : https://steamcommunity.com/workshop/filedetails/?id=2026976958
-description=[*]Green Fire: https://steamcommunity.com/sharedfiles/filedetails/?id=1703604612
-description=[/list]
-description=
-description=[h2] Planned Features: [/h2]
-description=[list]
-description=[/list]
-description=
-description=[h2] Last Update : [/h2]
-description=https://steamcommunity.com/sharedfiles/filedetails/changelog/2714198296
-description=
-description=[h3]Current Translation Available[/h3]
-description=FR/ EN / DE / ES /  PTBR / RU / CN / NL / CS / IT / CH
-description=
-description=[b][url=https://ko-fi.com/fingbel][img]https://uploads-ssl.webflow.com/5c14e387dab576fe667689cf/61e11d430afb112ea33c3aa5_Button-1-p-500.png[/img][/url][/b]
-description=[b][url=https://github.com/Fingbel/I-Dont-Need-A-Lighter]Github [/url]
-description=
-description=[h3] Mod Infos : [/h3]
-description=Workshop ID: 2714198296
-description=Mod ID: NoLighterNeeded
+id=2883633728
+title=I Might Need A Lighter
+description=a
 tags=Build 41;Balance;Misc;Multiplayer;Realistic
-visibility=public
+visibility=private
