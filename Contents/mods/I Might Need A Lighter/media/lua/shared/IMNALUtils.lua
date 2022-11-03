@@ -44,6 +44,32 @@ function CheckInventoryForCigarette(player)
 	return removeDuplicates(smokable)
 end
 
+function CheckInventoryForCarLighter(player)
+	local inventoryItems = player:getInventory():getItems()
+	local carLighter
+	
+	--Do we have a car lighter in our pocket
+	for i=0, inventoryItems:size()-1 do			
+		if inventoryItems:get(i):getType() ==  ('CarLighter') then			
+				return inventoryItems:get(i)		
+		end	
+	end
+
+	--Now we look for container to search inside
+	for i=0, inventoryItems:size()-1 do	
+		if inventoryItems:get(i):getCategory() == ("Container") then
+		
+			--We look inside each container for carLighter
+			local ContainerContent = inventoryItems:get(i):getItemContainer():getItems()				
+			for i=0, ContainerContent:size()-1 do				
+				if ContainerContent:get(i):getType() ==  ('CarLighter')  then					
+						return ContainerContent:get(i)
+				end
+			end
+		end
+	end
+	return CarLighter
+end
 
 
 --Utility functions
@@ -73,4 +99,10 @@ function getTableSize(t)
         count = count + 1
     end
     return count
+end
+
+function CarLighterRandomizer()
+	local rand = ZombRand(100)
+	if rand >50 then return 1 end
+	return 0 
 end
