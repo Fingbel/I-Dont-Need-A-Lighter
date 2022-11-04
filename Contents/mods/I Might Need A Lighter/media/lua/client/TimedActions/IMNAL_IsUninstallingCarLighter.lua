@@ -17,7 +17,7 @@ end
 
 function IsUnInstallingCarLighter:perform()
 	self.character:getVehicle():getModData()["CL"] = 1
-	self.character:getVehicle()vehicle:transmitModData()
+	self.character:getVehicle():transmitModData()
 	self.character:getInventory():AddItem("Base.CarLighter")
 	--FinishTimeBasedAction
 	ISBaseTimedAction.perform(self)

@@ -19,7 +19,7 @@ end
 
 function IsRepairingCLSocket:perform()
 	self.character:getVehicle():getModData()["CL"] = 1
-	self.character:getVehicle()vehicle:transmitModData()
+	self.character:getVehicle():transmitModData()
 --FinishTimeBasedAction
 	ISBaseTimedAction.perform(self)
 end
