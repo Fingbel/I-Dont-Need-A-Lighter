@@ -1,31 +1,31 @@
 version=1
 id=2883633728
 title=I Might Need A Lighter
-description=[h1]DISCLAIMER :[/h1]
-description=[List]
-description=[*]THIS IS AN EARLY WORK IN PROGRESS VERSION OF THE MOD. 
-description=[*]TEST IT AT YOUR OWN DISCRETION
-description=[*]NO SUPPORT FOR NOW (but you can submit bug reports [url=https://steamcommunity.com/workshop/filedetails/discussion/2883633728/3493131640454215245/]here <3[/url])
-description=[*]EXPECT FREQUENT AND GAMEBREAKING UPDATE
-description=[/list]
-description=
-description=[h2]Philosophy behind this mod[/h2]
-description=The first iteration of this mod [url=https://steamcommunity.com/sharedfiles/filedetails/?id=2714198296] I Don't Need A Lighter[/url] missed the balance I was aiming at. It made the Smoker trait even more a freebie point than it should. With this version I want to keep the vanilla's lighters as the best option to light a cigarette, but also provide the player more risky and/or scarce alternate options .
-description=
-description=[h2]Current feature implemented [/h2]
-description=[list]
+description=[h1]DISCLAIMER :[/h1]
+description=[List]
+description=[*]THIS IS AN EARLY WORK IN PROGRESS VERSION OF THE MOD.
+description=[*]TEST IT AT YOUR OWN DISCRETION
+description=[*]NO SUPPORT FOR NOW (but you can submit bug reports [url=https://steamcommunity.com/workshop/filedetails/discussion/2883633728/3493131640454215245/]here <3[/url])
+description=[*]EXPECT FREQUENT AND GAMEBREAKING UPDATE
+description=[/list]
+description=
+description=[h2]Philosophy behind this mod[/h2]
+description=The first iteration of this mod [url=https://steamcommunity.com/sharedfiles/filedetails/?id=2714198296] I Don't Need A Lighter[/url] missed the balance I was aiming at. It made the Smoker trait even more a freebie point than it should. With this version I want to keep the vanilla's lighters as the best option to light a cigarette, but also provide the player more risky and/or scarce alternate options .
+description=
+description=[h2]Current feature implemented [/h2]
+description=[list]
 description=[*] Car scan now spawn within three different state regarding car lighters : No car lighter and car lighter socket is damaged / No car lighter / Car lighter present
 description=[*] Broken socket can now be repaired (requirement will be added soon)
-description=[*] Player can install or retrieve car lighters from any car
-description=[*] Car lighter is now an item that can be carried by player
-description=[*] All TimedAction are now dynamic. The car lighter timing depend on the durability and charge level of the car battery. The timing for the stove smoking is now tied to the player current stats(Panic,Fatigue,Endurance/Pain and hand injuries). 
-description=[/list]
-description=
-description=[h2]Planned feature[/h2]
-description=[list]
-description=[*] Sandbox options to adjust the percentage of chance to spawn a car lighter in each vehicle
-description=[*] All stove smoking methods are gonna be more risky (injury / break the cigarette / induce stress on failure/etc). The chance of failure will be calculated from the current state of the player (moodles & stats) + what appliance is currently being used + a random factor (sandbox option)
+description=[*] Player can install or retrieve car lighters from any car
+description=[*] Car lighter is now an item that can be carried by player
+description=[*] All TimedAction are now dynamic. The car lighter timing depend on the durability and charge level of the car battery. The timing for the stove smoking is now tied to the player current stats(Panic,Fatigue,Endurance/Pain and hand injuries).
+description=[/list]
+description=
+description=[h2]Planned feature[/h2]
+description=[list]
+description=[*] Sandbox options to adjust the percentage of chance to spawn a car lighter in each vehicle
+description=[*] All stove smoking methods are gonna be more risky (injury / break the cigarette / induce stress on failure/etc). The chance of failure will be calculated from the current state of the player (moodles & stats) + what appliance is currently being used + a random factor (sandbox option)
 description=[*] Add a risk to break the car lighter and/or the car lighter socket depending on the battery state / charge level
-description=[/list]
+description=[/list]
 tags=Build 41;Balance;Misc;Multiplayer;Realistic
 visibility=public

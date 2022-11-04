@@ -1,17 +1,6 @@
---NoLighterNeeded Mod by Fingbel
+--I Might Need A Lighter Mod by Fingbel
 
 require "TimedActions/ISBaseTimedAction"
-
---Outcome ranges 
-	--100 - 85 : full success
-	--85 - 60 : success with a possible small negative
-	--60 - 45 : success is not guaranteed, medium chance of small negative, small chance of medium negative
-	--45 - 30 : failure with high chance of small negative, medium chance of medium negative, small chance of big negative
-	--30 - 0 : failure with automatic small negative, high chance of medium negative, medium chance of big negative
-
-	--Small negatives : 
-	--Light burn
-
 IsStoveLighting = ISBaseTimedAction:derive('IsStoveLighting')
 
 function IsStoveLighting:isValid()

@@ -1,8 +1,6 @@
---NoLighterNeeded Mod by Fingbel
+--I Might Need A Lighter Mod by Fingbel
 
 require "TimedActions/ISBaseTimedAction"
-
-
 IsRepairingCLSocket = ISBaseTimedAction:derive('IsRepairingCLSocket')
 
 function IsRepairingCLSocket:isValid()
@@ -21,6 +19,7 @@ end
 
 function IsRepairingCLSocket:perform()
 	self.character:getVehicle():getModData()["CL"] = 1
+	self.character:getVehicle()vehicle:transmitModData()
 --FinishTimeBasedAction
 	ISBaseTimedAction.perform(self)
 end

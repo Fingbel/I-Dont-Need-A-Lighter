@@ -1,4 +1,4 @@
---NoLighterNeeded Mod by Fingbel
+--I Might Need A Lighter Mod by Fingbel
 
 require "TimedActions/ISBaseTimedAction"
 

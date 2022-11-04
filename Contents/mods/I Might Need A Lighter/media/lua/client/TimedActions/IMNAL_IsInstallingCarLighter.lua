@@ -1,6 +1,6 @@
+--I Might Need A Lighter Mod by Fingbel
+
 require "TimedActions/ISBaseTimedAction"
-
-
 IsInstallingCarLighter = ISBaseTimedAction:derive('IsInstallingCarLighter')
 
 function IsInstallingCarLighter:isValid()
@@ -17,6 +17,7 @@ end
 
 function IsInstallingCarLighter:perform()
 	self.character:getVehicle():getModData()["CL"] = 2
+	self.character:getVehicle()vehicle:transmitModData()
 	self.item:Use()
 	--FinishTimeBasedAction
 	ISBaseTimedAction.perform(self)

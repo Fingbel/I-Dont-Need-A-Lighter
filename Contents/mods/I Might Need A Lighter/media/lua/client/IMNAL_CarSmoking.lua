@@ -1,4 +1,4 @@
---NoLighterNeeded Mod by Fingbel
+--I Might Need A Lighter Mod by Fingbel
 local old_ISVehicleMenu_showRadialMenu = ISVehicleMenu.showRadialMenu
 
 --This is the added code to the base function
