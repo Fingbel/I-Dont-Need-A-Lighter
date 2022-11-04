@@ -76,7 +76,7 @@ function OnStoveSmoking(_player, stove, _cigarette)
 	ISWorldObjectContextMenu.Test = true
 
 	--Those are the base value for the timed action lenght
-	local stoveBaseTimer = 100
+	local stoveBaseTimer = 150
 	local microwaveBaseTimer = 1000
 	local fireplaceBaseTimer = 100
 	local barbecueBaseTimer = 100
@@ -97,9 +97,8 @@ function OnStoveSmoking(_player, stove, _cigarette)
 		end
 	end
 	
-	--This is where we need to decide if player failed or not the lighting
+	--This is where we need to decide if player failed or not the lighting, and by how much
 		local outcome = DeterminateStoveSmokingOutcome(_player, stove, _cigarette)
-		--
 
 	--Let's light what we've found
 	if luautils.walkAdj(_player, stove:getSquare(), true) then 
@@ -129,6 +128,8 @@ end
 
 --This is where we determined the outcome of the attempt. THe function return a float between 0 and 1.
 function DeterminateStoveSmokingOutcome(_player, stove, _cigarette)
+
+	
 	local outcome = 1
 	
 	--print(stove:getSquare():getCell():getCurrentLightZ())
@@ -143,5 +144,31 @@ function DeterminateStoveSmokingOutcome(_player, stove, _cigarette)
 	print("Endurance : ",endurance)
 	print("Fatigue : ",fatigue)
 	print("Panic : ",panic)
+
+	--Fatigue influence on outcome
+	if (fatigue >= 0.6) then outcome = outcome - 0.15 end
+
+	--Pain influence on outcome
+	if(pain >=50) then outcome = outcome - 0.20 end
+
+	--Panic influence on outcome
+	if(panic >= 30 and panic <= 70) then outcome = outcome - 0.15 end
+	if(panic >=70) then outcome = outcome - 0.30 end
+
+	--Endurance influence on outcome
+	if(endurance > 0 and endurance < 0.25) then outcome = outcome - 0.45 end
+	if(endurance > 0.25 and endurance <0.5) then outcome = outcome - 0.30 end
+	if(endurance > 0.5 and endurance <0.7) then outcome = outcome - 0.15 end
+	
+	print("Outcome : ", outcome)
+	--Outcome ranges 
+	--100 - 85 : full success
+	--85 - 60 : success with a possible small negative
+	--60 - 45 : success is not guaranteed, medium chance of small negative, small chance of medium negative
+	--45 - 30 : failure with high chance of small negative, medium chance of medium negative, small chance of big negative
+	--30 - 0 : failure with automatic small negative, high chance of medium negative, medium chance of big negative
+
+	--Small negatives : 
+	--Light burn
 	return outcome
 end
