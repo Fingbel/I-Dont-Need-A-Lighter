@@ -104,16 +104,16 @@ function OnStoveSmoking(_player, stove, _cigarette)
 	if luautils.walkAdj(_player, stove:getSquare(), true) then 
 		
 		
-		if instanceof(stove, 'IsoStove') and not stove:isMicrowave() then ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette, stoveBaseTimer/outcome))
-		elseif instanceof(stove, 'IsoStove') and stove:isMicrowave() then ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette, microwaveBaseTimer/outcome)) 
-		elseif instanceof(stove,'IsoFireplace') and stove:isLit() then ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette, fireplaceBaseTimer/outcome)) 
-		elseif instanceof(stove,'IsoBarbecue') and stove:isLit() then ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette, barbecueBaseTimer/outcome)) 
-		elseif instanceof(stove, "IsoObject") and stove:getSpriteName() == "camping_01_5" then ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette, campingBaseTimer/outcome)) 
+		if instanceof(stove, 'IsoStove') and not stove:isMicrowave() then ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette, stoveBaseTimer/outcome, outcome))
+		elseif instanceof(stove, 'IsoStove') and stove:isMicrowave() then ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette, microwaveBaseTimer/outcome, outcome)) 
+		elseif instanceof(stove,'IsoFireplace') and stove:isLit() then ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette, fireplaceBaseTimer/outcome, outcome)) 
+		elseif instanceof(stove,'IsoBarbecue') and stove:isLit() then ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette, barbecueBaseTimer/outcome, outcome)) 
+		elseif instanceof(stove, "IsoObject") and stove:getSpriteName() == "camping_01_5" then ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette, campingBaseTimer/outcome, outcome)) 
 		elseif stove:getSquare():haveFire() then ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette, fireBaseTimer/outcome))
 		else for i=0,stove:getSquare():getMovingObjects():size()-1 do
 				local o = stove:getSquare():getMovingObjects():get(i)
 				if instanceof(o, "IsoPlayer") and (o ~= playerObj) then
-					if string.match(o:getAnimationDebug(), "foodtype : Cigarettes") then ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette, playerBaseTimer/outcome)) end
+					if string.match(o:getAnimationDebug(), "foodtype : Cigarettes") then ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette, playerBaseTimer/outcome, outcome)) end
 				end		
 			end
 		end
@@ -140,6 +140,10 @@ function DeterminateStoveSmokingOutcome(_player, stove, _cigarette)
     local fatigue = stats:getFatigue()
 	local panic = stats:getPanic()
 
+	local hand_L = _player:getBodyDamage():getBodyPart(BodyPartType.Hand_L)
+	local hand_R = _player:getBodyDamage():getBodyPart(BodyPartType.Hand_R)
+	local head = _player:getBodyDamage():getBodyPart(BodyPartType.Head)
+
 	print("Pain : ", pain)
 	print("Endurance : ",endurance)
 	print("Fatigue : ",fatigue)
@@ -156,10 +160,14 @@ function DeterminateStoveSmokingOutcome(_player, stove, _cigarette)
 	if(panic >=70) then outcome = outcome - 0.30 end
 
 	--Endurance influence on outcome
-	if(endurance > 0 and endurance < 0.25) then outcome = outcome - 0.45 end
-	if(endurance > 0.25 and endurance <0.5) then outcome = outcome - 0.30 end
-	if(endurance > 0.5 and endurance <0.7) then outcome = outcome - 0.15 end
+	if(endurance > 0 and endurance < 0.25) then outcome = outcome - 0.30 end
+	if(endurance > 0.25 and endurance <0.5) then outcome = outcome - 0.15 end
+	if(endurance > 0.5 and endurance <0.7) then outcome = outcome - 0.10 end
 	
+	--Injuries influence on outcome
+	if(hand_L:HasInjury() or hand_L:isDeepWounded() or hand_L:isBurnt() or hand_L:isCut() or hand_L:haveGlass() or hand_L:bandaged()) then outcome = outcome -0.10 end
+	if(hand_R:HasInjury() or hand_R:isDeepWounded() or hand_R:isBurnt() or hand_R:isCut() or hand_R:haveGlass() or hand_R:bandaged()) then outcome = outcome -0.10 end
+
 	print("Outcome : ", outcome)
 	--Outcome ranges 
 	--100 - 85 : full success

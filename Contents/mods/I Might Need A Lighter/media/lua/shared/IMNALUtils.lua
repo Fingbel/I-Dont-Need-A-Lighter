@@ -102,7 +102,12 @@ function getTableSize(t)
 end
 
 function CarLighterRandomizer()
-	local rand = ZombRand(100)
-	if rand >50 then return 1 end
-	return 0 
+	--is the socket broken ?
+	local rand2 = ZombRand(100)
+	if(rand2 >50) then return 0 end
+	--is it in good shape but empty ?
+	local rand3 = ZombRand(100)
+	if(rand3 >50) then return 1 end
+	--is it in good shape and populated ?
+	return 2
 end

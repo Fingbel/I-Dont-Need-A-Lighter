@@ -29,19 +29,22 @@ function ISVehicleMenu.showRadialMenu(player)
 		end
 		local seat = vehicle:getSeat(player)
 		
-
+		
 
 		if seat == 0 or seat == 1 then
-			if vehicle:getModData()["CL"] == 0 and carLighter == nill then 
-				menu:addSlice(getText("No Car Lighter"),getTexture("media/ui/vehicles/noCarLighter.png")) 
+			if vehicle:getModData()["CL"] == 0 then
+				menu:addSlice(getText("Car Lighter socket needs repair"),getTexture("media/ui/vehicles/carLighterNeedRepair.png"),OnCarLighterSocketRepair, player) 
 				return
-			elseif vehicle:getModData()["CL"] == 0 and carLighter ~= nill then
+			elseif vehicle:getModData()["CL"] == 1 and carLighter == nill then 
+				menu:addSlice(getText("No Car Lighter present"),getTexture("media/ui/vehicles/noCarLighter.png")) 
+				return
+			elseif vehicle:getModData()["CL"] == 1 and carLighter ~= nill then
 				menu:addSlice(getText("Install Car Lighter"),getTexture("media/ui/vehicles/CarLighterCanBeInstalled.png"),OnCarLighterInstalling, player, carLighter ) 
 				return
 			end
 
 			--Do we have everything ?
-			if vehicle:getModData()["CL"] == 1 and smokables ~= nil and vehicle:getBatteryCharge() >= 0.03 and (vehicle:isHotwired() or vehicle:isKeysInIgnition()) then
+			if vehicle:getModData()["CL"] == 2 and smokables ~= nil and vehicle:getBatteryCharge() >= 0.03 and (vehicle:isHotwired() or vehicle:isKeysInIgnition()) then
 				menu:addSlice(getText('ContextMenu_CarLighter'), getTexture("media/ui/vehicles/carSmokingBatteryCigarette.png"), OnSubMenu, player, vehicle)
 				return
 
@@ -84,12 +87,12 @@ function OnSubMenu(player, vehicle)
 
 	local texture = Joypad.Texture.AButton
 
-	if vehicle:getModData()["CL"] == 1 and smokables ~= nil and vehicle:getBatteryCharge() > 0 and (vehicle:isHotwired() or vehicle:isKeysInIgnition())  then
+	if vehicle:getModData()["CL"] == 2 and smokables ~= nil and vehicle:getBatteryCharge() > 0 and (vehicle:isHotwired() or vehicle:isKeysInIgnition())  then
 		for i=0, getTableSize(smokables) -1 do --TODO : this need to have a hardcap to not fuck up the radialmenu
 			menu:addSlice(smokables[i]:getDisplayName(), smokables[i]:getTexture(), OnCarSmoking, player, smokables[i] )
 		end
 	end
-	if vehicle:getModData()["CL"] == 1 then
+	if vehicle:getModData()["CL"] == 2 then
 		menu:addSlice(getText("Remove Car Lighter"), getTexture("media/ui/vehicles/CarLighterCanBeRemoved.png"), OnCarLighterUnInstalling, player)	
 	end
 	menu:addToUIManager()
@@ -134,4 +137,8 @@ end
 
 function OnCarLighterUnInstalling(_player)
 	ISTimedActionQueue.add(IsUnInstallingCarLighter:new(_player,50))
+end
+
+function OnCarLighterSocketRepair(_player)
+	ISTimedActionQueue.add(IsRepairingCLSocket:new(_player,400))
 end

@@ -47,16 +47,18 @@ function IsStoveLighting:perform()
 	end
 	--FinishTimeBasedAction
 	ISBaseTimedAction.perform(self)
+
 end
 
-function IsStoveLighting:new (character, stove, item, time)
+function IsStoveLighting:new (character, stove, item, time, outcome)
 	local o = {}
 	setmetatable(o, self)
 	self.__index = self
-	o.character = character;
+	o.character = character
 	o.stove = stove
-	o.item = item;
-	o.maxTime = time;
+	o.item = item
+	o.maxTime = time
+	o.outcome = outcome
 	if instanceof(stove,'IsoStove') then
 		o.initialState = stove:Activated()
 	end
