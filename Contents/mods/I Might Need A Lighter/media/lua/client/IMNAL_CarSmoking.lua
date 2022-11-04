@@ -103,14 +103,20 @@ end
 
 --This is the function starting the car smoking sequence
 function OnCarSmoking(_player, _cigarette)
-	
+	local carlighterBaseTimer = 125
+	local batteryDurabilityMult = _player:getVehicle():getBattery():getCondition()/100
+	local batteryChargeMult = _player:getVehicle():getBattery():getInventoryItem():getUsedDelta()
+	print(batteryChargeMult)
+	print(batteryDurabilityMult)
+	print((carlighterBaseTimer/batteryDurabilityMult)/batteryChargeMult)
+
 	--Do we need to transfer cigarette from a bag first ? 
 	if _cigarette:getContainer() ~= _player:getInventory() then
 		ISTimedActionQueue.add(ISInventoryTransferAction:new (_player,  _cigarette, _cigarette:getContainer(), _player:getInventory(), 5))
 	end
 
 	--We need some time for the lighter to heat
-	ISTimedActionQueue.add(IsCarLighting:new (_player, _cigarette, 300))
+	ISTimedActionQueue.add(IsCarLighting:new (_player, _cigarette, (carlighterBaseTimer/batteryDurabilityMult)/batteryChargeMult))
 	
 	--Let's smoke now
 	ISTimedActionQueue.add(IsCarSmoking:new(_player, _cigarette, 460))

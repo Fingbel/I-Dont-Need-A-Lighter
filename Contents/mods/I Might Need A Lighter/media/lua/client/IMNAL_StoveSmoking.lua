@@ -31,7 +31,7 @@ function ContextDrawing(player, context, stove, smokables)
 	return
 	end
 
-	--We have more than on type, we need to draw a sub-menu
+	--We have more than one type, we need to draw a sub-menu
 	local smokeOption = context:addOptionOnTop(getText('ContextMenu_Smoke'), stove, nil);		
 	local subMenu = ISContextMenu:getNew(context)
 	for i=0,getTableSize(smokables) -1 do	
@@ -75,6 +75,16 @@ end
 function OnStoveSmoking(_player, stove, _cigarette) 
 	ISWorldObjectContextMenu.Test = true
 
+	--Those are the base value for the timed action lenght
+	local stoveBaseTimer = 100
+	local microwaveBaseTimer = 1000
+	local fireplaceBaseTimer = 100
+	local barbecueBaseTimer = 100
+	local campingBaseTimer = 120
+	local fireBaseTimer = 40
+	local playerBaseTimer = 10
+
+
 	--We need to make sure the clicked player is still smoking
 	if instanceof(stove, 'IsoPlayer') then
 		if not string.match(stove:getAnimationDebug(), "foodtype : Cigarettes") then return end
@@ -86,26 +96,52 @@ function OnStoveSmoking(_player, stove, _cigarette)
 			ISTimedActionQueue.add(ISInventoryTransferAction:new (_player,  _cigarette, _cigarette:getContainer(), _player:getInventory(), 5))
 		end
 	end
-	 
+	
+	--This is where we need to decide if player failed or not the lighting
+		local outcome = DeterminateStoveSmokingOutcome(_player, stove, _cigarette)
+		--
+
 	--Let's light what we've found
 	if luautils.walkAdj(_player, stove:getSquare(), true) then 
-		if instanceof(stove, 'IsoStove') and not stove:isMicrowave() then ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette, 100))
-		elseif instanceof(stove, 'IsoStove') and stove:isMicrowave() then ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette, 3000)) 
-		elseif instanceof(stove,'IsoFireplace') and stove:isLit() then ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette, 100)) 
-		elseif instanceof(stove,'IsoBarbecue') and stove:isLit() then ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette, 100)) 
-		elseif instanceof(stove, "IsoObject") and stove:getSpriteName() == "camping_01_5" then ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette, 120)) 
-		elseif stove:getSquare():haveFire() then ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette, 10))
+		
+		
+		if instanceof(stove, 'IsoStove') and not stove:isMicrowave() then ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette, stoveBaseTimer/outcome))
+		elseif instanceof(stove, 'IsoStove') and stove:isMicrowave() then ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette, microwaveBaseTimer/outcome)) 
+		elseif instanceof(stove,'IsoFireplace') and stove:isLit() then ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette, fireplaceBaseTimer/outcome)) 
+		elseif instanceof(stove,'IsoBarbecue') and stove:isLit() then ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette, barbecueBaseTimer/outcome)) 
+		elseif instanceof(stove, "IsoObject") and stove:getSpriteName() == "camping_01_5" then ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette, campingBaseTimer/outcome)) 
+		elseif stove:getSquare():haveFire() then ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette, fireBaseTimer/outcome))
 		else for i=0,stove:getSquare():getMovingObjects():size()-1 do
 				local o = stove:getSquare():getMovingObjects():get(i)
 				if instanceof(o, "IsoPlayer") and (o ~= playerObj) then
-					if string.match(o:getAnimationDebug(), "foodtype : Cigarettes") then ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette, 10)) end
+					if string.match(o:getAnimationDebug(), "foodtype : Cigarettes") then ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette, playerBaseTimer/outcome)) end
 				end		
 			end
 		end
 	end
 
+	--Past this line the player successfully lighted his smokable
 	--Now it's lit, let's smoke it
 	if luautils.walkAdj(_player, stove:getSquare(), true) then 	
 		ISTimedActionQueue.add(IsStoveSmoking:new(_player, stove, _cigarette, 460))
 	end
+end
+
+--This is where we determined the outcome of the attempt. THe function return a float between 0 and 1.
+function DeterminateStoveSmokingOutcome(_player, stove, _cigarette)
+	local outcome = 1
+	
+	--print(stove:getSquare():getCell():getCurrentLightZ())
+
+	local stats = _player:getStats()
+	local pain = stats:getPain()
+    local endurance = stats:getEndurance()
+    local fatigue = stats:getFatigue()
+	local panic = stats:getPanic()
+
+	print("Pain : ", pain)
+	print("Endurance : ",endurance)
+	print("Fatigue : ",fatigue)
+	print("Panic : ",panic)
+	return outcome
 end
