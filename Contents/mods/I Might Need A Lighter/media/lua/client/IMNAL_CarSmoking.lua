@@ -3,14 +3,16 @@ local old_ISVehicleMenu_showRadialMenu = ISVehicleMenu.showRadialMenu
 
 --This is the added code to the base function
 function ISVehicleMenu.showRadialMenu(player)
+	
 	--Here we first call the base function
-	old_ISVehicleMenu_showRadialMenu(player)	
+	old_ISVehicleMenu_showRadialMenu(player)
+
 	local vehicle = player:getVehicle()
 	local smokables = CheckInventoryForCigarette(player)
 	local carLighter = CheckInventoryForCarLighter(player)
 
 	if vehicle ~= nil then
-		--Now we run some custom code
+		--Now we run our code
 		local menu = getPlayerRadialMenu(player:getPlayerNum())
 		if (vehicle:getModData()["CL"] == null) then
 			vehicle:getModData()["CL"] = CarLighterRandomizer()
@@ -29,8 +31,6 @@ function ISVehicleMenu.showRadialMenu(player)
 		end
 		local seat = vehicle:getSeat(player)
 		
-		
-
 		if seat == 0 or seat == 1 then
 			if vehicle:getModData()["CL"] == 0 then
 				menu:addSlice(getText("Car Lighter socket needs repair"),getTexture("media/ui/vehicles/carLighterNeedRepair.png"),OnCarLighterSocketRepair, player) 

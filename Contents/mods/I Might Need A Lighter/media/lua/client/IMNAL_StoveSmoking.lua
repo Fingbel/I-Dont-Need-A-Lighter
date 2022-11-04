@@ -97,23 +97,30 @@ function OnStoveSmoking(_player, stove, _cigarette)
 		end
 	end
 	
-	--This is where we need to decide if player failed or not the lighting, and by how much
+	--This is where we calculate the length of the timed action and outcome
 		local outcome = DeterminateStoveSmokingOutcome(_player, stove, _cigarette)
 
 	--Let's light what we've found
 	if luautils.walkAdj(_player, stove:getSquare(), true) then 
 		
-		
-		if instanceof(stove, 'IsoStove') and not stove:isMicrowave() then ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette, stoveBaseTimer/outcome, outcome))
-		elseif instanceof(stove, 'IsoStove') and stove:isMicrowave() then ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette, microwaveBaseTimer/outcome, outcome)) 
-		elseif instanceof(stove,'IsoFireplace') and stove:isLit() then ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette, fireplaceBaseTimer/outcome, outcome)) 
-		elseif instanceof(stove,'IsoBarbecue') and stove:isLit() then ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette, barbecueBaseTimer/outcome, outcome)) 
-		elseif instanceof(stove, "IsoObject") and stove:getSpriteName() == "camping_01_5" then ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette, campingBaseTimer/outcome, outcome)) 
-		elseif stove:getSquare():haveFire() then ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette, fireBaseTimer/outcome))
+		if instanceof(stove, 'IsoStove') and not stove:isMicrowave() then 
+			ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette,outcome, stoveBaseTimer))
+		elseif instanceof(stove, 'IsoStove') and stove:isMicrowave() then 
+			ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette,outcome, microwaveBaseTimer)) 
+		elseif instanceof(stove,'IsoFireplace') and stove:isLit() then 
+			ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette,outcome, fireplaceBaseTimer)) 
+		elseif instanceof(stove,'IsoBarbecue') and stove:isLit() then 
+			ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette,outcome, barbecueBaseTimer)) 
+		elseif instanceof(stove, "IsoObject") and stove:getSpriteName() == "camping_01_5" then 
+			ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette,outcome, campingBaseTimer)) 
+		elseif stove:getSquare():haveFire() then
+			ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette,outcome, fireBaseTimer))
 		else for i=0,stove:getSquare():getMovingObjects():size()-1 do
 				local o = stove:getSquare():getMovingObjects():get(i)
 				if instanceof(o, "IsoPlayer") and (o ~= playerObj) then
-					if string.match(o:getAnimationDebug(), "foodtype : Cigarettes") then ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette, playerBaseTimer/outcome, outcome)) end
+					if string.match(o:getAnimationDebug(), "foodtype : Cigarettes") then 
+						ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette,outcome, playerBaseTimer)) 
+					end
 				end		
 			end
 		end
@@ -126,28 +133,25 @@ function OnStoveSmoking(_player, stove, _cigarette)
 	end
 end
 
---This is where we determined the outcome of the attempt. THe function return a float between 0 and 1.
-function DeterminateStoveSmokingOutcome(_player, stove, _cigarette)
-
-	
+--This is where we determine the outcome of the attempt. The function return between 0 and 1.
+function DeterminateStoveSmokingOutcome(_player, stove, _cigarette)	
 	local outcome = 1
 	
-	--print(stove:getSquare():getCell():getCurrentLightZ())
-
 	local stats = _player:getStats()
 	local pain = stats:getPain()
     local endurance = stats:getEndurance()
     local fatigue = stats:getFatigue()
 	local panic = stats:getPanic()
+	local drunkenness = stats:getDrunkenness()
 
 	local hand_L = _player:getBodyDamage():getBodyPart(BodyPartType.Hand_L)
 	local hand_R = _player:getBodyDamage():getBodyPart(BodyPartType.Hand_R)
-	local head = _player:getBodyDamage():getBodyPart(BodyPartType.Head)
 
 	print("Pain : ", pain)
 	print("Endurance : ",endurance)
 	print("Fatigue : ",fatigue)
 	print("Panic : ",panic)
+	print("Drunkenness:",drunkenness)
 
 	--Fatigue influence on outcome
 	if (fatigue >= 0.6) then outcome = outcome - 0.15 end
@@ -164,19 +168,13 @@ function DeterminateStoveSmokingOutcome(_player, stove, _cigarette)
 	if(endurance > 0.25 and endurance <0.5) then outcome = outcome - 0.15 end
 	if(endurance > 0.5 and endurance <0.7) then outcome = outcome - 0.10 end
 	
+	--Drunkenness influence on outcome
+	if(drunkenness > 70) then outcome = outcome - 0.4 end
+	if(drunkenness > 35 and drunkenness < 70) then outcome = outcome - 0.2 end
 	--Injuries influence on outcome
-	if(hand_L:HasInjury() or hand_L:isDeepWounded() or hand_L:isBurnt() or hand_L:isCut() or hand_L:haveGlass() or hand_L:bandaged()) then outcome = outcome -0.10 end
-	if(hand_R:HasInjury() or hand_R:isDeepWounded() or hand_R:isBurnt() or hand_R:isCut() or hand_R:haveGlass() or hand_R:bandaged()) then outcome = outcome -0.10 end
+	if(hand_L:HasInjury() or hand_L:isDeepWounded() or hand_L:isBurnt() or hand_L:isCut() or hand_L:haveGlass() or hand_L:bandaged()) then outcome = outcome -0.15 end
+	if(hand_R:HasInjury() or hand_R:isDeepWounded() or hand_R:isBurnt() or hand_R:isCut() or hand_R:haveGlass() or hand_R:bandaged()) then outcome = outcome -0.15 end
 
 	print("Outcome : ", outcome)
-	--Outcome ranges 
-	--100 - 85 : full success
-	--85 - 60 : success with a possible small negative
-	--60 - 45 : success is not guaranteed, medium chance of small negative, small chance of medium negative
-	--45 - 30 : failure with high chance of small negative, medium chance of medium negative, small chance of big negative
-	--30 - 0 : failure with automatic small negative, high chance of medium negative, medium chance of big negative
-
-	--Small negatives : 
-	--Light burn
 	return outcome
 end

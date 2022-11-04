@@ -2,6 +2,15 @@
 
 require "TimedActions/ISBaseTimedAction"
 
+--Outcome ranges 
+	--100 - 85 : full success
+	--85 - 60 : success with a possible small negative
+	--60 - 45 : success is not guaranteed, medium chance of small negative, small chance of medium negative
+	--45 - 30 : failure with high chance of small negative, medium chance of medium negative, small chance of big negative
+	--30 - 0 : failure with automatic small negative, high chance of medium negative, medium chance of big negative
+
+	--Small negatives : 
+	--Light burn
 
 IsStoveLighting = ISBaseTimedAction:derive('IsStoveLighting')
 
@@ -28,6 +37,63 @@ function IsStoveLighting:start()
 	end
 end
 
+function IsStoveLighting:update()
+	--print (self:getJobDelta())
+	
+	if self:getJobDelta() > 0.30 and self:getJobDelta() < 0.60 then
+		if (self.riskCounter > 1) then
+			local rand = ZombRand(100)
+			if self.highrisk == true then
+				if rand>self.failureRate then
+					print("highrisk event triggered ",rand)
+					self.character:getBodyDamage():getBodyPart(BodyPartType.Head):setBurned()				
+					self.character:getBodyDamage():getBodyPart(BodyPartType.Hand_L):setBurned()
+					self.character:getBodyDamage():getBodyPart(BodyPartType.Hand_R):setBurned()
+					self.riskCounter = self.riskCounter -10
+					self:forceStop()
+					return
+				else 
+					self.riskCounter = self.riskCounter -10
+					print("highrisk event avoided",rand)	
+					return
+				end
+			end
+			if self.medrisk == true then
+				if rand>self.failureRate then
+					print("medrisk event triggered",rand)
+					self.character:getBodyDamage():getBodyPart(BodyPartType.Hand_L):setBurned()
+					self.character:getBodyDamage():getBodyPart(BodyPartType.Hand_R):setBurned()					
+					self.riskCounter = self.riskCounter -10
+					self:forceStop()
+					return
+				else  
+					self.riskCounter = self.riskCounter -10
+					print("medrisk event avoided",rand)
+					return
+				end
+			end
+			if self.lowrisk == true then
+				if rand>self.failureRate then
+					print("lowrisk event triggered",rand)
+					local rerand = ZombRand(100)
+					print("Rerand : ", rerand)
+					if (rerand >=50) then
+						self.character:getBodyDamage():getBodyPart(BodyPartType.Hand_L):setBurned()
+					elseif (rerand <50) then
+						self.character:getBodyDamage():getBodyPart(BodyPartType.Hand_R):setBurned()
+					end
+					self.riskCounter = self.riskCounter -10
+					return
+				else  
+					self.riskCounter = self.riskCounter -10
+					print("lowrisk event avoided",rand)
+					return
+				end
+			end
+		end
+	end
+end
+
 function IsStoveLighting:stop()
 	--StopTimeBasedAction
 	if instanceof(self.stove,'IsoStove') then
@@ -50,20 +116,36 @@ function IsStoveLighting:perform()
 
 end
 
-function IsStoveLighting:new (character, stove, item, time, outcome)
+function IsStoveLighting:new (character, stove, item, outcome, time)
 	local o = {}
+	o.riskCounter = (time/outcome)/time
+	o.failureRate = 70
+	time = time/outcome
 	setmetatable(o, self)
 	self.__index = self
 	o.character = character
 	o.stove = stove
 	o.item = item
-	o.maxTime = time
 	o.outcome = outcome
+	o.maxTime = time
+	o.lowrisk = false
+	o.medrisk = false
+	o.highrisk = false
 	if instanceof(stove,'IsoStove') then
 		o.initialState = stove:Activated()
 	end
 	if character:isTimedActionInstant() then
 		o.maxTime = 1;
+	end
+	if outcome <0.85 and outcome >= 0.50 then
+		o.lowrisk = true
+	elseif outcome <0.50 and outcome > 0.30 then
+		o.lowrisk = true
+		o.medrisk = true
+	elseif outcome <0.30 then
+		o.lowrisk = true
+		o.medrisk = true
+		o.highrisk = true	
 	end
 	return o
 end
