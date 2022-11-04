@@ -109,17 +109,18 @@ function OnCarSmoking(_player, _cigarette)
 	local carlighterBaseTimer = 125
 	local batteryDurabilityMult = _player:getVehicle():getBattery():getCondition()/100
 	local batteryChargeMult = _player:getVehicle():getBattery():getInventoryItem():getUsedDelta()
-	print(batteryChargeMult)
-	print(batteryDurabilityMult)
-	print((carlighterBaseTimer/batteryDurabilityMult)/batteryChargeMult)
+	local carlighterFinalTimer = (carlighterBaseTimer/batteryDurabilityMult)/batteryChargeMult
 
 	--Do we need to transfer cigarette from a bag first ? 
 	if _cigarette:getContainer() ~= _player:getInventory() then
 		ISTimedActionQueue.add(ISInventoryTransferAction:new (_player,  _cigarette, _cigarette:getContainer(), _player:getInventory(), 5))
 	end
 
+	--TODO : We need to decide here if the attempt failed and broke the car lighter and/or the socket
+
+
 	--We need some time for the lighter to heat
-	ISTimedActionQueue.add(IsCarLighting:new (_player, _cigarette, (carlighterBaseTimer/batteryDurabilityMult)/batteryChargeMult))
+	ISTimedActionQueue.add(IsCarLighting:new (_player, _cigarette, carlighterFinalTimer))
 	
 	--Let's smoke now
 	ISTimedActionQueue.add(IsCarSmoking:new(_player, _cigarette, 460))
@@ -131,12 +132,12 @@ function OnCarLighterInstalling(_player, _carlighter)
 	if _carlighter:getContainer() ~= _player:getInventory() then
 		ISTimedActionQueue.add(ISInventoryTransferAction:new (_player,  _carlighter, _carlighter:getContainer(), _player:getInventory(), 5))
 	end
-	ISTimedActionQueue.add(IsInstallingCarLighter:new(_player,_carlighter, 50))
+	ISTimedActionQueue.add(IsInstallingCarLighter:new(_player,_carlighter, 30))
 end
 
 
 function OnCarLighterUnInstalling(_player)
-	ISTimedActionQueue.add(IsUnInstallingCarLighter:new(_player,50))
+	ISTimedActionQueue.add(IsUnInstallingCarLighter:new(_player,30))
 end
 
 function OnCarLighterSocketRepair(_player)

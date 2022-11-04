@@ -8,7 +8,7 @@ function IsInstallingCarLighter:isValid()
 end
 
 function IsInstallingCarLighter:start()
-	--
+	self.character:getEmitter():playSound("CarLighter_Plug");
 end
 
 function IsInstallingCarLighter:stop()

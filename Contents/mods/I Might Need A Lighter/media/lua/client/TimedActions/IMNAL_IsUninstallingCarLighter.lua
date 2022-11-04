@@ -8,7 +8,7 @@ return true
 end
 
 function IsUnInstallingCarLighter:start()
-	--
+	self.character:getEmitter():playSound("CarLighter_PlugOut");
 end
 
 function IsUnInstallingCarLighter:stop()
