@@ -8,8 +8,6 @@ function ISVehicleMenu.showRadialMenu(player)
 
 	local isPaused = UIManager.getSpeedControls() and UIManager.getSpeedControls():getCurrentGameSpeed() == 0
 	if isPaused then return end
-	
-	
 
 	local vehicle = player:getVehicle()
 	local smokables = CheckInventoryForCigarette(player)
@@ -29,7 +27,7 @@ function ISVehicleMenu.showRadialMenu(player)
 		--Gamepad stuff
 		if menu:isReallyVisible() then
 			if menu.joyfocus then
-				setJoypadFocus(player:getplayerObjNum(), nil)
+				setJoypadFocus(player:getPlayerObjNum(), nil)
 			end 
 			menu:undisplay()
 			return
@@ -82,7 +80,7 @@ end
 
 function OnSubMenu(player, vehicle)
 	local smokables = CheckInventoryForCigarette(player) --TODO : this could be a parameter, we are wasting power
-	local menu = getPlayerRadialMenu(player:getPlayerNum())
+	local menu = getPlayerRadialMenu(player:getplayerNum())
 	menu:clear()
 	
 	--Draw the radial menu again
