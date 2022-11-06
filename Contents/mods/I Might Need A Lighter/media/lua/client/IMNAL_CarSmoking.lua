@@ -1,6 +1,27 @@
 --I Might Need A Lighter Mod by Fingbel
 local old_ISVehicleMenu_showRadialMenu = ISVehicleMenu.showRadialMenu
 
+--TODO : We need to fire the check when we enter the vehicle
+function OnEnterVehicleCLCheck(player)
+	local args = {}
+	args["vehicle"] = player:getVehicle()
+	args["playerID"] = player:getOnlineID()
+	sendClientCommand(player, "IMNAL", "IMNALCLCheck", args)
+
+end
+
+Events.OnEnterVehicle.Add(OnEnterVehicleCLCheck)
+
+function CLUpdate(module, command, args)
+	if not isClient() then return end	
+    if module ~= "IMNAL" then return end;  	
+    if command == "IMNALCLUpdate" then
+		getPlayer():getModData().CL = args["CL"]
+	end          
+end
+
+Events.OnServerCommand.Add(CLUpdate)
+
 --This is the added code to the base function
 function ISVehicleMenu.showRadialMenu(player)
 	--Here we first call the base function
@@ -17,13 +38,9 @@ function ISVehicleMenu.showRadialMenu(player)
 		--Now we run our code
 		local menu = getPlayerRadialMenu(player:getPlayerNum())
 
-		--TODO : FIX MODDATA TRANSMISSION FOR MP
-		if player:getVehicle():getModData().CL == nill then
-			player:getVehicle():getModData().CL = CarLighterRandomizer()
-			print("New moddata assigned to this vehicle")
-		end
-		print(vehicle:getModData().CL)
-
+		--Did we received the correct data ?
+		print("Vehicle : ",player:getModData().CL)
+	
 		--Gamepad stuff
 		if menu:isReallyVisible() then
 			if menu.joyfocus then
@@ -35,19 +52,19 @@ function ISVehicleMenu.showRadialMenu(player)
 		local seat = vehicle:getSeat(player)
 		
 		if seat <=1 then
-			if vehicle:getModData().CL == "0" then
+			if player:getModData().CL == "0" then
 				menu:addSlice(getText("Car Lighter socket needs repair"),getTexture("media/ui/vehicles/carLighterNeedRepair.png"),OnCarLighterSocketRepair, player) 
 				return
-			elseif vehicle:getModData().CL == "1" and carLighter == nill then 
+			elseif player:getModData().CL == "1" and carLighter == nill then 
 				menu:addSlice(getText("No Car Lighter present"),getTexture("media/ui/vehicles/noCarLighter.png")) 
 				return
-			elseif vehicle:getModData().CL == "1" and carLighter ~= nill then
+			elseif player:getModData().CL == "1" and carLighter ~= nill then
 				menu:addSlice(getText("Install Car Lighter"),getTexture("media/ui/vehicles/CarLighterCanBeInstalled.png"),OnCarLighterInstalling, player, carLighter ) 
 				return
 			end
 
 			--Do we have everything ?
-			if vehicle:getModData().CL == "2" and smokables ~= nil and vehicle:getBatteryCharge() >= 0.03 and (vehicle:isHotwired() or vehicle:isKeysInIgnition()) then
+			if player:getModData().CL == "2" and smokables ~= nil and vehicle:getBatteryCharge() >= 0.03 and (vehicle:isHotwired() or vehicle:isKeysInIgnition()) then
 				menu:addSlice(getText('ContextMenu_CarLighter'), getTexture("media/ui/vehicles/carSmokingBatteryCigarette.png"), OnSubMenu, player, vehicle)
 				return
 
@@ -80,7 +97,7 @@ end
 
 function OnSubMenu(player, vehicle)
 	local smokables = CheckInventoryForCigarette(player) --TODO : this could be a parameter, we are wasting power
-	local menu = getPlayerRadialMenu(player:getplayerNum())
+	local menu = getPlayerRadialMenu(player:getPlayerNum())
 	menu:clear()
 	
 	--Draw the radial menu again
@@ -89,12 +106,12 @@ function OnSubMenu(player, vehicle)
 
 	local texture = Joypad.Texture.AButton
 
-	if vehicle:getModData().CL == "2" and smokables ~= nil and vehicle:getBatteryCharge() > 0.03 and (vehicle:isHotwired() or vehicle:isKeysInIgnition())  then
+	if player:getModData().CL == "2" and smokables ~= nil and vehicle:getBatteryCharge() > 0.03 and (vehicle:isHotwired() or vehicle:isKeysInIgnition())  then
 		for i=0, getTableSize(smokables) -1 do --TODO : this need to have a hardcap to not fuck up the radialmenu
 			menu:addSlice(smokables[i]:getDisplayName(), smokables[i]:getTexture(), OnCarSmoking, player, smokables[i] )
 		end
 	end
-	if vehicle:getModData().CL == "2" then
+	if player:getModData().CL == "2" then
 		menu:addSlice(getText("Remove Car Lighter"), getTexture("media/ui/vehicles/CarLighterCanBeRemoved.png"), OnCarLighterUnInstalling, player)	
 	end
 	menu:addToUIManager()
