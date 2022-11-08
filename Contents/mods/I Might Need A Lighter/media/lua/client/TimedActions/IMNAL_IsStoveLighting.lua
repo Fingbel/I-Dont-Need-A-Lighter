@@ -34,7 +34,7 @@ function IsStoveLighting:update()
 			local rand = ZombRand(100)
 			if self.highrisk == true then
 				if rand>self.failureRate then
-					print("highrisk event triggered ",rand)
+					--print("highrisk event triggered ",rand)
 					self.character:getBodyDamage():getBodyPart(BodyPartType.Head):setBurned()				
 					self.character:getBodyDamage():getBodyPart(BodyPartType.Hand_L):setBurned()
 					self.character:getBodyDamage():getBodyPart(BodyPartType.Hand_R):setBurned()
@@ -43,13 +43,13 @@ function IsStoveLighting:update()
 					return
 				else 
 					self.riskCounter = self.riskCounter -10
-					print("highrisk event avoided",rand)	
+					--print("highrisk event avoided",rand)	
 					return
 				end
 			end
 			if self.medrisk == true then
 				if rand>self.failureRate then
-					print("medrisk event triggered",rand)
+					--print("medrisk event triggered",rand)
 					self.character:getBodyDamage():getBodyPart(BodyPartType.Hand_L):setBurned()
 					self.character:getBodyDamage():getBodyPart(BodyPartType.Hand_R):setBurned()					
 					self.riskCounter = self.riskCounter -10
@@ -57,15 +57,15 @@ function IsStoveLighting:update()
 					return
 				else  
 					self.riskCounter = self.riskCounter -10
-					print("medrisk event avoided",rand)
+					--print("medrisk event avoided",rand)
 					return
 				end
 			end
 			if self.lowrisk == true then
 				if rand>self.failureRate then
-					print("lowrisk event triggered",rand)
+					--print("lowrisk event triggered",rand)
 					local rerand = ZombRand(100)
-					print("Rerand : ", rerand)
+					--print("Rerand : ", rerand)
 					if (rerand >=50) then
 						self.character:getBodyDamage():getBodyPart(BodyPartType.Hand_L):setBurned()
 					elseif (rerand <50) then
@@ -75,7 +75,7 @@ function IsStoveLighting:update()
 					return
 				else  
 					self.riskCounter = self.riskCounter -10
-					print("lowrisk event avoided",rand)
+					--print("lowrisk event avoided",rand)
 					return
 				end
 			end

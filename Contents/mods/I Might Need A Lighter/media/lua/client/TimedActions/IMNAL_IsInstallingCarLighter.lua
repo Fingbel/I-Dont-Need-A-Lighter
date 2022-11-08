@@ -21,7 +21,7 @@ function IsInstallingCarLighter:perform()
 		IMNALSPVehicles[self.character:getVehicle():getSqlId()] = "2"
 	end
 
-	sendClientCommand(self.character, 'IMNAL', 'Upgrade', {vehicle = self.character:getVehicle():getSqlId(),playerID = self.character:getOnlineID(), newCL = "2"})
+	sendClientCommand(self.character, 'IMNAL', 'Upgrade', {vehicle = self.character:getVehicle():getId(),playerID = self.character:getOnlineID(), newCL = "2"})
 	self.item:Use()
 	--FinishTimeBasedAction
 	ISBaseTimedAction.perform(self)

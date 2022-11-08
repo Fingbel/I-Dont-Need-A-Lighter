@@ -13,16 +13,16 @@ end
 Events.OnInitGlobalModData.Add(OnInitGlobalModData)
 
 function OnEnterVehicleCLCheck(player)
-	sendClientCommand(player, 'IMNAL', 'Update', {vehicle = player:getVehicle():getSqlId(), playerID = player:getOnlineID()})
-	print(player:getVehicle():getSqlId())	
-	print("Client command sent")
+	sendClientCommand(player, 'IMNAL', 'Update', {vehicle = player:getVehicle():getKeyId(), playerID = player:getOnlineID()})
+	--print(player:getVehicle():getKeyId())	
+	--print("Client command sent")
 	if(getWorld():getGameMode() ~= "Multiplayer")then
-		if(IMNALSPVehicles[player:getVehicle():getSqlId()] == nill) then
-			IMNALSPVehicles[player:getVehicle():getSqlId()] = CarLighterRandomizer()
-			print("NEW CAR DETECTED")
-			player:getModData().CL = IMNALSPVehicles[player:getVehicle():getSqlId()]
+		if(IMNALSPVehicles[player:getVehicle():getKeyId()] == nill) then
+			IMNALSPVehicles[player:getVehicle():getKeyId()] = CarLighterRandomizer()
+			--print("NEW CAR DETECTED")
+			player:getModData().CL = IMNALSPVehicles[player:getVehicle():getKeyId()]
 		end
-		player:getModData().CL = IMNALSPVehicles[player:getVehicle():getSqlId()]
+		player:getModData().CL = IMNALSPVehicles[player:getVehicle():getKeyId()]
 	end
 end
 
@@ -30,14 +30,14 @@ Events.OnEnterVehicle.Add(OnEnterVehicleCLCheck)
 
 function IMNALServerCommands.CLUpdate(args)	
 	--if not isClient() then return end	   
-		print("Server command received")
-		print(args.CL)
+		--print("Server command received")
+		--print(args.CL)
 		getPlayerByOnlineID(args.playerID):getModData().CL = args.CL    
 end
 
 IMNALServerCommands.OnServerCommand = function(module, command, args)
     if module == 'IMNAL' and IMNALServerCommands[command] then
-        print("Parsing IMNAL server command")
+       -- print("Parsing IMNAL server command")
         local argStr = ''
         args = args or {}
         for k,v in pairs(args) do
@@ -66,7 +66,7 @@ function ISVehicleMenu.showRadialMenu(player)
 		local menu = getPlayerRadialMenu(player:getPlayerNum())
 
 		--Did we received the correct data ?
-		print("Vehicle : ", player:getModData().CL)
+		--print("Vehicle : ", player:getModData().CL)
 	
 		--Gamepad stuff
 		if menu:isReallyVisible() then
