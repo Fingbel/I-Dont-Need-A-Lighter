@@ -4,7 +4,7 @@ local IMNALServerCommands = {}
 
 --TODO : We need to fire the check when we enter the vehicle
 function OnEnterVehicleCLCheck(player)
-	sendClientCommand(player, 'IMNAL', 'Update', {vehicle = player:getVehicle(),playerID = player:getOnlineID()})	
+	sendClientCommand(player, 'IMNAL', 'Update', {vehicle = player:getVehicle():toString(), playerID = player:getOnlineID()})	
 	print("Client command sent")
 end
 
@@ -12,9 +12,9 @@ Events.OnEnterVehicle.Add(OnEnterVehicleCLCheck)
 
 function IMNALServerCommands.CLUpdate(args)	
 	if not isClient() then return end	   
-	print("Server command received")
-	print(args['CL'])
-	getPlayer():getModData().CL = args.CL    
+		print("Server command received")
+		print(args.CL)
+		getPlayerByOnlineID(args.playerID):getModData().CL = args.CL    
 end
 
 IMNALServerCommands.OnServerCommand = function(module, command, args)
@@ -48,7 +48,7 @@ function ISVehicleMenu.showRadialMenu(player)
 		local menu = getPlayerRadialMenu(player:getPlayerNum())
 
 		--Did we received the correct data ?
-		print("Vehicle : ",player:getModData().CL)
+		print("Vehicle : ", player:getModData().CL)
 	
 		--Gamepad stuff
 		if menu:isReallyVisible() then

@@ -18,7 +18,7 @@ function IsRepairingCLSocket:stop()
 end
 
 function IsRepairingCLSocket:perform()
-	self.character:getVehicle():getModData()["CL"] = "1"
+	sendClientCommand(self.character, 'IMNAL', 'Upgrade', {vehicle = self.character:getVehicle():toString(),playerID = self.character:getOnlineID(), newCL = "1"})
 --FinishTimeBasedAction
 	ISBaseTimedAction.perform(self)
 end

@@ -16,8 +16,8 @@ function IsUnInstallingCarLighter:stop()
 end
 
 function IsUnInstallingCarLighter:perform()
-	self.character:getVehicle():getModData()["CL"] = "1"
 	self.character:getInventory():AddItem("Base.CarLighter")
+	sendClientCommand(self.character, 'IMNAL', 'Upgrade', {vehicle = self.character:getVehicle():toString(),playerID = self.character:getOnlineID(), newCL = "1"})
 	--FinishTimeBasedAction
 	ISBaseTimedAction.perform(self)
 end

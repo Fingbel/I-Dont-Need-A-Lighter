@@ -16,7 +16,7 @@ function IsInstallingCarLighter:stop()
 end
 
 function IsInstallingCarLighter:perform()
-	self.character:getVehicle():getModData()["CL"] = "2"
+	sendClientCommand(self.character, 'IMNAL', 'Upgrade', {vehicle = self.character:getVehicle():toString(),playerID = self.character:getOnlineID(), newCL = "2"})
 	self.item:Use()
 	--FinishTimeBasedAction
 	ISBaseTimedAction.perform(self)
