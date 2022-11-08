@@ -1,33 +1,34 @@
 if isClient() then return end
 
 local IMNALClientCommands = {}
-IMNALvehicles = {}
+ModData.getOrCreate("IMNALVehicles")
 
-local function OnInitGlobalModData(isNewGame)
-    if not isServer() then return end   
-    if(isNewGame == true)then
-        print("NEW GAME")
-		IMNALvehicles = ModData.create("IMNALvehicles")
-	end
-	IMNALvehicles = ModData.get("IMNALvehicles")
+local function IMNALMPStarted()
+    if not isServer() then return end    
+    if( ModData.get("IMNALVehicles").IMNALvehicles == nill) then
+        ModData.get("IMNALVehicles").IMNALvehicles = {}
+    end
 end
 
 function IMNALClientCommands.Update(player, args)	
     if not isServer() then return end	
-    if(IMNALvehicles[args.vehicle] == nill) then 
+    print()
+    if( ModData.get("IMNALVehicles").IMNALvehicles[args.vehicle] == nill) then 
         local rand = CarLighterRandomizer()
-        --IMNALvehicles[args.vehicle] = rand
-        IMNALvehicles[args.vehicle] = rand
-        print("NEW CAR DETECTED - RESULT IS : ", IMNALvehicles[args.vehicle])
+        ModData.get("IMNALVehicles").IMNALvehicles[args.vehicle] = rand
+        print("NEW CAR DETECTED - RESULT IS : ", ModData.get("IMNALVehicles").IMNALvehicles[args.vehicle])
     end
-    sendServerCommand(player,"IMNAL","CLUpdate", {playerID = args.playerID, CL = IMNALvehicles[args.vehicle], vehicle = args.vehicle})
+    sendServerCommand(player,"IMNAL","CLUpdate", {playerID = args.playerID, CL =  ModData.get("IMNALVehicles").IMNALvehicles[args.vehicle], vehicle = args.vehicle})
+    --gameTime:getModData().IMNALvehicles = IMNALvehicles 
+    local vehicleID = args.vehicle
 end
 
 function IMNALClientCommands.Upgrade(player, args)	
     if not isServer() then return end	
     print("UPGRADE DETECTED")
-    IMNALvehicles[args.vehicle] = args.newCL
-    sendServerCommand(player,"IMNAL","CLUpdate", {playerID = args.playerID, CL = IMNALvehicles[args.vehicle], vehicle = args.vehicle})
+    ModData.get("IMNALVehicles").IMNALvehicles[args.vehicle] = args.newCL
+    sendServerCommand(player,"IMNAL","CLUpdate", {playerID = args.playerID, CL =  ModData.get("IMNALVehicles").IMNALvehicles[args.vehicle], vehicle = args.vehicle})
+
 end
 
 IMNALClientCommands.OnClientCommand = function(module, command, player, args)
@@ -43,4 +44,6 @@ IMNALClientCommands.OnClientCommand = function(module, command, player, args)
     end
 end
 
-Events.OnClientCommand.Add(IMNALClientCommands.OnClientCommand);
+
+Events.OnClientCommand.Add(IMNALClientCommands.OnClientCommand)
+Events.OnServerStarted.Add(IMNALMPStarted)
