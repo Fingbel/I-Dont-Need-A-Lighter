@@ -1,26 +1,35 @@
 --I Might Need A Lighter Mod by Fingbel
 local old_ISVehicleMenu_showRadialMenu = ISVehicleMenu.showRadialMenu
+local IMNALServerCommands = {}
 
 --TODO : We need to fire the check when we enter the vehicle
 function OnEnterVehicleCLCheck(player)
-	local args = {}
-	args["vehicle"] = player:getVehicle()
-	args["playerID"] = player:getOnlineID()
-	sendClientCommand(player, "IMNAL", "IMNALCLCheck", args)
-
+	sendClientCommand(player, 'IMNAL', 'Update', {vehicle = player:getVehicle(),playerID = player:getOnlineID()})	
+	print("Client command sent")
 end
 
 Events.OnEnterVehicle.Add(OnEnterVehicleCLCheck)
 
-function CLUpdate(module, command, args)
-	if not isClient() then return end	
-    if module ~= "IMNAL" then return end;  	
-    if command == "IMNALCLUpdate" then
-		getPlayer():getModData().CL = args["CL"]
-	end          
+function IMNALServerCommands.CLUpdate(args)	
+	if not isClient() then return end	   
+	print("Server command received")
+	print(args['CL'])
+	getPlayer():getModData().CL = args.CL    
 end
 
-Events.OnServerCommand.Add(CLUpdate)
+IMNALServerCommands.OnServerCommand = function(module, command, args)
+    if module == 'IMNAL' and IMNALServerCommands[command] then
+        print("Parsing IMNAL server command")
+        local argStr = ''
+        args = args or {}
+        for k,v in pairs(args) do
+            argStr = argStr..' '..k..'='..tostring(v)
+        end
+        IMNALServerCommands[command](args)
+    end
+end
+
+Events.OnServerCommand.Add(IMNALServerCommands.OnServerCommand)
 
 --This is the added code to the base function
 function ISVehicleMenu.showRadialMenu(player)

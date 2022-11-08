@@ -1,21 +1,32 @@
-local vehicles = {}
+if isClient() then return end
 
-function IMNALonClientCommand(module, command, player, args)	
-    if not isServer() then return end	
-    if module ~= "IMNAL" then return end;  	
-    if command == "IMNALCLCheck" then           
-        if(vehicles[args["vehicle"]] == nill) then 
-            local rand = CarLighterRandomizer()
-            vehicles[args["vehicle"]] = rand
+local IMNALClientCommands = {}
+local IMNALvehicles = {}
+
+function IMNALClientCommands.Update(player, args)	
+    if not isServer() then return end	     
+    if(IMNALvehicles[args.vehicle] == nill) then 
+        local rand = CarLighterRandomizer()
+        IMNALvehicles[args.vehicle] = rand
+    end
+    sendServerCommand(player,"IMNAL","CLUpdate", {playerID = args.playerID, CL = IMNALvehicles[args.vehicle]})
+
+end
+
+IMNALClientCommands.OnClientCommand = function(module, command, player, args)
+    if module == 'IMNAL' and IMNALClientCommands[command] then
+        print("Parsing IMNAL client command")
+        local argStr = ''
+        args = args or {}
+        for k,v in pairs(args) do
+            argStr = argStr..' '..k..'='..tostring(v)
         end
-        local argsB = {}
-        argsB["playerID"] = args["PlayerID"]
-        argsB["CL"]= rand
-        sendServerCommand(player,"IMNAL","IMNALCLUpdate", argsB)
+         print('received '..module..' '..command..' '..tostring(player)..argStr)
+        IMNALClientCommands[command](player, args)
     end
 end
 
-Events.OnClientCommand.Add(IMNALonClientCommand);
+Events.OnClientCommand.Add(IMNALClientCommands.OnClientCommand);
 
 function CarLighterRandomizer()
 	--is the socket broken ?
