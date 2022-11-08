@@ -60,7 +60,7 @@ function whatIsUnderTheMouse ( worldObjects, playerObj)
 			end
 		end
 	--did we clicked a stove/microwave?	
-		if stove:getObjectName() == ("Stove") and ((SandboxVars.ElecShutModifier > -1 and getGameTime():getNightsSurvived() < SandboxVars.ElecShutModifier) or stove:getSquare():haveElectricity()) then return stove
+		if stove:getObjectName() == ("Stove") and not stove:isMicrowave() and ((SandboxVars.ElecShutModifier > -1 and getGameTime():getNightsSurvived() < SandboxVars.ElecShutModifier) or stove:getSquare():haveElectricity()) then return stove
 	--did we clicked a lit fireplace ?
 		elseif stove:getObjectName() == ("Fireplace") and stove:isLit() then return stove										
 	--did we clicked a lit barbecue ?
