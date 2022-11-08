@@ -18,10 +18,10 @@ end
 function IsInstallingCarLighter:perform()
 	if(getWorld():getGameMode() ~= "Multiplayer")then
 		self.character:getModData().CL = "2"
-		IMNALSPVehicles[self.character:getVehicle():getSqlId()] = "2"
+		IMNALSPVehicles[self.character:getVehicle():getKeyId()] = "2"
 	end
 
-	sendClientCommand(self.character, 'IMNAL', 'Upgrade', {vehicle = self.character:getVehicle():getId(),playerID = self.character:getOnlineID(), newCL = "2"})
+	sendClientCommand(self.character, 'IMNAL', 'Upgrade', {vehicle = self.character:getVehicle():getKeyId(),playerID = self.character:getOnlineID(), newCL = "2"})
 	self.item:Use()
 	--FinishTimeBasedAction
 	ISBaseTimedAction.perform(self)

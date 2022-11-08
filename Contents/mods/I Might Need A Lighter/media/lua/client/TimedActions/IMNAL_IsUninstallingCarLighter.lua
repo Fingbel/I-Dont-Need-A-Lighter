@@ -19,9 +19,9 @@ function IsUnInstallingCarLighter:perform()
 	self.character:getInventory():AddItem("Base.CarLighter")
 	if(getWorld():getGameMode() ~= "Multiplayer")then
 		self.character:getModData().CL = "1"
-		IMNALSPVehicles[self.character:getVehicle():getSqlId()] = "1"
+		IMNALSPVehicles[self.character:getVehicle():getKeyId()] = "1"
 	end
-	sendClientCommand(self.character, 'IMNAL', 'Upgrade', {vehicle = self.character:getVehicle():getId(),playerID = self.character:getOnlineID(), newCL = "1"})
+	sendClientCommand(self.character, 'IMNAL', 'Upgrade', {vehicle = self.character:getVehicle():getKeyId(),playerID = self.character:getOnlineID(), newCL = "1"})
 	--FinishTimeBasedAction
 	ISBaseTimedAction.perform(self)
 end

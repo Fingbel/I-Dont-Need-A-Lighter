@@ -3,26 +3,29 @@ local old_ISVehicleMenu_showRadialMenu = ISVehicleMenu.showRadialMenu
 IMNALServerCommands = {}
 IMNALSPVehicles = {}
 
-local function OnInitGlobalModData(isNewGame)
-	if(isNewGame == true)then
-		IMNALSPVehicles = ModData.create("IMNALSPVehicles")
+local function IMNALSPLoad(isNewGame)
+	if(getWorld():getGameMode() ~= "Multiplayer")then	
+		if(isNewGame == true)then
+			IMNALSPVehicles = ModData.create("IMNALSPVehicles")
+		end
+		IMNALSPVehicles = ModData.get("IMNALSPVehicles")
 	end
-	IMNALSPVehicles = ModData.get("IMNALSPVehicles")
 end
 
-Events.OnInitGlobalModData.Add(OnInitGlobalModData)
+Events.OnInitGlobalModData.Add(IMNALSPLoad)
 
 function OnEnterVehicleCLCheck(player)
 	sendClientCommand(player, 'IMNAL', 'Update', {vehicle = player:getVehicle():getKeyId(), playerID = player:getOnlineID()})
-	--print(player:getVehicle():getKeyId())	
-	--print("Client command sent")
-	if(getWorld():getGameMode() ~= "Multiplayer")then
+	if(getWorld():getGameMode() ~= "Multiplayer")then	
 		if(IMNALSPVehicles[player:getVehicle():getKeyId()] == nill) then
-			IMNALSPVehicles[player:getVehicle():getKeyId()] = CarLighterRandomizer()
-			--print("NEW CAR DETECTED")
+			local rand = CarLighterRandomizer()
+			print("New car")
+			IMNALSPVehicles[player:getVehicle():getKeyId()] = rand
+			player:getModData().CL = rand			
+		else
 			player:getModData().CL = IMNALSPVehicles[player:getVehicle():getKeyId()]
 		end
-		player:getModData().CL = IMNALSPVehicles[player:getVehicle():getKeyId()]
+		player:getModData().SPVehicules = IMNALSPVehicles
 	end
 end
 
@@ -53,7 +56,6 @@ Events.OnServerCommand.Add(IMNALServerCommands.OnServerCommand)
 function ISVehicleMenu.showRadialMenu(player)
 	--Here we first call the base function
 	old_ISVehicleMenu_showRadialMenu(player)
-
 	local isPaused = UIManager.getSpeedControls() and UIManager.getSpeedControls():getCurrentGameSpeed() == 0
 	if isPaused then return end
 
@@ -71,7 +73,7 @@ function ISVehicleMenu.showRadialMenu(player)
 		--Gamepad stuff
 		if menu:isReallyVisible() then
 			if menu.joyfocus then
-				setJoypadFocus(player:getPlayerObjNum(), nil)
+				setJoypadFocus(player:getplayerObjNum(), nil)
 			end 
 			menu:undisplay()
 			return
