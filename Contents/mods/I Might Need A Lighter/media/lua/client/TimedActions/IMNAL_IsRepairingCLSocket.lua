@@ -18,7 +18,11 @@ function IsRepairingCLSocket:stop()
 end
 
 function IsRepairingCLSocket:perform()
-	sendClientCommand(self.character, 'IMNAL', 'Upgrade', {vehicle = self.character:getVehicle():toString(),playerID = self.character:getOnlineID(), newCL = "1"})
+	if(getWorld():getGameMode() ~= "Multiplayer")then
+		self.character:getModData().CL = "1"	
+		IMNALSPVehicles[self.character:getVehicle():getSqlId()] = "1"
+	end
+	sendClientCommand(self.character, 'IMNAL', 'Upgrade', {vehicle = self.character:getVehicle():getSqlId(),playerID = self.character:getOnlineID(), newCL = "1"})
 --FinishTimeBasedAction
 	ISBaseTimedAction.perform(self)
 end

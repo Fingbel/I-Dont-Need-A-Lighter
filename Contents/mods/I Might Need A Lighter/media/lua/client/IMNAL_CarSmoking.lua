@@ -1,17 +1,35 @@
 --I Might Need A Lighter Mod by Fingbel
 local old_ISVehicleMenu_showRadialMenu = ISVehicleMenu.showRadialMenu
-local IMNALServerCommands = {}
+IMNALServerCommands = {}
+IMNALSPVehicles = {}
 
---TODO : We need to fire the check when we enter the vehicle
+local function OnInitGlobalModData(isNewGame)
+	if(isNewGame == true)then
+		IMNALSPVehicles = ModData.create("IMNALSPVehicles")
+	end
+	IMNALSPVehicles = ModData.get("IMNALSPVehicles")
+end
+
+Events.OnInitGlobalModData.Add(OnInitGlobalModData)
+
 function OnEnterVehicleCLCheck(player)
-	sendClientCommand(player, 'IMNAL', 'Update', {vehicle = player:getVehicle():toString(), playerID = player:getOnlineID()})	
+	sendClientCommand(player, 'IMNAL', 'Update', {vehicle = player:getVehicle():getSqlId(), playerID = player:getOnlineID()})
+	print(player:getVehicle():getSqlId())	
 	print("Client command sent")
+	if(getWorld():getGameMode() ~= "Multiplayer")then
+		if(IMNALSPVehicles[player:getVehicle():getSqlId()] == nill) then
+			IMNALSPVehicles[player:getVehicle():getSqlId()] = CarLighterRandomizer()
+			print("NEW CAR DETECTED")
+			player:getModData().CL = IMNALSPVehicles[player:getVehicle():getSqlId()]
+		end
+		player:getModData().CL = IMNALSPVehicles[player:getVehicle():getSqlId()]
+	end
 end
 
 Events.OnEnterVehicle.Add(OnEnterVehicleCLCheck)
 
 function IMNALServerCommands.CLUpdate(args)	
-	if not isClient() then return end	   
+	--if not isClient() then return end	   
 		print("Server command received")
 		print(args.CL)
 		getPlayerByOnlineID(args.playerID):getModData().CL = args.CL    
