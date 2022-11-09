@@ -128,10 +128,9 @@ function OnStoveSmoking(_player, stove, _cigarette)
 		end
 	end
 
-	--Past this line the player successfully lighted his smokable
 	--Now it's lit, let's smoke it
 	if luautils.walkAdj(_player, stove:getSquare(), true) then 	
-		ISTimedActionQueue.add(IsStoveSmoking:new(_player, stove, _cigarette, 460))
+		ISTimedActionQueue.add(IsStoveSmoking:new(_player, stove, _cigarette, 460)) -- THIS ONE IS HARDCODED TO REFLECT VANILLA SMOKING
 	end
 end
 
@@ -155,6 +154,7 @@ function DeterminateStoveSmokingOutcome(_player, stove, _cigarette)
 	print("Panic : ",panic)
 	print("Drunkenness:",drunkenness)
 
+	--TODO : BALANCE THIS MESS
 	--Fatigue influence on outcome
 	if (fatigue >= 0.6) then outcome = outcome - 0.15 end
 
@@ -176,6 +176,9 @@ function DeterminateStoveSmokingOutcome(_player, stove, _cigarette)
 	--Injuries influence on outcome
 	if(hand_L:HasInjury() or hand_L:isDeepWounded() or hand_L:isBurnt() or hand_L:isCut() or hand_L:haveGlass() or hand_L:bandaged()) then outcome = outcome -0.15 end
 	if(hand_R:HasInjury() or hand_R:isDeepWounded() or hand_R:isBurnt() or hand_R:isCut() or hand_R:haveGlass() or hand_R:bandaged()) then outcome = outcome -0.15 end
+
+	--We're clamping here to not obtain stupidly long lenght for the timed action
+	if(outcome < 0.3) then outcome = 0.3
 
 	print("Outcome : ", outcome)
 	return outcome
