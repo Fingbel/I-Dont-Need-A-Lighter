@@ -59,8 +59,10 @@ function whatIsUnderTheMouse ( worldObjects, playerObj)
 				end
 			end
 		end
-	--did we clicked a stove/microwave?	
+	--did we clicked a stove?	
 		if stove:getObjectName() == ("Stove") and not stove:isMicrowave() and ((SandboxVars.ElecShutModifier > -1 and getGameTime():getNightsSurvived() < SandboxVars.ElecShutModifier) or stove:getSquare():haveElectricity()) then return stove
+	--did we clicked a microwave ?
+		elseif stove:getObjectName() == ("Stove") and stove:isMicrowave() and SandboxVars.IMNAL.allowMicrowave == true and ((SandboxVars.ElecShutModifier > -1 and getGameTime():getNightsSurvived() < SandboxVars.ElecShutModifier) or stove:getSquare():haveElectricity()) then return stove
 	--did we clicked a lit fireplace ?
 		elseif stove:getObjectName() == ("Fireplace") and stove:isLit() then return stove										
 	--did we clicked a lit barbecue ?
@@ -76,13 +78,13 @@ function OnStoveSmoking(_player, stove, _cigarette)
 	ISWorldObjectContextMenu.Test = true
 
 	--Those are the base value for the timed action lenght
-	local stoveBaseTimer = 150
-	local microwaveBaseTimer = 1000
-	local fireplaceBaseTimer = 100
-	local barbecueBaseTimer = 100
-	local campingBaseTimer = 120
-	local fireBaseTimer = 40
-	local playerBaseTimer = 10
+	local stoveBaseTimer = SandboxVars.IMNAL.stoveBaseTimer
+	local microwaveBaseTimer = SandboxVars.IMNAL.microwaveBaseTimer
+	local fireplaceBaseTimer = SandboxVars.IMNAL.fireplaceBaseTimer
+	local barbecueBaseTimer = SandboxVars.IMNAL.barbecueBaseTimer
+	local campingBaseTimer = SandboxVars.IMNAL.campingBaseTimer
+	local fireBaseTimer = SandboxVars.IMNAL.fireBaseTimer
+	local playerBaseTimer = SandboxVars.IMNAL.playerBaseTimer
 
 
 	--We need to make sure the clicked player is still smoking

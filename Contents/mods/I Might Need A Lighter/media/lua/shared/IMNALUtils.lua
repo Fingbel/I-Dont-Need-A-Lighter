@@ -1,16 +1,5 @@
 --I Don't Need A Lighter Mod by Fingbel
 
-
--- if getCore():isDedicated()
-
-if getActivatedMods():contains("Smoker") or getActivatedMods():contains("jiggasGreenfireMod") then 
-	IDNAL="MODDEDIDNAL"
-else IDNAL="IDNAL"
-end
-
---This function is responsible to confirm the presence of cigarette in the player inventory 
---This function return an array(duplicate removed) of one of each of the possible smokable items
-
 function CheckInventoryForCigarette(player)
 	local inventoryItems = player:getInventory():getItems()
 	local smokable = {}
@@ -102,12 +91,14 @@ function getTableSize(t)
 end
 
 function CarLighterRandomizer()
-	--is the socket broken ?
-	local rand2 = ZombRand(100)
-	if(rand2 >50) then return "0" end
-	--is it in good shape but empty ?
-	local rand3 = ZombRand(100)
-	if(rand3 >50) then return "1" end
-	--is it in good shape and populated ?
-	return "2"
+	--Is the socket in good shape and populated  ?
+	local randCL = ZombRand(100)
+	if(randCL <= SandboxVars.IMNAL.CarLighterChance) then return "2" end
+
+	--Well it's not, but is the socket broken or not ?
+	local randCLS = ZombRand(100)
+	if(randCLS <= SandboxVars.IMNAL.CarLighterSocketChance) then return "1" end
+	
+	--Worst outcome
+	return "0"
 end

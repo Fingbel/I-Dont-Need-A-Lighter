@@ -154,7 +154,7 @@ end
 
 --This is the function starting the car smoking sequence
 function OnCarSmoking(_player, _cigarette)
-	local carlighterBaseTimer = 125
+	local carlighterBaseTimer = SandboxVars.IMNAL.carLighterBaseTimer
 	local batteryDurabilityMult = _player:getVehicle():getBattery():getCondition()/100
 	local batteryChargeMult = _player:getVehicle():getBattery():getInventoryItem():getUsedDelta()
 	local carlighterFinalTimer = (carlighterBaseTimer/batteryDurabilityMult)/batteryChargeMult
