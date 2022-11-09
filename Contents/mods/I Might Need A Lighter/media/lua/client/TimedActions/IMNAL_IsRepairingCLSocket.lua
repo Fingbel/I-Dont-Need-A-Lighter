@@ -8,16 +8,17 @@ function IsRepairingCLSocket:isValid()
 end
 
 function IsRepairingCLSocket:start()
-	
+	self.sound = self.character:playSound("GeneratorRepair")
 end
 
 function IsRepairingCLSocket:stop()
-	
+	self.character:stopOrTriggerSound(self.sound)
 	--StopTimeBasedAction
 	ISBaseTimedAction.stop(self);	
 end
 
 function IsRepairingCLSocket:perform()
+	self.character:stopOrTriggerSound(self.sound)
 	if(getWorld():getGameMode() ~= "Multiplayer")then
 		self.character:getModData().CL = "1"	
 		IMNALSPVehicles[self.character:getVehicle():getKeyId()] = "1"

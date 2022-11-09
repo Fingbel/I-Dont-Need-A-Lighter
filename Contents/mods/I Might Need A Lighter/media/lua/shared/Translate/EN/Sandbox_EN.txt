@@ -14,4 +14,6 @@ Sandbox_EN =
     Sandbox_IMNAL_fireOnly = "Restrict lighting cigarettes to open flames only"
     Sandbox_IMNAL_allowMicrowave = "Allow the use of microwave"
     Sandbox_IMNAL_noStoveRisk = "Disable all risks on stoves/fireplace/etc"
+    Sandbox_IMNAL_electricityReq = "Electricity requirement to repair a car lighter socket"
+    Sandbox_IMNAL_mechanicReq = "Mechanic requirement to repair a car lighter socket"
 }

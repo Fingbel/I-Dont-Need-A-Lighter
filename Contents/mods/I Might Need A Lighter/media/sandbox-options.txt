@@ -20,6 +20,26 @@ option IMNAL.CarLighterSocketChance
 	translation = IMNAL_CarLighterSocketChance,
 }
 
+option IMNAL.electricityReq
+{
+	type = integer,
+	max = 10,
+    min = 0,
+	default = 1,
+	page = IMightNeedALighter,
+	translation = IMNAL_electricityReq,
+}
+
+option IMNAL.mechanicReq
+{
+	type = integer,
+	max = 10,
+    min = 0,
+	default = 2,
+	page = IMightNeedALighter,
+	translation = IMNAL_mechanicReq,
+}
+
 option IMNAL.fireOnly
 {
 	type = boolean,

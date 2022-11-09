@@ -97,8 +97,8 @@ function CarLighterRandomizer()
 
 	--Well it's not, but is the socket broken or not ?
 	local randCLS = ZombRand(100)
-	if(randCLS <= SandboxVars.IMNAL.CarLighterSocketChance) then return "1" end
+	if(randCLS <= SandboxVars.IMNAL.CarLighterSocketChance) then return "0" end
 	
-	--Worst outcome
-	return "0"
+	--It's just missing
+	return "1"
 end

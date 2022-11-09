@@ -82,13 +82,18 @@ function ISVehicleMenu.showRadialMenu(player)
 		
 		if seat <=1 then
 			if player:getModData().CL == "0" then
-				menu:addSlice(getText("Car Lighter socket needs repair"),getTexture("media/ui/vehicles/carLighterNeedRepair.png"),OnCarLighterSocketRepair, player) 
+				--TODO : This is where we need to test the player skills to repair the car lighter socket
+				if player:getPerkLevel(Perks.Mechanics) >= SandboxVars.IMNAL.mechanicReq and player:getPerkLevel(Perks.Electricity) >= SandboxVars.IMNAL.electricityReq then
+					menu:addSlice(getText('ContextMenu_CarLighterRepairWithSkill'),getTexture("media/ui/vehicles/carLighterCanBeRepaired.png"),OnCarLighterSocketRepair, player) 
+				else
+					menu:addSlice(getText('ContextMenu_CarLighterRepairNoSkill'),getTexture("media/ui/vehicles/carLighterNeedRepair.png")) 
+				end
 				return
 			elseif player:getModData().CL == "1" and carLighter == nill then 
-				menu:addSlice(getText("No Car Lighter present"),getTexture("media/ui/vehicles/noCarLighter.png")) 
+				menu:addSlice(getText('ContextMenu_NoCarLighter'),getTexture("media/ui/vehicles/noCarLighter.png")) 
 				return
 			elseif player:getModData().CL == "1" and carLighter ~= nill then
-				menu:addSlice(getText("Install Car Lighter"),getTexture("media/ui/vehicles/CarLighterCanBeInstalled.png"),OnCarLighterInstalling, player, carLighter ) 
+				menu:addSlice(getText('ContextMenu_InstallCarLighter'),getTexture("media/ui/vehicles/CarLighterCanBeInstalled.png"),OnCarLighterInstalling, player, carLighter ) 
 				return
 			end
 
@@ -142,7 +147,7 @@ function OnSubMenu(player, vehicle)
 		end
 	end
 	if player:getModData().CL == "2" then
-		menu:addSlice(getText("Remove Car Lighter"), getTexture("media/ui/vehicles/CarLighterCanBeRemoved.png"), OnCarLighterUnInstalling, player)	
+		menu:addSlice(getText('ContextMenu_UnInstallCarLighter'), getTexture("media/ui/vehicles/CarLighterCanBeRemoved.png"), OnCarLighterUnInstalling, player)	
 	end
 	menu:addToUIManager()
 
