@@ -1,11 +1,4 @@
 ContextMenu_PTBR = {
-	ContextMenu_LightCigaretteWithOven = "Acender o cigarro no fogão"
-	ContextMenu_LightCigaretteWithFireplace = "Acender o cigarro no fogão a lenha"
-	ContextMenu_LightCigaretteWithBarbecue = "Acender o cigarro com a churrasqueira"
-	ContextMenu_LightCigaretteWithCampFire = "Acender o cigarro na fogueira"
-	ContextMenu_LightCigaretteWithFire = "Acenda o cigarro com o fogo"
-	ContextMenu_StartCarSmoking = "Use o acendedor do carro"
-	
 	ContextMenu_Smoke = "Fumar"
 	
 	ContextMenu_CarLighter = "Acendedor do carro"

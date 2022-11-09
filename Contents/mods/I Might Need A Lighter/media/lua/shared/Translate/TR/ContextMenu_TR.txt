@@ -1,11 +1,6 @@
 ContextMenu_TR = {
-	ContextMenu_LightCigaretteWithOven = "Sigaranı Ocakta Yak"
-	ContextMenu_LightCigaretteWithFireplace = ""Sigaranı Sominede Yak"
-	ContextMenu_LightCigaretteWithBarbecue = ""Sigaranı Barbeku Ocagında Yak"
-	ContextMenu_LightCigaretteWithCampFire = "Sigaranı Kamp Atesinde Yak"
-	ContextMenu_LightCigaretteWithFire = "Sigaranı Ateste Yak"
-	ContextMenu_StartCarSmoking = "Araba Cakmagını Kullan "
 	ContextMenu_Smoke = "Sigara ic"	
+	
 	ContextMenu_CarLighter = "Araba cakmagi"
 	ContextMenu_CarOutOfCigarette = " <br> Sigara icecek bir sey yok."
 	ContextMenu_CarNoBattery = "<br> Aku yok ya da bitmis. "
