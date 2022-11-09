@@ -60,9 +60,9 @@ function whatIsUnderTheMouse ( worldObjects, playerObj)
 			end
 		end
 	--did we clicked a stove?	
-		if stove:getObjectName() == ("Stove") and not stove:isMicrowave() and ((SandboxVars.ElecShutModifier > -1 and getGameTime():getNightsSurvived() < SandboxVars.ElecShutModifier) or stove:getSquare():haveElectricity()) then return stove
+		if stove:getObjectName() == ("Stove") and not stove:isMicrowave() and not SandboxVars.IMNAL.fireOnly and ((SandboxVars.ElecShutModifier > -1 and getGameTime():getNightsSurvived() < SandboxVars.ElecShutModifier) or stove:getSquare():haveElectricity()) then return stove
 	--did we clicked a microwave ?
-		elseif stove:getObjectName() == ("Stove") and stove:isMicrowave() and SandboxVars.IMNAL.allowMicrowave == true and ((SandboxVars.ElecShutModifier > -1 and getGameTime():getNightsSurvived() < SandboxVars.ElecShutModifier) or stove:getSquare():haveElectricity()) then return stove
+		elseif stove:getObjectName() == ("Stove") and stove:isMicrowave() and not SandboxVars.IMNAL.fireOnly and SandboxVars.IMNAL.allowMicrowave == true and ((SandboxVars.ElecShutModifier > -1 and getGameTime():getNightsSurvived() < SandboxVars.ElecShutModifier) or stove:getSquare():haveElectricity()) then return stove
 	--did we clicked a lit fireplace ?
 		elseif stove:getObjectName() == ("Fireplace") and stove:isLit() then return stove										
 	--did we clicked a lit barbecue ?
@@ -77,16 +77,6 @@ end
 function OnStoveSmoking(_player, stove, _cigarette) 
 	ISWorldObjectContextMenu.Test = true
 
-	--Those are the base value for the timed action lenght
-	local stoveBaseTimer = SandboxVars.IMNAL.stoveBaseTimer
-	local microwaveBaseTimer = SandboxVars.IMNAL.microwaveBaseTimer
-	local fireplaceBaseTimer = SandboxVars.IMNAL.fireplaceBaseTimer
-	local barbecueBaseTimer = SandboxVars.IMNAL.barbecueBaseTimer
-	local campingBaseTimer = SandboxVars.IMNAL.campingBaseTimer
-	local fireBaseTimer = SandboxVars.IMNAL.fireBaseTimer
-	local playerBaseTimer = SandboxVars.IMNAL.playerBaseTimer
-
-
 	--We need to make sure the clicked player is still smoking
 	if instanceof(stove, 'IsoPlayer') then
 		if not string.match(stove:getAnimationDebug(), "foodtype : Cigarettes") then return end
@@ -100,28 +90,31 @@ function OnStoveSmoking(_player, stove, _cigarette)
 	end
 	
 	--This is where we calculate the length of the timed action and outcome
-		local outcome = DeterminateStoveSmokingOutcome(_player, stove, _cigarette)
+	local outcome = 1
+	if (SandboxVars.IMNAL.noStoveRisk == false) then 
+		outcome = DeterminateStoveSmokingOutcome(_player, stove, _cigarette)
+	end
 
 	--Let's light what we've found
 	if luautils.walkAdj(_player, stove:getSquare(), true) then 
 		
 		if instanceof(stove, 'IsoStove') and not stove:isMicrowave() then 
-			ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette,outcome, stoveBaseTimer))
+			ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette,outcome, SandboxVars.IMNAL.stoveBaseTimer))
 		elseif instanceof(stove, 'IsoStove') and stove:isMicrowave() then 
-			ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette,outcome, microwaveBaseTimer)) 
+			ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette,outcome, SandboxVars.IMNAL.microwaveBaseTimer)) 
 		elseif instanceof(stove,'IsoFireplace') and stove:isLit() then 
-			ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette,outcome, fireplaceBaseTimer)) 
+			ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette,outcome, SandboxVars.IMNAL.fireplaceBaseTimer)) 
 		elseif instanceof(stove,'IsoBarbecue') and stove:isLit() then 
-			ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette,outcome, barbecueBaseTimer)) 
+			ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette,outcome, SandboxVars.IMNAL.barbecueBaseTimer)) 
 		elseif instanceof(stove, "IsoObject") and stove:getSpriteName() == "camping_01_5" then 
-			ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette,outcome, campingBaseTimer)) 
+			ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette,outcome, SandboxVars.IMNAL.campingBaseTimer)) 
 		elseif stove:getSquare():haveFire() then
-			ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette,outcome, fireBaseTimer))
+			ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette,outcome, SandboxVars.IMNAL.fireBaseTimer))
 		else for i=0,stove:getSquare():getMovingObjects():size()-1 do
 				local o = stove:getSquare():getMovingObjects():get(i)
 				if instanceof(o, "IsoPlayer") and (o ~= playerObj) then
 					if string.match(o:getAnimationDebug(), "foodtype : Cigarettes") then 
-						ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette,outcome, playerBaseTimer)) 
+						ISTimedActionQueue.add(IsStoveLighting:new (_player, stove, _cigarette,outcome, SandboxVars.IMNAL.playerBaseTimer)) 
 					end
 				end		
 			end
@@ -180,7 +173,7 @@ function DeterminateStoveSmokingOutcome(_player, stove, _cigarette)
 
 	--We're clamping here to not obtain stupidly long lenght for the timed action
 	if(outcome < 0.3) then outcome = 0.3 end
-
-	print("Outcome : ", outcome)
+	
+	--print("Outcome : ", outcome)
 	return outcome
 end

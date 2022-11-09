@@ -20,6 +20,30 @@ option IMNAL.CarLighterSocketChance
 	translation = IMNAL_CarLighterSocketChance,
 }
 
+option IMNAL.fireOnly
+{
+	type = boolean,
+	default = false,
+	page = IMightNeedALighter,
+	translation = IMNAL_fireOnly,
+}
+
+option IMNAL.allowMicrowave
+{
+	type = boolean,
+	default = false,
+	page = IMightNeedALighter,
+	translation = IMNAL_allowMicrowave,
+}
+
+option IMNAL.noStoveRisk
+{
+	type = boolean,
+	default = false,
+	page = IMightNeedALighter,
+	translation = IMNAL_noStoveRisk,
+}
+
 option IMNAL.carLighterBaseTimer
 {
 	type = integer,
@@ -100,10 +124,4 @@ option IMNAL.playerBaseTimer
 	translation = IMNAL_playerBaseTimer,
 }
 
-option IMNAL.allowMicrowave
-{
-	type = boolean,
-	default = true,
-	page = IMightNeedALighter,
-	translation = IMNAL_allowMicrowave,
-}
+

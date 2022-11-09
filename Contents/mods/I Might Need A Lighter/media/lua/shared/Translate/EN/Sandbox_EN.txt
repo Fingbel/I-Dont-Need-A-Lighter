@@ -10,6 +10,8 @@ Sandbox_EN =
     Sandbox_IMNAL_barbecueBaseTimer = "Base timer for barbecues"
     Sandbox_IMNAL_campingBaseTimer = "Base timer for camping fire"
     Sandbox_IMNAL_fireBaseTimer = "Base timer for live fire"
-    Sandbox_IMNAL_playerBaseTimer = "Base timer for other player already smoking"
+    Sandbox_IMNAL_playerBaseTimer = "Base timer to bump a light"
+    Sandbox_IMNAL_fireOnly = "Restrict lighting cigarettes to open flames only"
     Sandbox_IMNAL_allowMicrowave = "Allow the use of microwave"
+    Sandbox_IMNAL_noStoveRisk = "Disable all risks on stoves/fireplace/etc"
 }
