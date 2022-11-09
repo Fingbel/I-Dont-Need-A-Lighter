@@ -2,6 +2,12 @@ ContextMenu_FR = {
 	ContextMenu_Smoke = "Fumer"
 	
 	ContextMenu_CarLighter = "Allume Cigare"
+	ContextMenu_NoCarLighter = "No Car Lighter"
+	ContextMenu_InstallCarLighter = "Plug Car Lighter"
+	ContextMenu_UnInstallCarLighter = "Unplug Car Lighter"
+	ContextMenu_CarLighterRepairNoSkill = "Car Lighter socket needs repair"
+	ContextMenu_CarLighterRepairWithSkill = "Car Lighter socket can be repaired"
+	
 	ContextMenu_CarOutOfCigarette = " <br> Pas de cigarette"
 	ContextMenu_CarNoBattery = "<br> Pas de batterie "
 	ContextMenu_CarNoKeyOrWire = "<br> Cl�s ou Fils manquants "
