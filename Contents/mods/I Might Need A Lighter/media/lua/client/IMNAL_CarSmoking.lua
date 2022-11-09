@@ -82,7 +82,6 @@ function ISVehicleMenu.showRadialMenu(player)
 		
 		if seat <=1 then
 			if player:getModData().CL == "0" then
-				--TODO : This is where we need to test the player skills to repair the car lighter socket
 				if player:getPerkLevel(Perks.Mechanics) >= SandboxVars.IMNAL.mechanicReq and player:getPerkLevel(Perks.Electricity) >= SandboxVars.IMNAL.electricityReq then
 					menu:addSlice(getText('ContextMenu_CarLighterRepairWithSkill'),getTexture("media/ui/vehicles/carLighterCanBeRepaired.png"),OnCarLighterSocketRepair, player) 
 				else
@@ -131,6 +130,10 @@ end
 
 function OnSubMenu(player, vehicle)
 	if(player:getVehicle() == nill) then return end
+	
+	local isPaused = UIManager.getSpeedControls() and UIManager.getSpeedControls():getCurrentGameSpeed() == 0
+	if isPaused then return end
+
 	local smokables = CheckInventoryForCigarette(player) --TODO : this could be a parameter, we are wasting power
 	local menu = getPlayerRadialMenu(player:getPlayerNum())
 	menu:clear()
@@ -164,6 +167,7 @@ function OnCarSmoking(_player, _cigarette)
 	local carlighterBaseTimer = SandboxVars.IMNAL.carLighterBaseTimer
 	local batteryDurabilityMult = _player:getVehicle():getBattery():getCondition()/100
 	local batteryChargeMult = _player:getVehicle():getBattery():getInventoryItem():getUsedDelta()
+	--TODO : We should add a clamping or we risk near infinite TA lenghts
 	local carlighterFinalTimer = (carlighterBaseTimer/batteryDurabilityMult)/batteryChargeMult
 
 	--Do we need to transfer cigarette from a bag first ? 
