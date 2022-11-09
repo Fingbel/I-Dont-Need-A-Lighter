@@ -4,7 +4,7 @@ require "TimedActions/ISBaseTimedAction"
 IsInstallingCarLighter = ISBaseTimedAction:derive('IsInstallingCarLighter')
 
 function IsInstallingCarLighter:isValid()
-	return self.character:getInventory():contains(self.item);
+	return self.character:getInventory():contains(self.item) and self.character:getVehicle() ~= nill;
 end
 
 function IsInstallingCarLighter:start()

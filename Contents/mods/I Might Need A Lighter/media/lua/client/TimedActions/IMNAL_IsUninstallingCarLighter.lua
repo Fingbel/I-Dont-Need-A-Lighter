@@ -4,7 +4,7 @@ require "TimedActions/ISBaseTimedAction"
 IsUnInstallingCarLighter = ISBaseTimedAction:derive('IsUnInstallingCarLighter')
 
 function IsUnInstallingCarLighter:isValid()
-return true
+return self.character:getVehicle() ~= nill
 end
 
 function IsUnInstallingCarLighter:start()

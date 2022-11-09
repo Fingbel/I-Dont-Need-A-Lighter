@@ -173,12 +173,13 @@ function DeterminateStoveSmokingOutcome(_player, stove, _cigarette)
 	--Drunkenness influence on outcome
 	if(drunkenness > 70) then outcome = outcome - 0.4 end
 	if(drunkenness > 35 and drunkenness < 70) then outcome = outcome - 0.2 end
-	--Injuries influence on outcome
+
+	--Hand Injuries influence on outcome
 	if(hand_L:HasInjury() or hand_L:isDeepWounded() or hand_L:isBurnt() or hand_L:isCut() or hand_L:haveGlass() or hand_L:bandaged()) then outcome = outcome -0.15 end
 	if(hand_R:HasInjury() or hand_R:isDeepWounded() or hand_R:isBurnt() or hand_R:isCut() or hand_R:haveGlass() or hand_R:bandaged()) then outcome = outcome -0.15 end
 
 	--We're clamping here to not obtain stupidly long lenght for the timed action
-	if(outcome < 0.3) then outcome = 0.3
+	if(outcome < 0.3) then outcome = 0.3 end
 
 	print("Outcome : ", outcome)
 	return outcome

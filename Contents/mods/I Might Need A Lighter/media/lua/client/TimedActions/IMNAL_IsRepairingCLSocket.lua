@@ -4,7 +4,7 @@ require "TimedActions/ISBaseTimedAction"
 IsRepairingCLSocket = ISBaseTimedAction:derive('IsRepairingCLSocket')
 
 function IsRepairingCLSocket:isValid()
-	return true
+	return self.character:getVehicle() ~= nill
 end
 
 function IsRepairingCLSocket:start()

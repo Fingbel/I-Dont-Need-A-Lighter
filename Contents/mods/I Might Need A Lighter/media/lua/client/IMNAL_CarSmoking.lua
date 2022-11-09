@@ -125,6 +125,7 @@ function ISVehicleMenu.showRadialMenu(player)
 end
 
 function OnSubMenu(player, vehicle)
+	if(player:getVehicle() == nill) then return end
 	local smokables = CheckInventoryForCigarette(player) --TODO : this could be a parameter, we are wasting power
 	local menu = getPlayerRadialMenu(player:getPlayerNum())
 	menu:clear()
@@ -154,6 +155,7 @@ end
 
 --This is the function starting the car smoking sequence
 function OnCarSmoking(_player, _cigarette)
+	if(_player:getVehicle() == nill) then return end
 	local carlighterBaseTimer = SandboxVars.IMNAL.carLighterBaseTimer
 	local batteryDurabilityMult = _player:getVehicle():getBattery():getCondition()/100
 	local batteryChargeMult = _player:getVehicle():getBattery():getInventoryItem():getUsedDelta()
