@@ -134,7 +134,7 @@ function OnSubMenu(player, vehicle)
 	local isPaused = UIManager.getSpeedControls() and UIManager.getSpeedControls():getCurrentGameSpeed() == 0
 	if isPaused then return end
 
-	local smokables = CheckInventoryForCigarette(player) --TODO : this could be a parameter, we are wasting power
+	local smokables = CheckInventoryForCigarette(player) 
 	local menu = getPlayerRadialMenu(player:getPlayerNum())
 	menu:clear()
 	
