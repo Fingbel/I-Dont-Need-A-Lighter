@@ -10,8 +10,15 @@ Sandbox_EN = {
     Sandbox_IMNAL_campingBaseTimer = "Base timer for camping fire"
     Sandbox_IMNAL_fireBaseTimer = "Base timer for live fire"
     Sandbox_IMNAL_playerBaseTimer = "Base timer to bump a light"
-    Sandbox_IMNAL_fireOnly = "Restrict lighting cigarettes to open flames only"
+    
+    Sandbox_IMNAL_allowStove = "Allow the use of stoves"
     Sandbox_IMNAL_allowMicrowave = "Allow the use of microwave"
+    Sandbox_IMNAL_allowFireplace = "Allow the use of Fireplace"
+    Sandbox_IMNAL_allowBarbecue = "Allow the use of Barbecue"
+    Sandbox_IMNAL_allowCampfire = "Allow the use of Camping Fire"
+    Sandbox_IMNAL_allowFire = "Allow the use of a burning tile"
+    Sandbox_IMNAL_allowBump = "Allow the use of another player already smoking"
+    
     Sandbox_IMNAL_noStoveRisk = "Disable all risks on stoves/fireplace/etc"
     Sandbox_IMNAL_electricityReq = "Electricity requirement to repair a car lighter socket"
     Sandbox_IMNAL_mechanicReq = "Mechanic requirement to repair a car lighter socket" 

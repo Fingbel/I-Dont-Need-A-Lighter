@@ -40,12 +40,12 @@ option IMNAL.mechanicReq
 	translation = IMNAL_mechanicReq,
 }
 
-option IMNAL.fireOnly
+option IMNAL.allowStove
 {
 	type = boolean,
-	default = false,
+	default = true,
 	page = IMightNeedALighter,
-	translation = IMNAL_fireOnly,
+	translation = IMNAL_allowStove,
 }
 
 option IMNAL.allowMicrowave
@@ -54,6 +54,38 @@ option IMNAL.allowMicrowave
 	default = false,
 	page = IMightNeedALighter,
 	translation = IMNAL_allowMicrowave,
+}
+
+option IMNAL.allowFireplace
+{
+	type = boolean,
+	default = true,
+	page = IMightNeedALighter,
+	translation = IMNAL_allowFireplace,
+}
+
+option IMNAL.allowCampfire
+{
+	type = boolean,
+	default = true,
+	page = IMightNeedALighter,
+	translation = IMNAL_allowCampfire,
+}
+
+option IMNAL.allowFire
+{
+	type = boolean,
+	default = true,
+	page = IMightNeedALighter,
+	translation = IMNAL_allowFire,
+}
+
+option IMNAL.allowBump
+{
+	type = boolean,
+	default = true,
+	page = IMightNeedALighter,
+	translation = IMNAL_allowBump,
 }
 
 option IMNAL.noStoveRisk

@@ -50,7 +50,7 @@ function whatIsUnderTheMouse ( worldObjects, playerObj)
 				if sq then
 					for i=0,sq:getMovingObjects():size()-1 do
 						local o = sq:getMovingObjects():get(i)
-						if instanceof(o, "IsoPlayer") and (o ~= playerObj) then
+						if instanceof(o, "IsoPlayer") and (o ~= playerObj) and SandboxVars.IMNAL.allowBump then
 							if string.match(o:getAnimationDebug(), "foodtype : Cigarettes") then
 							return o
 							end
@@ -60,17 +60,17 @@ function whatIsUnderTheMouse ( worldObjects, playerObj)
 			end
 		end
 	--did we clicked a stove?	
-		if stove:getObjectName() == ("Stove") and not stove:isMicrowave() and not SandboxVars.IMNAL.fireOnly and ((SandboxVars.ElecShutModifier > -1 and getGameTime():getNightsSurvived() < SandboxVars.ElecShutModifier) or stove:getSquare():haveElectricity()) then return stove
+		if stove:getObjectName() == ("Stove") and not stove:isMicrowave() and SandboxVars.IMNAL.allowStove and ((SandboxVars.ElecShutModifier > -1 and getGameTime():getNightsSurvived() < SandboxVars.ElecShutModifier) or stove:getSquare():haveElectricity()) then return stove
 	--did we clicked a microwave ?
-		elseif stove:getObjectName() == ("Stove") and stove:isMicrowave() and not SandboxVars.IMNAL.fireOnly and SandboxVars.IMNAL.allowMicrowave == true and ((SandboxVars.ElecShutModifier > -1 and getGameTime():getNightsSurvived() < SandboxVars.ElecShutModifier) or stove:getSquare():haveElectricity()) then return stove
+		elseif stove:getObjectName() == ("Stove") and stove:isMicrowave() and SandboxVars.IMNAL.allowMicrowave and ((SandboxVars.ElecShutModifier > -1 and getGameTime():getNightsSurvived() < SandboxVars.ElecShutModifier) or stove:getSquare():haveElectricity()) then return stove
 	--did we clicked a lit fireplace ?
-		elseif stove:getObjectName() == ("Fireplace") and stove:isLit() then return stove										
+		elseif stove:getObjectName() == ("Fireplace") and stove:isLit() and SandboxVars.IMNAL.allowFireplace then return stove										
 	--did we clicked a lit barbecue ?
-		elseif stove:getObjectName() == ("Barbecue") and stove:isLit() then return stove									
+		elseif stove:getObjectName() == ("Barbecue") and stove:isLit() and SandboxVars.IMNAL.allowBarbecue then return stove									
 	--did we clicked a Campfire ? We check the sprite directly to check if the campfire is lit or not
-		elseif stove:getObjectName() == ("IsoObject") and stove:getSpriteName() == "camping_01_5" then return stove						
+		elseif stove:getObjectName() == ("IsoObject") and stove:getSpriteName() == "camping_01_5" and SandboxVars.IMNAL.allowCampfire then return stove						
 	--did we clicked on a Fire ? You mad man 
-		elseif stove:getSquare():haveFire() then return stove end
+		elseif stove:getSquare():haveFire() and SandboxVars.IMNAL.allowFire then return stove end
 	end
 end
 
