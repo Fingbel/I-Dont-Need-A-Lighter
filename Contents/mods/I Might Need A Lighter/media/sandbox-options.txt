@@ -91,7 +91,7 @@ option IMNAL.allowBump
 option IMNAL.noStoveRisk
 {
 	type = boolean,
-	default = false,
+	default = true,
 	page = IMightNeedALighter,
 	translation = IMNAL_noStoveRisk,
 }
@@ -99,9 +99,9 @@ option IMNAL.noStoveRisk
 option IMNAL.carLighterBaseTimer
 {
 	type = integer,
-	max = 250,
+	max = 400,
     min = 0,
-	default = 125,
+	default = 200,
 	page = IMightNeedALighter,
 	translation = IMNAL_carLighterBaseTimer,
 }

@@ -19,7 +19,7 @@ Sandbox_EN = {
     Sandbox_IMNAL_allowFire = "Allow the use of a burning tile"
     Sandbox_IMNAL_allowBump = "Allow the use of another player already smoking"
     
-    Sandbox_IMNAL_noStoveRisk = "Disable all risks on stoves/fireplace/etc"
+    Sandbox_IMNAL_noStoveRisk = "WIP FEATURE - Disable all risks on stoves/fireplace/etc - WIP FEATURE"
     Sandbox_IMNAL_electricityReq = "Electricity requirement to repair a car lighter socket"
     Sandbox_IMNAL_mechanicReq = "Mechanic requirement to repair a car lighter socket" 
 	}
