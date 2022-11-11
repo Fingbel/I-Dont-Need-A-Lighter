@@ -1,14 +1,12 @@
 ContextMenu_RU = {
-	ContextMenu_Smoke = "Дым"
-	
-	ContextMenu_CarLighter = "Автомобильная зажигалка"
-	ContextMenu_NoCarLighter = "Нет автомобильной зажигалки"
-	ContextMenu_InstallCarLighter = "Подключите автомобильный прикуриватель"
-	ContextMenu_UnInstallCarLighter = "Отключите автомобильный прикуриватель"
-	ContextMenu_CarLighterRepairNoSkill = "Розетка прикуривателя требует ремонта"
-	ContextMenu_CarLighterRepairWithSkill = "Гнездо автомобильного прикуривателя можно отремонтировать"
-	
-	ContextMenu_CarOutOfCigarette = " <br> Нечего курить"
-	ContextMenu_CarNoBattery = "<br> Батарея разряжена или отсутствует"
-	ContextMenu_CarNoKeyOrWire = "<br> Ключ или провод отсутствуют"
-}
+	ContextMenu_Smoke = "Курево"
+	ContextMenu_CarLighter = "Прикуриватель"
+	ContextMenu_NoCarLighter = "Нет прикуривателя"
+	ContextMenu_InstallCarLighter = "Поставить прикуриватель"
+	ContextMenu_UnInstallCarLighter = "Вытащить прикуриватель"
+	ContextMenu_CarLighterRepairNoSkill = "Прикуривателю требуется ремонт"
+	ContextMenu_CarLighterRepairWithSkill = "Прикуриватель можно починить"
+	ContextMenu_CarOutOfCigarette = " <br> Курево кончилось"
+	ContextMenu_CarNoBattery = "<br> Аккумулятор разряжен или отсутствует "
+	ContextMenu_CarNoKeyOrWire = "<br> Ключ или провода для "прикурки" отсутствуют "
+	}
