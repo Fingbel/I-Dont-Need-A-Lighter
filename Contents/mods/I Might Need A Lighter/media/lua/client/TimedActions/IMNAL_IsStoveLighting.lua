@@ -79,6 +79,9 @@ function IsStoveLighting:update()
 					return
 				end
 			end
+			
+			
+			
 		end
 	end
 end
@@ -135,6 +138,11 @@ function IsStoveLighting:new (character, stove, item, outcome, time)
 		o.lowrisk = true
 		o.medrisk = true
 		o.highrisk = true	
+	end
+	if(SandboxVars.IMNAL.noStoveRisk == true) then
+		o.lowrisk = false
+		o.medrisk = false
+		o.highrisk = false	
 	end
 	return o
 end
