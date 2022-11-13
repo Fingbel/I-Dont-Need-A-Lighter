@@ -1,12 +1,12 @@
 ContextMenu_RU = {
-	ContextMenu_Smoke = "Дым"
+	ContextMenu_Smoke = "Курить"
 	
 	ContextMenu_CarLighter = "Автомобильная зажигалка"
 	ContextMenu_NoCarLighter = "Нет автомобильной зажигалки"
 	ContextMenu_InstallCarLighter = "Подключите автомобильный прикуриватель"
 	ContextMenu_UnInstallCarLighter = "Отключите автомобильный прикуриватель"
-	ContextMenu_CarLighterRepairNoSkill = "Розетка прикуривателя требует ремонта"
-	ContextMenu_CarLighterRepairWithSkill = "Гнездо автомобильного прикуривателя можно отремонтировать"
+	ContextMenu_CarLighterRepairNoSkill = "<br> needs repair"
+	ContextMenu_CarLighterRepairWithSkill = "<br> can be repaired"
 	
 	ContextMenu_CarOutOfCigarette = " <br> Нечего курить"
 	ContextMenu_CarNoBattery = "<br> Батарея разряжена или отсутствует"
