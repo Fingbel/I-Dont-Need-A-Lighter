@@ -1,5 +1,5 @@
 ContextMenu_CS = {
-	ContextMenu_Smoke = "Kou�it"
+	ContextMenu_Smoke = "Kouřit"
 
 	ContextMenu_CarLighter = "Zapalovac do auta"
 	ContextMenu_NoCarLighter = "No Car Lighter"
@@ -9,6 +9,6 @@ ContextMenu_CS = {
 	ContextMenu_CarLighterRepairWithSkill = "<br> can be repaired"
 	
 	ContextMenu_CarOutOfCigarette = " <br> Nohing to smoke"
-	ContextMenu_CarNoBattery = "<br> Nic ke kouren� "
-	ContextMenu_CarNoKeyOrWire = "<br> Chyb� kl�c nebo dr�t"
+	ContextMenu_CarNoBattery = "<br> Battery is out or missing  "
+	ContextMenu_CarNoKeyOrWire = "<br> Key or wire missing"
 }
