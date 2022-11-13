@@ -6,8 +6,8 @@ ContextMenu_EN = {
 	ContextMenu_NoCarLighter = "No Car Lighter"
 	ContextMenu_InstallCarLighter = "Plug Car Lighter"
 	ContextMenu_UnInstallCarLighter = "Unplug Car Lighter"
-	ContextMenu_CarLighterRepairNoSkill = "Car Lighter socket needs repair"
-	ContextMenu_CarLighterRepairWithSkill = "Car Lighter socket can be repaired"
+	ContextMenu_CarLighterRepairNoSkill = "<br> needs repair"
+	ContextMenu_CarLighterRepairWithSkill = "<br> can be repaired"
 
 	ContextMenu_CarOutOfCigarette = " <br> Nothing to smoke"
 	ContextMenu_CarNoBattery = "<br> Battery is out or missing "

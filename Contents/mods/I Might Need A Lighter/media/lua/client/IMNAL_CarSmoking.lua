@@ -83,9 +83,9 @@ function ISVehicleMenu.showRadialMenu(player)
 		if seat <=1 then
 			if player:getModData().CL == "0" then
 				if player:getPerkLevel(Perks.Mechanics) >= SandboxVars.IMNAL.mechanicReq and player:getPerkLevel(Perks.Electricity) >= SandboxVars.IMNAL.electricityReq then
-					menu:addSlice(getText('ContextMenu_CarLighterRepairWithSkill'),getTexture("media/ui/vehicles/carLighterCanBeRepaired.png"),OnCarLighterSocketRepair, player) 
+					menu:addSlice(getText('ContextMenu_CarLighter') ..":".. getText('ContextMenu_CarLighterRepairWithSkill') ,getTexture("media/ui/vehicles/carLighterCanBeRepaired.png"),OnCarLighterSocketRepair, player) 
 				else
-					menu:addSlice(getText('ContextMenu_CarLighterRepairNoSkill'),getTexture("media/ui/vehicles/carLighterNeedRepair.png")) 
+					menu:addSlice(getText('ContextMenu_CarLighter') ..":".. getText('ContextMenu_CarLighterRepairNoSkill'), getTexture("media/ui/vehicles/carLighterNeedRepair.png")) 
 				end
 				return
 			elseif player:getModData().CL == "1" and carLighter == nill then 
